@@ -1,6 +1,5 @@
 package de.mediapool.server.media.controller;
 
-import java.nio.file.Files;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.domain.DocumentUtil;
 import de.mediapool.server.core.domain.json.DocumentDTO;
-import de.mediapool.server.media.domain.MediaAttributeDTO;
+import de.mediapool.server.media.domain.ActorNodeDTO;
+import de.mediapool.server.media.domain.MediaNodeDTO;
 import de.mediapool.server.media.repository.MediaRepository;
 
 @RestController
@@ -34,18 +34,22 @@ public class MediaController {
 	}
 	
 	@RequestMapping("/details")
-	public DocumentDTO<MediaAttributeDTO> getMediaDetails() {
-		MediaAttributeDTO mediaAttributeDTO = new MediaAttributeDTO();
+	public DocumentDTO<MediaNodeDTO> getMediaDetails() {
+		MediaNodeDTO mediaAttributeDTO = new MediaNodeDTO();
 		
 		mediaAttributeDTO.setId(UUID.randomUUID().toString());
 		mediaAttributeDTO.setName("Das ist meine Testmedia");
 		mediaAttributeDTO.setPublished(new Date());
 		
+		ActorNodeDTO actor = new ActorNodeDTO();
+		
+		actor.setName("Tom Hanks");
+		
+		mediaAttributeDTO.addActor(actor);
+		
 		mediaRepository.save(mediaAttributeDTO);
 		
-		MediaAttributeDTO findByName = mediaRepository.findByName("Das ist meine Testmedia");
-		
-		return DocumentUtil.getDocument(findByName);
+		return DocumentUtil.getDocument(mediaAttributeDTO);
 		
 	}
 	

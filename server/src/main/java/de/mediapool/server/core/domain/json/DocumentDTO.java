@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class DocumentDTO<T extends AttributeDTO> extends DataTransfereObject {
+public class DocumentDTO<T extends NodeDTO> extends DataTransfereObject {
 
 	private static final long serialVersionUID = 1L;
 	
