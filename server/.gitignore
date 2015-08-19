@@ -1,5 +1,2 @@
-/target/
-/projekt_mediapool/
-/target/
-/target/
-/target/
+target
+target/*
