@@ -8,5 +8,4 @@ public interface MovieRepository extends GraphRepository<MovieNodeDTO> {
 
 	public MovieNodeDTO findById(String id);
 
-
 }

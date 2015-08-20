@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.GraphProperty;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,13 +24,5 @@ public abstract class NodeDTO implements DataTransfereObject {
 		return new HashMap<>();
 	}
 	
-	@JsonIgnore
-	@GraphProperty
 	public abstract String getType();
-	
-	@JsonIgnore
-	public String getId() {
-		return id;
-	}
-	
 }
