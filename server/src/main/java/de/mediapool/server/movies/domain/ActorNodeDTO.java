@@ -1,4 +1,4 @@
-package de.mediapool.server.media.domain;
+package de.mediapool.server.movies.domain;
 
 import java.util.Date;
 import java.util.Set;
@@ -8,7 +8,10 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
-import de.mediapool.server.core.domain.json.NodeDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.media.domain.MediaNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +21,8 @@ import lombok.Setter;
 public class ActorNodeDTO extends NodeDTO {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@JsonIgnore
 	@RelatedTo(type = "ACTOR", direction = Direction.BOTH)
 	private @Fetch Set<MediaNodeDTO> actsIn;
 	
