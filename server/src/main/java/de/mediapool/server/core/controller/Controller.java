@@ -1,4 +1,4 @@
-package de.mediapool.server.core.domain.controller;
+package de.mediapool.server.core.controller;
 
 /**
  * Markup interface for rest controller.

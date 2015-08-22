@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.mediapool.server.core.domain.controller.Controller;
+import de.mediapool.server.core.controller.Controller;
 import de.mediapool.server.movies.domain.MovieNodeDTO;
 import de.mediapool.server.movies.repository.MovieRepository;
 
