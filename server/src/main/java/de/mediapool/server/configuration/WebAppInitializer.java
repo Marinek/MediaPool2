@@ -1,25 +1,23 @@
 package de.mediapool.server.configuration;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration.Dynamic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import de.mediapool.server.security.simple.config.SecurityConfiguration;
 
 /**
  * 
  * @author marcinek
  *
  */
-public class WebAppInitializer implements WebApplicationInitializer {
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(AppConfig.class);
-		ctx.setServletContext(servletContext);
-		Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
-		dynamic.addMapping("/");
-		dynamic.setLoadOnStartup(1);
+public class WebAppInitializer extends AbstractSecurityWebApplicationInitializer {
+
+	private static final Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
+
+	public WebAppInitializer() {
+		super(SecurityConfiguration.class, AppConfig.class);
+
+		logger.debug("Invoking: WebAppInitializer()");
 	}
 }

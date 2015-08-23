@@ -11,47 +11,49 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.mediapool.server.core.controller.Controller;
+import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.movies.domain.MovieNodeDTO;
 import de.mediapool.server.movies.repository.MovieRepository;
 
-@RestController
+@RestController	
 @RequestMapping("/movie")
-public class MovieController implements Controller {
+public class MovieController implements MPController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
-	@Autowired MovieRepository movieRepository;
-	
+	@Autowired
+	MovieRepository movieRepository;
+
 	@PostConstruct
-	public void init () {
+	public void init() {
 		logger.debug("Invoking: init()");
 	}
-	
-	@RequestMapping("/get/{id}")
-	public MovieNodeDTO getMovie(@PathVariable("id") String id) {
+
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	public @ResponseBody MovieNodeDTO getMovie(@PathVariable("id") String id) {
 		logger.debug("Invoking: getMovie(id)");
-		
+
 		MovieNodeDTO movie = movieRepository.findById(id);
-		
+
 		return movie;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie) {
 		logger.debug("Invoking: createMovie(newMovie)");
-		
-		if(newMovie.getId() != null) {
+
+		if (newMovie.getId() != null) {
 			return newMovie;
 		}
-		
+
 		newMovie.setId(UUID.randomUUID().toString());
-		
+
 		movieRepository.save(newMovie);
-		
+
 		return newMovie;
 	}
-	
+
 }
