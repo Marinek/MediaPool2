@@ -5,6 +5,6 @@ package de.mediapool.server.core.controller;
  * @author marcinek
  *
  */
-public interface Controller {
+public interface MPController {
 
 }

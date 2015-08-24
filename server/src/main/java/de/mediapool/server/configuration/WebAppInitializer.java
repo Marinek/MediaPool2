@@ -1,25 +1,47 @@
 package de.mediapool.server.configuration;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration.Dynamic;
+import javax.servlet.Filter;
+import javax.servlet.ServletRegistration;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import de.mediapool.server.security.simple.config.SecurityConfiguration;
 
 /**
  * 
  * @author marcinek
  *
  */
-public class WebAppInitializer implements WebApplicationInitializer {
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(AppConfig.class);
-		ctx.setServletContext(servletContext);
-		Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
-		dynamic.addMapping("/");
-		dynamic.setLoadOnStartup(1);
-	}
+@Order(2)
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+	 
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
+ 
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class<?>[] {SecurityConfiguration.class};
+    }
+ 
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[] {AppConfig.class};
+    }
+ 
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return new Filter[] {characterEncodingFilter};
+    }
+ 
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {        
+        registration.setInitParameter("spring.profiles.active", "default");
+    }
 }
