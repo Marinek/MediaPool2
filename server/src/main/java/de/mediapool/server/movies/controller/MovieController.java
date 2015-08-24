@@ -1,5 +1,6 @@
 package de.mediapool.server.movies.controller;
 
+import java.security.Principal;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
@@ -33,9 +33,9 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
-	public @ResponseBody MovieNodeDTO getMovie(@PathVariable("id") String id) {
+	public MovieNodeDTO getMovie(@PathVariable("id") String id, Principal  test) {
 		logger.debug("Invoking: getMovie(id)");
-
+		
 		MovieNodeDTO movie = movieRepository.findById(id);
 
 		return movie;

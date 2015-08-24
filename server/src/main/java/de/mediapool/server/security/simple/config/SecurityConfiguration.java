@@ -15,8 +15,8 @@ import de.mediapool.server.security.simple.controller.RESTAuthenticationEntryPoi
 import de.mediapool.server.security.simple.controller.RESTAuthenticationFailureHandler;
 import de.mediapool.server.security.simple.controller.RESTAuthenticationSuccessHandler;
 
+@ComponentScan("de.mediapool.server.security")
 @EnableWebSecurity
-@ComponentScan("de.mediapool")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 		http.formLogin().successHandler(authenticationSuccessHandler);
 		http.formLogin().failureHandler(authenticationFailureHandler);
+		http.logout().logoutUrl("/logout");
 	}
 
 	@PostConstruct
