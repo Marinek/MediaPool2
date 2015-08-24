@@ -24,7 +24,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Spring Core -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -44,7 +44,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -57,7 +57,7 @@
 			<scope>provided</scope>
 			<version>3.1.0</version>
 		</dependency>
-	
+
 		<!-- Security -->
 
 		<dependency>
@@ -139,6 +139,13 @@
 			<artifactId>cdi-api</artifactId>
 			<version>2.0-EDR1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

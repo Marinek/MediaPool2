@@ -19,20 +19,20 @@ import de.mediapool.server.movies.domain.MovieNodeDTO;
 import de.mediapool.server.movies.repository.MovieRepository;
 
 @RestController	
-@RequestMapping("/movie")
+@RequestMapping("/rest/movie")
 public class MovieController implements MPController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
 	@Autowired
-	MovieRepository movieRepository;
+	private MovieRepository movieRepository;
 
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
 	}
 
-	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public MovieNodeDTO getMovie(@PathVariable("id") String id, Principal  test) {
 		logger.debug("Invoking: getMovie(id)");
 		
