@@ -1,4 +1,4 @@
-package de.mediapool.server.movies.controller;
+package de.mediapool.server.media.movies.controller;
 
 import java.security.Principal;
 import java.util.UUID;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.movies.domain.MovieNodeDTO;
-import de.mediapool.server.movies.repository.MovieRepository;
+import de.mediapool.server.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.media.movies.repository.MovieRepository;
 
 @RestController	
 @RequestMapping("/rest/movie")

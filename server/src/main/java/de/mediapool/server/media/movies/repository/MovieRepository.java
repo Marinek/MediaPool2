@@ -1,8 +1,8 @@
-package de.mediapool.server.movies.repository;
+package de.mediapool.server.media.movies.repository;
 
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import de.mediapool.server.movies.domain.MovieNodeDTO;
+import de.mediapool.server.media.movies.domain.MovieNodeDTO;
 
 public interface MovieRepository extends GraphRepository<MovieNodeDTO> {
 

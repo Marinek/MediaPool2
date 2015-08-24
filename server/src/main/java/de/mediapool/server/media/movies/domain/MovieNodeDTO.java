@@ -1,4 +1,4 @@
-package de.mediapool.server.movies.domain;
+package de.mediapool.server.media.movies.domain;
 
 import java.util.HashSet;
 import java.util.Set;

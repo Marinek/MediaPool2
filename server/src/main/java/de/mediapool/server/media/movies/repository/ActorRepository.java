@@ -1,4 +1,4 @@
-package de.mediapool.server.movies.repository;
+package de.mediapool.server.media.movies.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,4 +1,4 @@
-package de.mediapool.server.movies.domain;
+package de.mediapool.server.media.movies.domain;
 
 import java.util.Date;
 import java.util.Set;
