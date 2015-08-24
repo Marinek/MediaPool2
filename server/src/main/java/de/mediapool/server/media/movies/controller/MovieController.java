@@ -1,6 +1,5 @@
 package de.mediapool.server.media.movies.controller;
 
-import java.security.Principal;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.users.domain.UserNodeDTO;
+import de.mediapool.server.users.domain.UserRoleNodeDTO;
 import de.mediapool.server.users.repository.UserRepository;
 
 @RestController
@@ -27,9 +28,16 @@ public class UserController implements MPController {
 	private void createUser() {
 		UserNodeDTO user = new UserNodeDTO();
 		
+		user.setGraphId(2l);
 		user.setId(UUID.randomUUID().toString());
 		user.setPassword("root");
 		user.setUsername("admin");
+		
+		UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
+		
+		userRoleUser.setName("USER");
+		
+		user.getRoles().add(userRoleUser);
 		
 		userRepository.save(user);
 	}
