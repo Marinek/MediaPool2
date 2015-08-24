@@ -7,5 +7,7 @@ import de.mediapool.server.media.movies.domain.MovieNodeDTO;
 public interface MovieRepository extends GraphRepository<MovieNodeDTO> {
 
 	public MovieNodeDTO findById(String id);
+	
+	public MovieNodeDTO findByNameAndId(String name, String id);
 
 }
