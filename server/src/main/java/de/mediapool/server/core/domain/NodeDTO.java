@@ -1,9 +1,5 @@
 package de.mediapool.server.core.domain;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.data.neo4j.annotation.GraphId;
 
 import lombok.Getter;
@@ -19,10 +15,6 @@ public abstract class NodeDTO implements DataTransfereObject {
 	
 	@GraphId
 	private Long graphId;
-
-	public Map<String, Collection<? extends NodeDTO>> getRelationships() {
-		return new HashMap<>();
-	}
 	
 	public abstract String getType();
 }

@@ -1,5 +1,6 @@
 package de.mediapool.server.media.movies.controller;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +19,7 @@ import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.media.movies.repository.MovieRepository;
 import de.mediapool.server.security.domain.MPUserDetails;
+import de.mediapool.server.users.domain.UserNodeDTO;
 
 @RestController	
 @RequestMapping("/rest/movie")
@@ -27,7 +29,7 @@ public class MovieController implements MPController {
 
 	@Autowired
 	private MovieRepository movieRepository;
-
+	
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
@@ -43,7 +45,7 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie) {
+	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newMovie)");
 
 		if (newMovie.getId() != null) {
@@ -51,10 +53,12 @@ public class MovieController implements MPController {
 		}
 
 		newMovie.setId(UUID.randomUUID().toString());
+		
+		newMovie.ownedBy(currentUser, new Date());
 
-		movieRepository.save(newMovie);
+		MovieNodeDTO save = movieRepository.save(newMovie);
 
-		return newMovie;
+		return save;
 	}
 
 }
