@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.domain.RelationShipDTO;
 import de.mediapool.server.users.domain.UserNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RelationshipEntity(type="OWNING")
-public class OwnerShip extends NodeDTO {
+public class OwnerShip extends RelationShipDTO {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -34,10 +34,5 @@ public class OwnerShip extends NodeDTO {
 	
 	@GraphProperty
 	private Date since;
-	
-	@Override
-	public String getType() {
-		return "ownership";
-	}
 	
 }

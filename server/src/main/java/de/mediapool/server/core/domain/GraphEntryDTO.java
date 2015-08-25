@@ -1,15 +1,16 @@
 package de.mediapool.server.core.domain;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class NodeDTO extends GraphEntryDTO {
+public class GraphEntryDTO implements DataTransfereObject {
 
 	private static final long serialVersionUID = 1L;
 
-	private String id;
-	
-	public abstract String getType();
+	@GraphId
+	private Long graphId;
 }
