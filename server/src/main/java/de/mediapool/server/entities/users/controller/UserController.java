@@ -1,4 +1,4 @@
-package de.mediapool.server.users.controller;
+package de.mediapool.server.entities.users.controller;
 
 import java.util.UUID;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.users.domain.UserNodeDTO;
-import de.mediapool.server.users.domain.UserRoleNodeDTO;
-import de.mediapool.server.users.repository.UserRepository;
+import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
+import de.mediapool.server.entities.users.repository.UserRepository;
 
 @RestController
 @RequestMapping("/rest/user")

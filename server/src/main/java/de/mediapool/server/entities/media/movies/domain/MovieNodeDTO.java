@@ -1,4 +1,4 @@
-package de.mediapool.server.media.movies.domain;
+package de.mediapool.server.entities.media.movies.domain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.media.domain.MediaNodeDTO;
+import de.mediapool.server.entities.media.domain.MediaNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 

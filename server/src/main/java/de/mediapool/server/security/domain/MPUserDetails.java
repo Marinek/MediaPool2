@@ -7,7 +7,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import de.mediapool.server.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -5,9 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.repository.UserRepository;
 import de.mediapool.server.security.domain.MPUserDetails;
-import de.mediapool.server.users.domain.UserNodeDTO;
-import de.mediapool.server.users.repository.UserRepository;
 
 public class MPUserDetailsService implements UserDetailsService {
 

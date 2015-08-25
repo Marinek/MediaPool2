@@ -1,8 +1,8 @@
-package de.mediapool.server.media.movies.repository;
+package de.mediapool.server.entities.media.movies.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import de.mediapool.server.media.domain.MediaNodeDTO;
+import de.mediapool.server.entities.media.domain.MediaNodeDTO;
 
 public interface ActorRepository  extends CrudRepository<MediaNodeDTO, String> {
 

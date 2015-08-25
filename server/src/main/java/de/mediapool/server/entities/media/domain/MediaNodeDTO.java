@@ -1,4 +1,4 @@
-package de.mediapool.server.media.domain;
+package de.mediapool.server.entities.media.domain;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import de.mediapool.server.core.domain.NodeDTO;
-import de.mediapool.server.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

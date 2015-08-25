@@ -1,4 +1,4 @@
-package de.mediapool.server.users.domain;
+package de.mediapool.server.entities.users.domain;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
