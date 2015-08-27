@@ -33,7 +33,7 @@ public class ListNodeDTO extends NodeDTO {
 	private Visibility visibility = Visibility.PRIVATE;
 	
 	@RelatedTo(type="CREATED", direction=Direction.INCOMING)
-    public @Fetch UserNodeDTO createdBy;
+    private @Fetch UserNodeDTO createdBy;
 	
 	@RelatedToVia(type="LISTED", direction=Direction.OUTGOING)
 	@Fetch
