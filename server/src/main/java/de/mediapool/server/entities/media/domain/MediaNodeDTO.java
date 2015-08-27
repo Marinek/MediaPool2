@@ -29,10 +29,10 @@ public abstract class MediaNodeDTO extends NodeDTO {
 	
 	@RelatedToVia(type="OWNING", direction=Direction.INCOMING)
 	@Fetch
-	private Set<OwnerShip> ownedBy = new HashSet<>();
+	private Set<OwnerRelationship> ownedBy = new HashSet<>();
 	
 	public void ownedBy(UserNodeDTO user, Date since) {
-		OwnerShip newOwnerShip = new OwnerShip();
+		OwnerRelationship newOwnerShip = new OwnerRelationship();
 		
 		newOwnerShip.setUser(user);
 		newOwnerShip.setSince(new Date());
