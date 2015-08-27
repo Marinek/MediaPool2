@@ -1,6 +1,8 @@
 package de.mediapool.server.entities.media.movies.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -42,6 +44,11 @@ public class MovieController implements MPController {
 		MovieNodeDTO movie = movieRepository.findById(id);
 
 		return movie;
+	}
+	
+	@RequestMapping
+	public List<MovieNodeDTO> findMovieByName(String name) {
+		return new ArrayList<>();
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)

@@ -146,6 +146,13 @@
 			<version>1.9.2</version>
 		</dependency>
 
+		<!-- CSV Parser -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>3.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

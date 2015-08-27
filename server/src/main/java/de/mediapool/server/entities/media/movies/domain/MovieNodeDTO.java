@@ -11,6 +11,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.entities.media.domain.MediaNodeDTO;
+import de.mediapool.server.entities.persons.actors.domain.ActorNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
