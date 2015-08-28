@@ -1,13 +1,16 @@
 package de.mediapool.server.security.domain;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,6 +23,8 @@ public class MPUserDetails extends UserNodeDTO implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	private String password;
+
+	private Collection<GrantedAuthority> authorities;
 	
 	public MPUserDetails(UserNodeDTO userNode) {
 		try {
@@ -27,11 +32,12 @@ public class MPUserDetails extends UserNodeDTO implements UserDetails {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
-	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		authorities = new ArrayList<GrantedAuthority>();
+		
+		for(UserRoleNodeDTO userRole : getRoles()) {
+			authorities.add(new SimpleGrantedAuthority(userRole.getName()));
+		}
 	}
 
 	@Override

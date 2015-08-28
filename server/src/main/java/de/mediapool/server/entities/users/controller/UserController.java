@@ -13,7 +13,7 @@ import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
 import de.mediapool.server.entities.users.repository.UserRepository;
 
 @RestController
-@RequestMapping("/rest/user")
+@RequestMapping("/public/rest/user")
 public class UserController implements MPController {
 
 	@Autowired
@@ -24,7 +24,7 @@ public class UserController implements MPController {
 		return userRepository.findById(id);
 	}
 	
-	@RequestMapping(value="create")
+	@RequestMapping(value="register")
 	private void createUser() {
 		UserNodeDTO user = new UserNodeDTO();
 		
