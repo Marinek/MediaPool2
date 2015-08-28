@@ -19,6 +19,7 @@ import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
 import de.mediapool.server.entities.users.repository.UserRepository;
+import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController
 @RequestMapping("/rest/user")
@@ -35,7 +36,7 @@ public class UserController implements MPController {
 		logger.debug("Invoking: init()");
 	}
 	
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(PreAuthorization.ROLE_ADMIN)
 	@RequestMapping(value = "{id}", method=RequestMethod.GET)
 	public UserNodeDTO getUser(@PathVariable("id") String id) {
 		return userRepository.findById(id);

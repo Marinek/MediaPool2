@@ -23,6 +23,7 @@ import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
+import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController	
 @RequestMapping("/rest/movie")
@@ -38,7 +39,7 @@ public class MovieController implements MPController {
 		logger.debug("Invoking: init()");
 	}
 
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public MovieNodeDTO getMovie(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails  test) {
 		logger.debug("Invoking: getMovie(id)");
