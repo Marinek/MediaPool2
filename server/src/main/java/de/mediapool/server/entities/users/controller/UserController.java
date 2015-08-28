@@ -26,37 +26,43 @@ import de.mediapool.server.security.domain.PreAuthorization;
 public class UserController implements MPController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	
-	@Autowired(required = true)
+
+	@Autowired
 	private UserRepository userRepository;
-	
-	
+
 	@PostConstruct
 	private void init() {
 		logger.debug("Invoking: init()");
 	}
-	
+
 	@PreAuthorize(PreAuthorization.ROLE_ADMIN)
 	@RequestMapping(value = "{id}", method=RequestMethod.GET)
 	public UserNodeDTO getUser(@PathVariable("id") String id) {
 		return userRepository.findById(id);
 	}
-	
-	@RequestMapping(method=RequestMethod.GET)
+
+	@PreAuthorize(PreAuthorization.AUTHENTICATED)
+	@RequestMapping(value="current", method=RequestMethod.GET)
 	public UserNodeDTO getUser(@AuthenticationPrincipal UserNodeDTO userNode) {
 		return userNode;
 	}
-	
+
 	@RequestMapping(value="register", method=RequestMethod.POST)
 	private UserNodeDTO createUser(@RequestBody UserNodeDTO userNodeDTO) {
 		userNodeDTO.setId(UUID.randomUUID().toString());
-		
-		UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
-		
-		userRoleUser.setName("USER");
-		
-		userNodeDTO.getRoles().add(userRoleUser);
-		
+
+		{
+			UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
+			userRoleUser.setName("USER");
+			userNodeDTO.getRoles().add(userRoleUser);
+		}
+
+		{
+			UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
+			userRoleUser.setName("ADMIN");
+			userNodeDTO.getRoles().add(userRoleUser);
+		}
+
 		return userRepository.save(userNodeDTO);
 	}
 }
