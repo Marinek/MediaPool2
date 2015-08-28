@@ -36,7 +36,7 @@ public class MPUserDetails extends UserNodeDTO implements UserDetails {
 		authorities = new ArrayList<GrantedAuthority>();
 		
 		for(UserRoleNodeDTO userRole : getRoles()) {
-			authorities.add(new SimpleGrantedAuthority(userRole.getName()));
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.getName()));
 		}
 	}
 
