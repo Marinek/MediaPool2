@@ -48,7 +48,7 @@ public class UserController implements MPController {
 	}
 
 	@RequestMapping(value="register", method=RequestMethod.POST)
-	private UserNodeDTO createUser(@RequestBody UserNodeDTO userNodeDTO) {
+	public UserNodeDTO createUser(@RequestBody UserNodeDTO userNodeDTO) {
 		userNodeDTO.setId(UUID.randomUUID().toString());
 
 		{
