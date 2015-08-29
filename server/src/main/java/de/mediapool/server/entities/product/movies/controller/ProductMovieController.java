@@ -2,7 +2,6 @@ package de.mediapool.server.entities.product.movies.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -25,7 +24,7 @@ import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
-@RestController	
+@RestController
 @RequestMapping("/rest/movieproduct")
 public class ProductMovieController implements MPController {
 
@@ -33,7 +32,7 @@ public class ProductMovieController implements MPController {
 
 	@Autowired
 	private ProductMovieRepository productMovieRepository;
-	
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
@@ -41,14 +40,14 @@ public class ProductMovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails  test) {
+	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getProductMovie(id)");
-		
+
 		ProductMovieNodeDTO productMovie = productMovieRepository.findById(id);
 
 		return productMovie;
 	}
-	
+
 	@RequestMapping
 	public List<MovieNodeDTO> findProdcutMovieByName(String name) {
 		return new ArrayList<>();
@@ -57,13 +56,6 @@ public class ProductMovieController implements MPController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ProductMovieNodeDTO createMovie(@RequestBody ProductMovieNodeDTO newProductMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createProductMovie(newProductMovie)");
-
-		if (newProductMovie.getId() != null) {
-			return newProductMovie;
-		}
-
-		newProductMovie.setId(UUID.randomUUID().toString());
-		
 
 		ProductMovieNodeDTO save = productMovieRepository.save(newProductMovie);
 
