@@ -1,4 +1,4 @@
-package de.mediapool.server.entities.media.domain;
+package de.mediapool.server.entities.product.movies.domain;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.NodeDTO;
-import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
+import de.mediapool.server.entities.media.domain.MediaNodeDTO;
 import de.mediapool.server.entities.product.domain.OwnerRelationship;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import lombok.Getter;
@@ -25,37 +25,43 @@ import lombok.ToString;
 @Setter
 @ToString
 @NodeEntity
-public abstract class MediaNodeDTO extends NodeDTO {
+public abstract class ProductMovieNodeDTO extends NodeDTO {
 
-	private String title;
+	private String p_title;
 	
-	private String orginaltitle;
+	private String p_orginaltitle;
 	
-	private Date published;
+	private Date p_published;
 	
-	private String genre;
+	private String p_special;
 	
-	private String language;
+	private String p_language;
 	
-	private String award;
+	private String p_price;
 	
-	private String cover;
+	private String p_cover;
 	
-	private String description;
+	private String p_description;
 	
-	private String contentType;
+	private String p_ean;
+	
+	private String p_format;
+	
+	private String p_duration;
+	
+	private int p_age_restriction;
 	
 	
 	@JsonIgnore
-	@RelatedTo(type = "IS_PART", direction = Direction.INCOMING)
-	private @Fetch Set<PersonNodeDTO> persons;
+	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
+	private @Fetch Set<MediaNodeDTO> media;
 	
-	public void addPerson(PersonNodeDTO person) {
-		if (persons == null) {
-			persons = new HashSet<PersonNodeDTO>();
+	public void addPerson(MediaNodeDTO medium) {
+		if (media == null) {
+			media = new HashSet<MediaNodeDTO>();
 		}
-		persons.add(person);
+		media.add(medium);
 	}
 	
-		
+	
 }
