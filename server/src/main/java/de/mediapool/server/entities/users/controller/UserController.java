@@ -34,18 +34,18 @@ public class UserController implements MPController {
 	}
 
 	@PreAuthorize(PreAuthorization.ROLE_ADMIN)
-	@RequestMapping(value = "{id}", method=RequestMethod.GET)
-	public UserNodeDTO getUser(@PathVariable("id") String id) {
-		return userRepository.findById(id);
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public UserNodeDTO getUser(@PathVariable("id") Long id) {
+		return userRepository.findOne(id);
 	}
 
 	@PreAuthorize(PreAuthorization.AUTHENTICATED)
-	@RequestMapping(value="current", method=RequestMethod.GET)
+	@RequestMapping(value = "current", method = RequestMethod.GET)
 	public UserNodeDTO getUser(@AuthenticationPrincipal UserNodeDTO userNode) {
 		return userNode;
 	}
 
-	@RequestMapping(value="register", method=RequestMethod.POST)
+	@RequestMapping(value = "register", method = RequestMethod.POST)
 	public UserNodeDTO createUser(@RequestBody UserNodeDTO userNodeDTO) {
 
 		{

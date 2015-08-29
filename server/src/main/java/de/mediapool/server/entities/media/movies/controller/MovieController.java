@@ -24,7 +24,7 @@ import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
-@RestController	
+@RestController
 @RequestMapping("/rest/movie")
 public class MovieController implements MPController {
 
@@ -32,7 +32,7 @@ public class MovieController implements MPController {
 
 	@Autowired
 	private MovieRepository movieRepository;
-	
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
@@ -40,14 +40,14 @@ public class MovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieNodeDTO getMovie(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails  test) {
+	public MovieNodeDTO getMovie(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getMovie(id)");
-		
-		MovieNodeDTO movie = movieRepository.findById(id);
+
+		MovieNodeDTO movie = movieRepository.findOne(id);
 
 		return movie;
 	}
-	
+
 	@RequestMapping
 	public List<MovieNodeDTO> findMovieByName(String name) {
 		return new ArrayList<>();
