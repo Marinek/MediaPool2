@@ -48,7 +48,7 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findMovieByName(String name) {
+	public List<MovieNodeDTO> findMovieByTitle(String name) {
 		return new ArrayList<>();
 	}
 
