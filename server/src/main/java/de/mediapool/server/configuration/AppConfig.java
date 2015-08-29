@@ -10,7 +10,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@Configuration
 @ComponentScan("de.mediapool")
 @EnableWebMvc
 @PropertySources(value = {@PropertySource("classpath:application.properties")})
