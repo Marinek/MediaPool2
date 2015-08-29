@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 
-public interface PersonsRepository  extends CrudRepository<PersonNodeDTO, String> {
+public interface PersonsRepository extends CrudRepository<PersonNodeDTO, String> {
 
-	public PersonsRepository findByName(String name);
+	public PersonsRepository findByLastName(String name);
 
 }

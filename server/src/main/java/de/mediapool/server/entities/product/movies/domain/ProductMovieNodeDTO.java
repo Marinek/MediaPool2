@@ -22,9 +22,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @NodeEntity
-public abstract class ProductMovieNodeDTO extends NodeDTO {
+public class ProductMovieNodeDTO extends NodeDTO {
 
-	private String p_title;
+	private String title;
 
 	private String p_orginaltitle;
 
@@ -57,6 +57,11 @@ public abstract class ProductMovieNodeDTO extends NodeDTO {
 			media = new HashSet<MediaNodeDTO>();
 		}
 		media.add(medium);
+	}
+
+	@Override
+	public String getType() {
+		return "productmovie";
 	}
 
 }

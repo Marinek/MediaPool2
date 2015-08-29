@@ -40,16 +40,16 @@ public class ProductMovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails test) {
+	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getProductMovie(id)");
 
-		ProductMovieNodeDTO productMovie = productMovieRepository.findById(id);
+		ProductMovieNodeDTO productMovie = productMovieRepository.findOne(id);
 
 		return productMovie;
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findProdcutMovieByName(String name) {
+	public List<MovieNodeDTO> findProdcutMovieByTitle(String title) {
 		return new ArrayList<>();
 	}
 
