@@ -15,7 +15,7 @@ import de.mediapool.server.core.controller.MPController;
 @RequestMapping("/rest/picture")
 public class PicturesController implements MPController {
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = "image/png")
 	public FileSystemResource getFormPDF(@PathParam(value = "id") String file_id) {
 		return new FileSystemResource(new File("D:\\projekt_mediapool\\pictures\\vector_tux.864e6cdcc23e.png"));
 	}
