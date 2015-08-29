@@ -21,7 +21,7 @@ import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 
-@RestController	
+@RestController
 @RequestMapping("/rest/list")
 public class ListController implements MPController {
 
@@ -29,56 +29,55 @@ public class ListController implements MPController {
 
 	@Autowired
 	private ListRepository listRepository;
-	
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ListNodeDTO getList(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails  test) {
+	public ListNodeDTO getList(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getList(id, test)");
 
-		ListNodeDTO list = listRepository.findById(id);
+		ListNodeDTO list = listRepository.findOne(id);
 
 		return list;
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ListNodeDTO createList(@RequestBody ListNodeDTO newList, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newList, currentUser)");
-		
+
 		newList.setCreated(new Date());
 		newList.setCreatedBy(currentUser);
-		
+
 		ListNodeDTO savedList = listRepository.save(newList);
 
 		return savedList;
 	}
-	
+
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public void addToList(@PathVariable("id") String id, @RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public void addToList(@PathVariable("id") Long id, @RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: addToList(newMovie, currentUser)");
-		
-		if(newMovie == null) {
+
+		if (newMovie == null) {
 			return;
 		}
-		
-		ListNodeDTO currentList = listRepository.findById(id);
-		
+
+		ListNodeDTO currentList = listRepository.findOne(id);
+
 		currentList.addToList(newMovie);
-		
+
 		listRepository.save(currentList);
 	}
-	
+
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable("id") String id, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public void delete(@PathVariable("id") Long id, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: delete(id, currentUser)");
-		
-		ListNodeDTO currentList = listRepository.findById(id);
-		
+
+		ListNodeDTO currentList = listRepository.findOne(id);
+
 		listRepository.delete(currentList);
 	}
-	
 
 }

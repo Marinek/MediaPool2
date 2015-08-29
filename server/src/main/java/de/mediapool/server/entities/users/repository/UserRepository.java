@@ -6,7 +6,5 @@ import de.mediapool.server.entities.users.domain.UserNodeDTO;
 
 public interface UserRepository extends GraphRepository<UserNodeDTO> {
 
-	public UserNodeDTO findById(String id);
-	
 	public UserNodeDTO findByUsername(String username);
 }
