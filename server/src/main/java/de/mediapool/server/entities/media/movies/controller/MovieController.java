@@ -3,7 +3,6 @@ package de.mediapool.server.entities.media.movies.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -58,12 +57,6 @@ public class MovieController implements MPController {
 	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newMovie)");
 
-		if (newMovie.getId() != null) {
-			return newMovie;
-		}
-
-		newMovie.setId(UUID.randomUUID().toString());
-		
 		newMovie.ownedBy(currentUser, new Date());
 
 		MovieNodeDTO save = movieRepository.save(newMovie);

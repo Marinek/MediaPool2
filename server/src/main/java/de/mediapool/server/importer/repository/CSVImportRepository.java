@@ -1,6 +1,5 @@
 package de.mediapool.server.importer.repository;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
