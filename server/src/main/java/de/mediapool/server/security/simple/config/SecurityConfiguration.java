@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,6 +22,7 @@ import de.mediapool.server.security.simple.controller.RESTAuthenticationSuccessH
 
 @ComponentScan("de.mediapool.server")
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -40,12 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		logger.debug("Invoking: configure(auth)");
 
 		auth.userDetailsService(customUserDetailsService());
-		
-//		auth.inMemoryAuthentication()
-//		.withUser("greg").password("greg").roles("USER").and()
-//		.withUser("ollie").password("gierke").roles("USER", "ADMIN");
 	}
-	
+
+	@Bean @Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 	@Bean   
 	public UserDetailsService customUserDetailsService() {
 		return new MPUserDetailsService();
@@ -54,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		logger.debug("Invoking: configure(http)");
-		http.authorizeRequests().antMatchers("/rest/**").authenticated();
+		//		http.authorizeRequests().antMatchers("/rest/**").authenticated();
 		http.csrf().disable();
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 		http.formLogin().successHandler(authenticationSuccessHandler);

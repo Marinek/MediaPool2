@@ -11,6 +11,8 @@
 		"80cb04bd-daa5-1233-0011-b2507e64d806",
 		"dcb56e0a-4104-25fe-d907-357531fb2a8f",
 		"40aa7749-4928-8001-5a8e-e03b9443447a"
+		"40aa7749-4928-8001-5a8e-e03b9443447a",
+		"b13cbc79-42c0-625a-f109-22eccbb8e2ab"
 	],
 	"folders": [],
 	"timestamp": 1439933396021,
@@ -80,7 +82,7 @@
 		{
 			"id": "a80dd352-6777-3945-961d-7e376eeee0fd",
 			"headers": "Content-Type: application/json\n",
-			"url": "http://{{URL}}:{{PORT}}/{{CONTEXT}}/rest/user/create",
+			"url": "http://{{URL}}:{{PORT}}/{{CONTEXT}}/rest/user/register",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -90,12 +92,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1440411770702,
+			"time": 1440750497400,
 			"name": "Create User",
 			"description": "",
 			"collectionId": "3416a94b-4e8e-c397-6a7e-6bf3f1b6bde6",
 			"responses": [],
-			"rawModeData": "{\n  \"graphId\": 0,\n  \"name\": \"Alien vs. Predators\",\n  \"published\": 1440083706033,\n  \"type\": \"movie\",\n  \"relationships\": {}\n}"
+			"rawModeData": "{\n  \"username\": \"marinek\",\n  \"password\": \"test\",\n  \"type\": \"user\"\n}"
 		},
 		{
 			"id": "adb82408-db3b-5f43-7d1a-f761f418b65e",
@@ -125,6 +127,25 @@
 			"helperAttributes": {},
 			"time": 1440403332675,
 			"name": "Authenticate - Login",
+			"description": "",
+			"collectionId": "3416a94b-4e8e-c397-6a7e-6bf3f1b6bde6",
+			"responses": []
+		},
+		{
+			"id": "b13cbc79-42c0-625a-f109-22eccbb8e2ab",
+			"headers": "",
+			"url": "http://{{URL}}:{{PORT}}/{{CONTEXT}}/rest/user/8c017e03-6c48-4b51-b6e5-3885e4363df7",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1440749963534,
+			"name": "User Details",
 			"description": "",
 			"collectionId": "3416a94b-4e8e-c397-6a7e-6bf3f1b6bde6",
 			"responses": []
