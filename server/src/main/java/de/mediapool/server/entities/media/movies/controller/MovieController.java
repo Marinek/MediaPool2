@@ -1,7 +1,6 @@
 package de.mediapool.server.entities.media.movies.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +23,7 @@ import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
-@RestController	
+@RestController
 @RequestMapping("/rest/movie")
 public class MovieController implements MPController {
 
@@ -32,7 +31,7 @@ public class MovieController implements MPController {
 
 	@Autowired
 	private MovieRepository movieRepository;
-	
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
@@ -40,14 +39,14 @@ public class MovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieNodeDTO getMovie(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails  test) {
+	public MovieNodeDTO getMovie(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getMovie(id)");
-		
+
 		MovieNodeDTO movie = movieRepository.findById(id);
 
 		return movie;
 	}
-	
+
 	@RequestMapping
 	public List<MovieNodeDTO> findMovieByName(String name) {
 		return new ArrayList<>();
@@ -60,9 +59,6 @@ public class MovieController implements MPController {
 		if (newMovie.getId() != null) {
 			return newMovie;
 		}
-
-		newMovie.setId(UUID.randomUUID().toString());
-
 
 		MovieNodeDTO save = movieRepository.save(newMovie);
 
