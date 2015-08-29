@@ -22,20 +22,17 @@ import lombok.ToString;
 @NodeEntity
 public class ProductMovieNodeDTO extends ProductNodeDTO {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	private String p_duration;
+	private String duration;
 
-	private int p_age_restriction;
+	private int ageRestriction;
 
 	@JsonIgnore
 	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
 	private @Fetch Set<MovieNodeDTO> movies;
 
-	public void addMedia(MovieNodeDTO movie) {
+	public void addMovie(MovieNodeDTO movie) {
 		if (movies == null) {
 			movies = new HashSet<MovieNodeDTO>();
 		}

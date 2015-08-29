@@ -15,29 +15,26 @@ import lombok.ToString;
 @NodeEntity
 public abstract class ProductNodeDTO extends NodeDTO {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String title;
 
-	private String p_orginaltitle;
+	private String orginaltitle;
 
-	private Date p_published;
+	private Date published;
 
-	private String p_special;
+	private String special;
 
-	private String p_language;
+	private String language;
 
-	private String p_price;
+	private String price;
 
-	private String p_cover;
+	private String cover;
 
-	private String p_description;
+	private String description;
 
-	private String p_ean;
+	private String ean;
 
-	private String p_format;
+	private String format;
 
 }
