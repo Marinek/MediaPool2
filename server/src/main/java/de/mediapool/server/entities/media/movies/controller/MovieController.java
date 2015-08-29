@@ -56,10 +56,6 @@ public class MovieController implements MPController {
 	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newMovie)");
 
-		if (newMovie.getId() != null) {
-			return newMovie;
-		}
-
 		MovieNodeDTO save = movieRepository.save(newMovie);
 
 		return save;
