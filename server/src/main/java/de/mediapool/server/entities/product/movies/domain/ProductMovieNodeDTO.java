@@ -1,5 +1,6 @@
 package de.mediapool.server.entities.product.movies.domain;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,22 +11,38 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
-import de.mediapool.server.entities.product.domain.ProductNodeDTO;
+import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.entities.media.domain.MediaNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@SuppressWarnings("serial")
 @Getter
 @Setter
 @ToString
 @NodeEntity
-public abstract class ProductMovieNodeDTO extends ProductNodeDTO {
+public class ProductMovieNodeDTO extends NodeDTO {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private String title;
+
+	private String p_orginaltitle;
+
+	private Date p_published;
+
+	private String p_special;
+
+	private String p_language;
+
+	private String p_price;
+
+	private String p_cover;
+
+	private String p_description;
+
+	private String p_ean;
+
+	private String p_format;
 
 	private String p_duration;
 
@@ -33,13 +50,18 @@ public abstract class ProductMovieNodeDTO extends ProductNodeDTO {
 
 	@JsonIgnore
 	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
-	private @Fetch Set<MovieNodeDTO> movies;
+	private @Fetch Set<MediaNodeDTO> media;
 
-	public void addMovie(MovieNodeDTO movie) {
-		if (movies == null) {
-			movies = new HashSet<MovieNodeDTO>();
+	public void addPerson(MediaNodeDTO medium) {
+		if (media == null) {
+			media = new HashSet<MediaNodeDTO>();
 		}
-		movies.add(movie);
+		media.add(medium);
+	}
+
+	@Override
+	public String getType() {
+		return "productmovie";
 	}
 
 }
