@@ -1,7 +1,6 @@
 package de.mediapool.server.entities.media.movies.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -60,9 +59,6 @@ public class MovieController implements MPController {
 		if (newMovie.getId() != null) {
 			return newMovie;
 		}
-
-		newMovie.setId(UUID.randomUUID().toString());
-
 
 		MovieNodeDTO save = movieRepository.save(newMovie);
 
