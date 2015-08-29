@@ -25,7 +25,7 @@ import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
-@RestController	
+@RestController
 @RequestMapping("/rest/movieproduct")
 public class ProductMovieController implements MPController {
 
@@ -33,7 +33,7 @@ public class ProductMovieController implements MPController {
 
 	@Autowired
 	private ProductMovieRepository productMovieRepository;
-	
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
@@ -41,16 +41,16 @@ public class ProductMovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails  test) {
+	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") String id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getProductMovie(id)");
-		
+
 		ProductMovieNodeDTO productMovie = productMovieRepository.findById(id);
 
 		return productMovie;
 	}
-	
+
 	@RequestMapping
-	public List<MovieNodeDTO> findProdcutMovieByName(String name) {
+	public List<MovieNodeDTO> findProdcutMovieByTitle(String title) {
 		return new ArrayList<>();
 	}
 
@@ -63,7 +63,6 @@ public class ProductMovieController implements MPController {
 		}
 
 		newProductMovie.setId(UUID.randomUUID().toString());
-		
 
 		ProductMovieNodeDTO save = productMovieRepository.save(newProductMovie);
 

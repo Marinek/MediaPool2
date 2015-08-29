@@ -8,6 +8,6 @@ public interface ProductMovieRepository extends GraphRepository<ProductMovieNode
 
 	public ProductMovieNodeDTO findById(String id);
 
-	public ProductMovieNodeDTO findByNameAndId(String name, String id);
+	public ProductMovieNodeDTO findByTitle(String title);
 
 }

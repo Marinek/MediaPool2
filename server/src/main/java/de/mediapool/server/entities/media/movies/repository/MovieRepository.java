@@ -6,6 +6,6 @@ import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 
 public interface MovieRepository extends GraphRepository<MovieNodeDTO> {
 
-	public MovieNodeDTO findByName(String name);
+	public MovieNodeDTO findByTitle(String title);
 
 }
