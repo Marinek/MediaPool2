@@ -3,7 +3,6 @@ package de.mediapool.server.entities.media.movies.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -63,7 +62,7 @@ public class MovieController implements MPController {
 		}
 
 		newMovie.setId(UUID.randomUUID().toString());
-		
+
 
 		MovieNodeDTO save = movieRepository.save(newMovie);
 

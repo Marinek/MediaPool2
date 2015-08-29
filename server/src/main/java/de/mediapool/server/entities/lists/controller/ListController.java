@@ -1,7 +1,6 @@
 package de.mediapool.server.entities.lists.controller;
 
 import java.util.Date;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -49,11 +48,6 @@ public class ListController implements MPController {
 	public ListNodeDTO createList(@RequestBody ListNodeDTO newList, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newList, currentUser)");
 		
-		if (newList.getId() != null) {
-			return newList;
-		}
-
-		newList.setId(UUID.randomUUID().toString());
 		newList.setCreated(new Date());
 		newList.setCreatedBy(currentUser);
 		

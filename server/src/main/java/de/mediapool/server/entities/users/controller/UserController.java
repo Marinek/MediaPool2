@@ -1,7 +1,5 @@
 package de.mediapool.server.entities.users.controller;
 
-import java.util.UUID;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -49,7 +47,6 @@ public class UserController implements MPController {
 
 	@RequestMapping(value="register", method=RequestMethod.POST)
 	public UserNodeDTO createUser(@RequestBody UserNodeDTO userNodeDTO) {
-		userNodeDTO.setId(UUID.randomUUID().toString());
 
 		{
 			UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
