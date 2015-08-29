@@ -1,4 +1,4 @@
-package de.mediapool.server.entities.media.domain;
+package de.mediapool.server.entities.product.domain;
 
 import java.util.Date;
 
@@ -16,17 +16,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@SuppressWarnings("serial")
 @Getter
 @Setter
 @ToString
 @RelationshipEntity(type="OWNING")
 public class OwnerRelationship extends RelationShipDTO {
-	
-	private static final long serialVersionUID = 1L;
+
 
 	@EndNode
 	@JsonIgnore
-	private MediaNodeDTO ownes;
+	private ProductNodeDTO ownes;
 	
 	@StartNode
 	@Fetch
