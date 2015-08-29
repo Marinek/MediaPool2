@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RelationshipEntity(type="OWNING")
-public class OwnerShip extends RelationShipDTO {
+public class OwnerRelationship extends RelationShipDTO {
 	
 	private static final long serialVersionUID = 1L;
 
