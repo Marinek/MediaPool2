@@ -81,10 +81,11 @@ public class TestMovieProductController implements MPController {
 	@RequestMapping(value = "/deleteMovieProduct", method = RequestMethod.POST)
 	public void deleteMovieProduct(String title) {
 
-		ProductMovieNodeDTO pmn = productMovieRepository.findByTitle(title);
+		List<ProductMovieNodeDTO> pmnl = productMovieRepository.findByTitle(title);
 
-		if (pmn != null) {
-			productMovieRepository.delete(pmn);
+		if (pmnl != null && pmnl.size() > 0) {
+			for (ProductMovieNodeDTO pmn : pmnl)
+				productMovieRepository.delete(pmn);
 		}
 	}
 
@@ -124,9 +125,11 @@ public class TestMovieProductController implements MPController {
 			newUser.setUsername("Test");
 			newUser.setPassword("Test");
 
+			userRepository.save(newUser);
+
 			ProductMovieNodeDTO newProductMovie = new ProductMovieNodeDTO();
 
-			// newProductMovie.owendBy(newUser);
+			newProductMovie.owendBy(newUser);
 
 			newProductMovie.setTitle("Herr der Ringe Triologie");
 			{
