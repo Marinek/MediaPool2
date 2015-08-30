@@ -6,6 +6,6 @@ import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 
 public interface PersonsRepository extends CrudRepository<PersonNodeDTO, String> {
 
-	public PersonsRepository findByLastName(String name);
+	public PersonNodeDTO findByLastName(String name);
 
 }

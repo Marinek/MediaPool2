@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
+import de.mediapool.server.entities.persons.repository.PersonsRepository;
 import de.mediapool.server.entities.product.movies.domain.ProductMovieNodeDTO;
 import de.mediapool.server.entities.product.movies.repository.ProductMovieRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.repository.UserRepository;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
@@ -32,6 +35,15 @@ public class TestMovieProductController implements MPController {
 
 	@Autowired
 	private ProductMovieRepository productMovieRepository;
+
+	@Autowired
+	private PersonsRepository personsRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private MovieRepository movieRepository;
 
 	@PostConstruct
 	public void init() {
@@ -48,12 +60,61 @@ public class TestMovieProductController implements MPController {
 		return productMovie;
 	}
 
+	@RequestMapping(value = "/deletePerson", method = RequestMethod.POST)
+	public void deletePerson(String lastname) {
+
+		PersonNodeDTO person = personsRepository.findByLastName(lastname);
+
+		personsRepository.delete(person);
+	}
+
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	public void deleteUser() {
+
+		UserNodeDTO user = userRepository.findByUsername("Test");
+
+		if (user != null) {
+			userRepository.delete(user);
+		}
+	}
+
+	@RequestMapping(value = "/deleteMovieProduct", method = RequestMethod.POST)
+	public void deleteMovieProduct(String title) {
+
+		ProductMovieNodeDTO pmn = productMovieRepository.findByTitle(title);
+
+		if (pmn != null) {
+			productMovieRepository.delete(pmn);
+		}
+	}
+
+	@RequestMapping(value = "/deleteMovie", method = RequestMethod.POST)
+	public void deleteMovie(String title) {
+
+		MovieNodeDTO movie = movieRepository.findByTitle(title);
+
+		if (movie != null) {
+			movieRepository.delete(movie);
+		}
+	}
+
+	@RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
+	public void deleteAll() {
+
+		deleteMovieProduct("Herr der Ringe Triologie");
+		deleteMovie("Herr der Ringe - Die Gefährten");
+		deleteMovie("Herr der Ringe - Die 2 Türme");
+		deletePerson("Bloom");
+		deletePerson("Tyler");
+		deleteUser();
+	}
+
 	@RequestMapping
 	public List<MovieNodeDTO> findMovieByTitle(String name) {
 		return new ArrayList<>();
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/createAll", method = RequestMethod.POST)
 	public void createMovie() {
 		logger.debug("Invoking: createTestProductMovie(newTestProductMovie)");
 
@@ -65,7 +126,7 @@ public class TestMovieProductController implements MPController {
 
 			ProductMovieNodeDTO newProductMovie = new ProductMovieNodeDTO();
 
-			newProductMovie.owendBy(newUser);
+			// newProductMovie.owendBy(newUser);
 
 			newProductMovie.setTitle("Herr der Ringe Triologie");
 			{
