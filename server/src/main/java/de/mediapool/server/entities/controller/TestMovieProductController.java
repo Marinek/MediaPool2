@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
+import de.mediapool.server.entities.lists.domain.ListNodeDTO;
+import de.mediapool.server.entities.lists.repository.ListRepository;
 import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
@@ -45,9 +47,17 @@ public class TestMovieProductController implements MPController {
 	@Autowired
 	private MovieRepository movieRepository;
 
+	@Autowired
+	private ListRepository listRepository;
+
 	@PostConstruct
 	public void init() {
 		logger.debug("Invoking: init()");
+	}
+
+	@RequestMapping
+	public List<MovieNodeDTO> findMovieByTitle(String name) {
+		return new ArrayList<>();
 	}
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
@@ -63,9 +73,12 @@ public class TestMovieProductController implements MPController {
 	@RequestMapping(value = "/deletePerson", method = RequestMethod.POST)
 	public void deletePerson(String lastname) {
 
-		PersonNodeDTO person = personsRepository.findByLastName(lastname);
+		List<PersonNodeDTO> personList = personsRepository.findByLastName(lastname);
 
-		personsRepository.delete(person);
+		if (personList != null && personList.size() > 0) {
+			for (PersonNodeDTO person : personList)
+				personsRepository.delete(person);
+		}
 	}
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
@@ -92,10 +105,24 @@ public class TestMovieProductController implements MPController {
 	@RequestMapping(value = "/deleteMovie", method = RequestMethod.POST)
 	public void deleteMovie(String title) {
 
-		MovieNodeDTO movie = movieRepository.findByTitle(title);
+		List<MovieNodeDTO> movieList = movieRepository.findByTitle(title);
 
-		if (movie != null) {
-			movieRepository.delete(movie);
+		if (movieList != null && movieList.size() > 0) {
+			for (MovieNodeDTO movie : movieList) {
+				movieRepository.delete(movie);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
+	public void deleteList(String title) {
+
+		List<ListNodeDTO> listList = listRepository.findByTitle(title);
+
+		if (listList != null && listList.size() > 0) {
+			for (ListNodeDTO list : listList) {
+				listRepository.delete(list);
+			}
 		}
 	}
 
@@ -107,26 +134,27 @@ public class TestMovieProductController implements MPController {
 		deleteMovie("Herr der Ringe - Die 2 Türme");
 		deletePerson("Bloom");
 		deletePerson("Tyler");
+		deleteMovieProduct("Star Wars Triologie");
+		deleteMovie("Das Imperium schlägt zurück");
+		deleteMovie("Krieg der Sterne");
+		deletePerson("Ford");
+		deletePerson("Fisher");
+		deleteList("Wishlist");
 		deleteUser();
-	}
-
-	@RequestMapping
-	public List<MovieNodeDTO> findMovieByTitle(String name) {
-		return new ArrayList<>();
 	}
 
 	@RequestMapping(value = "/createAll", method = RequestMethod.POST)
 	public void createMovie() {
 		logger.debug("Invoking: createTestProductMovie(newTestProductMovie)");
 
+		UserNodeDTO newUser = new UserNodeDTO();
+
+		newUser.setUsername("Test");
+		newUser.setPassword("Test");
+
+		userRepository.save(newUser);
+
 		{
-			UserNodeDTO newUser = new UserNodeDTO();
-
-			newUser.setUsername("Test");
-			newUser.setPassword("Test");
-
-			userRepository.save(newUser);
-
 			ProductMovieNodeDTO newProductMovie = new ProductMovieNodeDTO();
 
 			newProductMovie.owendBy(newUser);
@@ -162,6 +190,58 @@ public class TestMovieProductController implements MPController {
 			}
 
 			productMovieRepository.save(newProductMovie);
+		}
+
+		{
+			ProductMovieNodeDTO newProductMovie = new ProductMovieNodeDTO();
+
+			newProductMovie.setTitle("Star Wars Triologie");
+			{
+				MovieNodeDTO newMovieDTO = new MovieNodeDTO();
+
+				newMovieDTO.setTitle("Krieg der Sterne");
+
+				newProductMovie.addMovie(newMovieDTO);
+
+				PersonNodeDTO newPersonDTO = new PersonNodeDTO();
+
+				newPersonDTO.setLastName("Ford");
+				newPersonDTO.setFirstName("Harrison");
+
+				newMovieDTO.addPerson(newPersonDTO);
+			}
+			{
+				MovieNodeDTO newMovieDTO = new MovieNodeDTO();
+
+				newMovieDTO.setTitle("Das Imperium schlägt zurück");
+
+				newProductMovie.addMovie(newMovieDTO);
+
+				PersonNodeDTO newPersonDTO = new PersonNodeDTO();
+
+				newPersonDTO.setLastName("Fisher");
+				newPersonDTO.setFirstName("Carrie");
+
+				newMovieDTO.addPerson(newPersonDTO);
+			}
+
+			productMovieRepository.save(newProductMovie);
+
+		}
+		{
+
+			List<ProductMovieNodeDTO> pmnl = productMovieRepository.findByTitle("Star Wars Triologie");
+
+			ListNodeDTO list = new ListNodeDTO();
+			list.setTitle("Wishlist");
+			list.setCreatedBy(newUser);
+
+			if (pmnl != null && pmnl.size() > 0) {
+				for (ProductMovieNodeDTO pmn : pmnl)
+					list.addToList(pmn);
+			}
+
+			listRepository.save(list);
 		}
 
 	}

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.lists.domain.ListNodeDTO;
 import de.mediapool.server.entities.lists.repository.ListRepository;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 
@@ -57,16 +57,16 @@ public class ListController implements MPController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public void addToList(@PathVariable("id") Long id, @RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public void addToList(@PathVariable("id") Long id, @RequestBody ProductNodeDTO newProduct, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: addToList(newMovie, currentUser)");
 
-		if (newMovie == null) {
+		if (newProduct == null) {
 			return;
 		}
 
 		ListNodeDTO currentList = listRepository.findOne(id);
 
-		currentList.addToList(newMovie);
+		currentList.addToList(newProduct);
 
 		listRepository.save(currentList);
 	}

@@ -12,7 +12,7 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import de.mediapool.server.core.domain.NodeDTO;
 import de.mediapool.server.entities.domain.Visibility;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,17 +25,17 @@ import lombok.ToString;
 public class ListNodeDTO extends NodeDTO {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String name;
-	
+
+	private String title;
+
 	private Date created;
-	
+
 	private Visibility visibility = Visibility.PRIVATE;
-	
-	@RelatedTo(type="CREATED", direction=Direction.INCOMING)
-    private @Fetch UserNodeDTO createdBy;
-	
-	@RelatedToVia(type="LISTED", direction=Direction.OUTGOING)
+
+	@RelatedTo(type = "CREATED", direction = Direction.INCOMING)
+	private @Fetch UserNodeDTO createdBy;
+
+	@RelatedToVia(type = "LISTED", direction = Direction.OUTGOING)
 	@Fetch
 	private Set<ListedRelationship> listedProducts = new HashSet<>();
 
@@ -43,17 +43,17 @@ public class ListNodeDTO extends NodeDTO {
 	public String getType() {
 		return "list";
 	}
-	
-	public ListedRelationship addToList(MovieNodeDTO movie) {
+
+	public ListedRelationship addToList(ProductNodeDTO product) {
 		ListedRelationship relation = new ListedRelationship();
-		
+
 		relation.setSince(new Date());
-		
+
 		relation.setList(this);
-		relation.setListItem(movie);
-		
+		relation.setListItem(product);
+
 		listedProducts.add(relation);
-		
+
 		return relation;
 	}
 

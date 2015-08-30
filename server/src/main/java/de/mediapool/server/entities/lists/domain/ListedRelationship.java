@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.RelationShipDTO;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,20 +19,20 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@RelationshipEntity(type="LISTED")
+@RelationshipEntity(type = "LISTED")
 public class ListedRelationship extends RelationShipDTO {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@EndNode
 	@JsonIgnore
-	private MovieNodeDTO listItem;
-	
+	private ProductNodeDTO listItem;
+
 	@StartNode
 	@Fetch
 	private ListNodeDTO list;
-	
+
 	@GraphProperty
 	private Date since;
-	
+
 }
