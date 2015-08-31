@@ -87,11 +87,14 @@ public class TestMovieProductController implements MPController {
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public void deleteUser(String username) {
 
-		UserNodeDTO user = userRepository.findByUsername(username);
+		List<UserNodeDTO> userList = userRepository.findAllByUsername(username);
 
-		if (user != null) {
-			userRepository.delete(user);
+		if (userList != null && userList.size() > 0) {
+			for (UserNodeDTO user : userList) {
+				userRepository.delete(user);
+			}
 		}
+
 	}
 
 	@RequestMapping(value = "/deleteMovieProduct", method = RequestMethod.POST)
@@ -153,7 +156,7 @@ public class TestMovieProductController implements MPController {
 	private Date getDateForString(String dateValue) {
 		Date date = null;
 		try {
-			date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
+			date = new SimpleDateFormat("dd.MM.yyyy").parse(dateValue);
 		} catch (ParseException ex) {
 			logger.error("Wrong Dateformat: " + dateValue);
 			date = new Date();
@@ -187,7 +190,7 @@ public class TestMovieProductController implements MPController {
 		newProductMovie1.addMovie(newMovie1);
 
 		PersonNodeDTO newPerson1 = new PersonNodeDTO("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
-		newMovie1.addPerson(newPerson1);
+		// newMovie1.addPerson(newPerson1);
 
 		MovieNodeDTO newMovie2 = new MovieNodeDTO("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "Movie",
 				180, 12);
@@ -195,9 +198,24 @@ public class TestMovieProductController implements MPController {
 		newProductMovie1.addMovie(newMovie2);
 
 		PersonNodeDTO newPerson2 = new PersonNodeDTO("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
-		newMovie2.addPerson(newPerson2);
+		// newMovie2.addPerson(newPerson2);
 
-		productMovieRepository.save(newProductMovie1);
+		// movieRepository.save(newMovie1);
+		// movieRepository.save(newMovie2);
+
+		// logger.info("TESTTEST " + newMovie2.getPersons().toString() + "
+		// TESTTEST");
+
+		// logger.info("TESTTEST " + newMovie1.getPersons().toString() + "
+		// TESTTEST");
+
+		logger.info("TESTTEST " + newProductMovie1.toString() + " TESTTEST");
+
+		logger.info("TESTTEST " + newProductMovie1.getOwendProducts().toString() + " TESTTEST");
+
+		if (productMovieRepository != null) {
+			productMovieRepository.save(newProductMovie1);
+		}
 
 		ProductMovieNodeDTO newProductMovie2 = new ProductMovieNodeDTO("Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blueray", 120, 12);
@@ -208,7 +226,8 @@ public class TestMovieProductController implements MPController {
 
 		PersonNodeDTO newPerson3 = new PersonNodeDTO("Harrison", "Ford", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		newMovie3.addPerson(newPerson3);
+		// newMovie3.addPerson(newPerson3);
+
 		MovieNodeDTO newMovie4 = new MovieNodeDTO("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"Movie", 180, 12);
 
@@ -216,7 +235,7 @@ public class TestMovieProductController implements MPController {
 
 		PersonNodeDTO newPerson4 = new PersonNodeDTO("Carrie", "Fisher", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		newMovie4.addPerson(newPerson4);
+		// newMovie4.addPerson(newPerson4);
 
 		productMovieRepository.save(newProductMovie2);
 

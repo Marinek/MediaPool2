@@ -39,6 +39,23 @@ public class ListNodeDTO extends NodeDTO {
 	@Fetch
 	private Set<ListedRelationship> listedProducts = new HashSet<>();
 
+	public ListNodeDTO(String title, Date created, Visibility visibility, UserNodeDTO createdBy, Set<ListedRelationship> listedProducts) {
+		super();
+		this.title = title;
+		this.created = created;
+		this.visibility = visibility;
+		this.createdBy = createdBy;
+		this.listedProducts = listedProducts;
+	}
+
+	public ListNodeDTO(String title, UserNodeDTO createdBy) {
+		this(title, new Date(), Visibility.PRIVATE, createdBy, new HashSet<>());
+	}
+
+	public ListNodeDTO() {
+		super();
+	}
+
 	@Override
 	public String getType() {
 		return "list";
@@ -60,25 +77,6 @@ public class ListNodeDTO extends NodeDTO {
 	@Override
 	public String toString() {
 		return "ListNodeDTO [title=" + title + "]";
-	}
-
-	public ListNodeDTO(String title, Date created, Visibility visibility, UserNodeDTO createdBy, Set<ListedRelationship> listedProducts) {
-		super();
-		this.title = title;
-		this.created = created;
-		this.visibility = visibility;
-		this.createdBy = createdBy;
-		this.listedProducts = listedProducts;
-	}
-
-	public ListNodeDTO(String title, UserNodeDTO createdBy) {
-		this(title, new Date(), Visibility.PRIVATE, createdBy, null);
-
-	}
-
-	public ListNodeDTO() {
-		super();
-
 	}
 
 }

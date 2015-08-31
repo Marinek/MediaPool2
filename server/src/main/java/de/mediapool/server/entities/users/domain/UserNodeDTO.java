@@ -59,7 +59,7 @@ public class UserNodeDTO extends NodeDTO {
 	}
 
 	public UserNodeDTO(String username, String password) {
-		this(username, password, null, false);
+		this(username, password, new HashSet<>(), false);
 		// this.addRole("User");
 	}
 
