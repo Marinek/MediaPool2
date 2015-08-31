@@ -1,13 +1,12 @@
 package de.mediapool.server.entities.media.domain;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,20 +14,19 @@ import de.mediapool.server.core.domain.NodeDTO;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@SuppressWarnings("serial")
 @Getter
 @Setter
-@ToString
 @NodeEntity
 public abstract class MediaNodeDTO extends NodeDTO {
+
+	private static final long serialVersionUID = 1L;
 
 	private String title;
 
 	private String orginaltitle;
 
-	private Date published;
+	private int publishedYear;
 
 	private String genre;
 
@@ -43,14 +41,48 @@ public abstract class MediaNodeDTO extends NodeDTO {
 	private String contentType;
 
 	@JsonIgnore
-	@RelatedTo(type = "IS_PART", direction = Direction.INCOMING)
-	private @Fetch Set<PersonNodeDTO> persons;
+	@RelatedToVia(type = "IS_PART", direction = Direction.INCOMING)
+	@Fetch
+	private Set<PersonsRelationship> persons = new HashSet<>();
 
-	public void addPerson(PersonNodeDTO person) {
-		if (persons == null) {
-			persons = new HashSet<PersonNodeDTO>();
-		}
-		persons.add(person);
+	public PersonsRelationship addPerson(PersonNodeDTO person, String role) {
+		PersonsRelationship relation = new PersonsRelationship();
+
+		relation.setMedia(this);
+
+		relation.setPerson(person);
+
+		relation.setRole(role);
+
+		persons.add(relation);
+
+		return relation;
+	}
+
+	public PersonsRelationship addPerson(PersonNodeDTO person) {
+		return addPerson(person, person.getMainRole());
+	}
+
+	@Override
+	public String toString() {
+		return "MediaNodeDTO [title=" + title + "]";
+	}
+
+	public MediaNodeDTO(String title, String orginaltitle, String genre, String language, String award, String cover, String description, String contentType, int publishedYear) {
+		super();
+		this.title = title;
+		this.orginaltitle = orginaltitle;
+		this.publishedYear = publishedYear;
+		this.genre = genre;
+		this.language = language;
+		this.award = award;
+		this.cover = cover;
+		this.description = description;
+		this.contentType = contentType;
+	}
+
+	public MediaNodeDTO() {
+		super();
 	}
 
 }

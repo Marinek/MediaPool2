@@ -16,10 +16,10 @@ public class UserRoleNodeDTO extends NodeDTO {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-	
+
 	@Override
 	public String getType() {
-		return "roles";
+		return "ROLES";
 	}
 
 }

@@ -24,7 +24,7 @@ public class ProductMovieNodeDTO extends ProductNodeDTO {
 
 	private static final long serialVersionUID = 1L;
 
-	private String duration;
+	private int duration;
 
 	private int ageRestriction;
 
@@ -41,7 +41,20 @@ public class ProductMovieNodeDTO extends ProductNodeDTO {
 
 	@Override
 	public String getType() {
-		return "productmovie";
+		return "PRODUCTMOVIE";
+	}
+
+	public ProductMovieNodeDTO(String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean, String format,
+			int duration, int ageRestriction) {
+		super(title, orginaltitle, publishedYear, special, language, price, cover, description, ean, format);
+		this.duration = duration;
+		this.ageRestriction = ageRestriction;
+
+	}
+
+	public ProductMovieNodeDTO() {
+		super();
+
 	}
 
 }

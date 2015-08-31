@@ -1,6 +1,9 @@
 package de.mediapool.server.entities.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -82,9 +85,9 @@ public class TestMovieProductController implements MPController {
 	}
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public void deleteUser() {
+	public void deleteUser(String username) {
 
-		UserNodeDTO user = userRepository.findByUsername("Test");
+		UserNodeDTO user = userRepository.findByUsername(username);
 
 		if (user != null) {
 			userRepository.delete(user);
@@ -140,106 +143,90 @@ public class TestMovieProductController implements MPController {
 		deletePerson("Ford");
 		deletePerson("Fisher");
 		deleteList("Wishlist");
-		deleteUser();
+		deleteUser("Test1");
+		deleteUser("Test2");
+		deleteUser("Test3");
+		deleteUser("Test4");
+		deleteUser("Test5");
+	}
+
+	private Date getDateForString(String dateValue) {
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("dd-MM-yyyy").parse(dateValue);
+		} catch (ParseException ex) {
+			logger.error("Wrong Dateformat: " + dateValue);
+			date = new Date();
+		}
+		return date;
 	}
 
 	@RequestMapping(value = "/createAll", method = RequestMethod.POST)
-	public void createMovie() {
-		logger.debug("Invoking: createTestProductMovie(newTestProductMovie)");
+	public void createAll() {
+		logger.debug("Invoking: createAllStuff");
 
-		UserNodeDTO newUser = new UserNodeDTO();
+		UserNodeDTO newUser1 = new UserNodeDTO("Test1", "Test1");
+		userRepository.save(newUser1);
+		UserNodeDTO newUser2 = new UserNodeDTO("Test2", "Test2");
+		userRepository.save(newUser2);
+		UserNodeDTO newUser3 = new UserNodeDTO("Test3", "Test3");
+		userRepository.save(newUser3);
+		UserNodeDTO newUser4 = new UserNodeDTO("Test4", "Test4");
+		userRepository.save(newUser4);
+		UserNodeDTO newUser5 = new UserNodeDTO("Test5", "Test5");
+		userRepository.save(newUser5);
 
-		newUser.setUsername("Test");
-		newUser.setPassword("Test");
+		ProductMovieNodeDTO newProductMovie1 = new ProductMovieNodeDTO("Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
+				"000-000", "Blueray", 120, 12);
 
-		userRepository.save(newUser);
+		newProductMovie1.owendBy(newUser1);
 
-		{
-			ProductMovieNodeDTO newProductMovie = new ProductMovieNodeDTO();
+		MovieNodeDTO newMovie1 = new MovieNodeDTO("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
+				"Movie", 180, 12);
 
-			newProductMovie.owendBy(newUser);
+		newProductMovie1.addMovie(newMovie1);
 
-			newProductMovie.setTitle("Herr der Ringe Triologie");
-			{
-				MovieNodeDTO newMovieDTO = new MovieNodeDTO();
+		PersonNodeDTO newPerson1 = new PersonNodeDTO("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
+		newMovie1.addPerson(newPerson1);
 
-				newMovieDTO.setTitle("Herr der Ringe - Die Gefährten");
+		MovieNodeDTO newMovie2 = new MovieNodeDTO("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "Movie",
+				180, 12);
 
-				newProductMovie.addMovie(newMovieDTO);
+		newProductMovie1.addMovie(newMovie2);
 
-				PersonNodeDTO newPersonDTO = new PersonNodeDTO();
+		PersonNodeDTO newPerson2 = new PersonNodeDTO("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
+		newMovie2.addPerson(newPerson2);
 
-				newPersonDTO.setLastName("Bloom");
-				newPersonDTO.setFirstName("Orlando");
+		productMovieRepository.save(newProductMovie1);
 
-				newMovieDTO.addPerson(newPersonDTO);
-			}
-			{
-				MovieNodeDTO newMovieDTO = new MovieNodeDTO();
+		ProductMovieNodeDTO newProductMovie2 = new ProductMovieNodeDTO("Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+				"Blueray", 120, 12);
 
-				newMovieDTO.setTitle("Herr der Ringe - Die 2 Türme");
+		MovieNodeDTO newMovie3 = new MovieNodeDTO("Krieg der Sterne", "Krieg der Sterne", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "Movie", 180, 12);
 
-				newProductMovie.addMovie(newMovieDTO);
+		newProductMovie2.addMovie(newMovie3);
 
-				PersonNodeDTO newPersonDTO = new PersonNodeDTO();
+		PersonNodeDTO newPerson3 = new PersonNodeDTO("Harrison", "Ford", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-				newPersonDTO.setLastName("Tyler");
-				newPersonDTO.setFirstName("Liv");
+		newMovie3.addPerson(newPerson3);
+		MovieNodeDTO newMovie4 = new MovieNodeDTO("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
+				"Movie", 180, 12);
 
-				newMovieDTO.addPerson(newPersonDTO);
-			}
+		newProductMovie2.addMovie(newMovie4);
 
-			productMovieRepository.save(newProductMovie);
-		}
+		PersonNodeDTO newPerson4 = new PersonNodeDTO("Carrie", "Fisher", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		{
-			ProductMovieNodeDTO newProductMovie = new ProductMovieNodeDTO();
+		newMovie4.addPerson(newPerson4);
 
-			newProductMovie.setTitle("Star Wars Triologie");
-			{
-				MovieNodeDTO newMovieDTO = new MovieNodeDTO();
+		productMovieRepository.save(newProductMovie2);
 
-				newMovieDTO.setTitle("Krieg der Sterne");
+		List<ProductMovieNodeDTO> pmnl = productMovieRepository.findByTitle("Star Wars Triologie");
 
-				newProductMovie.addMovie(newMovieDTO);
+		ListNodeDTO list = new ListNodeDTO("Wishlist", newUser1);
 
-				PersonNodeDTO newPersonDTO = new PersonNodeDTO();
-
-				newPersonDTO.setLastName("Ford");
-				newPersonDTO.setFirstName("Harrison");
-
-				newMovieDTO.addPerson(newPersonDTO);
-			}
-			{
-				MovieNodeDTO newMovieDTO = new MovieNodeDTO();
-
-				newMovieDTO.setTitle("Das Imperium schlägt zurück");
-
-				newProductMovie.addMovie(newMovieDTO);
-
-				PersonNodeDTO newPersonDTO = new PersonNodeDTO();
-
-				newPersonDTO.setLastName("Fisher");
-				newPersonDTO.setFirstName("Carrie");
-
-				newMovieDTO.addPerson(newPersonDTO);
-			}
-
-			productMovieRepository.save(newProductMovie);
-
-		}
-		{
-
-			List<ProductMovieNodeDTO> pmnl = productMovieRepository.findByTitle("Star Wars Triologie");
-
-			ListNodeDTO list = new ListNodeDTO();
-			list.setTitle("Wishlist");
-			list.setCreatedBy(newUser);
-
-			if (pmnl != null && pmnl.size() > 0) {
-				for (ProductMovieNodeDTO pmn : pmnl)
-					list.addToList(pmn);
-			}
+		if (pmnl != null && pmnl.size() > 0) {
+			for (ProductMovieNodeDTO pmn : pmnl)
+				list.addToList(pmn);
 
 			listRepository.save(list);
 		}

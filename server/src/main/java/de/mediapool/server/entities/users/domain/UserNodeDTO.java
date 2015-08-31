@@ -24,18 +24,47 @@ public class UserNodeDTO extends NodeDTO {
 	private static final long serialVersionUID = 1L;
 
 	private String username;
-	
+
 	@JsonIgnore
 	private String password;
-	
+
 	@RelatedTo(type = "HAS_ROLE", direction = Direction.OUTGOING)
 	private @Fetch Set<UserRoleNodeDTO> roles = new HashSet<>();
-	
+
 	private Boolean isLocked = false;
-	
+
 	@Override
 	public String getType() {
-		return "user";
+		return "USER";
+	}
+
+	public void addRole(String role) {
+		UserRoleNodeDTO userRole = new UserRoleNodeDTO();
+		userRole.setName(role);
+		roles.add(userRole);
+
+	}
+
+	@Override
+	public String toString() {
+		return "UserNodeDTO [username=" + username + "]";
+	}
+
+	public UserNodeDTO(String username, String password, Set<UserRoleNodeDTO> roles, Boolean isLocked) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+		this.isLocked = isLocked;
+	}
+
+	public UserNodeDTO(String username, String password) {
+		this(username, password, null, false);
+		// this.addRole("User");
+	}
+
+	public UserNodeDTO() {
+		super();
 	}
 
 }

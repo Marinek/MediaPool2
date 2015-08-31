@@ -13,11 +13,9 @@ import de.mediapool.server.core.domain.NodeDTO;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NodeEntity
 public abstract class ProductNodeDTO extends NodeDTO {
 
@@ -27,13 +25,13 @@ public abstract class ProductNodeDTO extends NodeDTO {
 
 	private String orginaltitle;
 
-	private Date published;
+	private int publishedYear;
 
 	private String special;
 
 	private String language;
 
-	private String price;
+	private double price;
 
 	private String cover;
 
@@ -64,6 +62,29 @@ public abstract class ProductNodeDTO extends NodeDTO {
 		owendProducts.add(relation);
 
 		return relation;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductNodeDTO [title=" + title + "]";
+	}
+
+	public ProductNodeDTO(String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean, String format) {
+		super();
+		this.title = title;
+		this.orginaltitle = orginaltitle;
+		this.publishedYear = publishedYear;
+		this.special = special;
+		this.language = language;
+		this.price = price;
+		this.cover = cover;
+		this.description = description;
+		this.ean = ean;
+		this.format = format;
+	}
+
+	public ProductNodeDTO() {
+		super();
 	}
 
 }

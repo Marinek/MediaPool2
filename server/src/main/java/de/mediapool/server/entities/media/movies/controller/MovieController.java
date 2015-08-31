@@ -1,6 +1,5 @@
 package de.mediapool.server.entities.media.movies.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +19,6 @@ import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
-import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController
@@ -39,7 +37,7 @@ public class MovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieNodeDTO getMovie(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
+	public MovieNodeDTO getMovie(@PathVariable("id") Long id) {
 		logger.debug("Invoking: getMovie(id)");
 
 		MovieNodeDTO movie = movieRepository.findOne(id);
@@ -48,8 +46,14 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findMovieByTitle(String name) {
-		return new ArrayList<>();
+	public List<MovieNodeDTO> findMovieByTitle(String title) {
+		List<MovieNodeDTO> movieList = movieRepository.findByTitle(title);
+		return movieList;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public void deleteMovie(@PathVariable("id") Long id) {
+		movieRepository.delete(id);
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
