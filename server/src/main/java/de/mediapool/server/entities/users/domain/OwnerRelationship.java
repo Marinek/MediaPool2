@@ -8,6 +8,8 @@ import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import de.mediapool.server.core.domain.RelationShipDTO;
 import de.mediapool.server.entities.domain.Visibility;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
@@ -28,6 +30,7 @@ public class OwnerRelationship extends RelationShipDTO {
 	private ProductNodeDTO ownes;
 
 	@StartNode
+	@JsonIgnore
 	private UserNodeDTO user;
 
 	@GraphProperty

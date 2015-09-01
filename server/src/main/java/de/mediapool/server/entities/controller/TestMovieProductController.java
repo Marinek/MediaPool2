@@ -188,7 +188,7 @@ public class TestMovieProductController implements MPController {
 		newProductMovie1.addMovie(newMovie1);
 
 		PersonNodeDTO newPerson1 = new PersonNodeDTO("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
-		// newMovie1.addPerson(newPerson1);
+		newMovie1.addPerson(newPerson1);
 
 		MovieMediaNodeDTO newMovie2 = new MovieMediaNodeDTO("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"Movie", 180, 12);
@@ -196,10 +196,10 @@ public class TestMovieProductController implements MPController {
 		newProductMovie1.addMovie(newMovie2);
 
 		PersonNodeDTO newPerson2 = new PersonNodeDTO("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
-		// newMovie2.addPerson(newPerson2);
+		newMovie2.addPerson(newPerson2);
 
-		// movieRepository.save(newMovie1);
-		// movieRepository.save(newMovie2);
+		personsRepository.save(newPerson1);
+		personsRepository.save(newPerson2);
 
 		// logger.info("TESTTEST " + newMovie2.getPersons().toString() + "
 		// TESTTEST");
@@ -228,7 +228,7 @@ public class TestMovieProductController implements MPController {
 
 		PersonNodeDTO newPerson3 = new PersonNodeDTO("Harrison", "Ford", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		// newMovie3.addPerson(newPerson3);
+		newMovie3.addPerson(newPerson3);
 
 		MovieMediaNodeDTO newMovie4 = new MovieMediaNodeDTO("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg",
 				"Trying to defeat Sauron", "Movie", 180, 12);
@@ -237,7 +237,10 @@ public class TestMovieProductController implements MPController {
 
 		PersonNodeDTO newPerson4 = new PersonNodeDTO("Carrie", "Fisher", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		// newMovie4.addPerson(newPerson4);
+		newMovie4.addPerson(newPerson4);
+
+		personsRepository.save(newPerson3);
+		personsRepository.save(newPerson4);
 
 		productMovieRepository.save(newProductMovie2);
 

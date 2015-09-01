@@ -28,6 +28,8 @@ public class MovieProductNodeDTO extends ProductNodeDTO {
 
 	private int ageRestriction;
 
+	private int numberOfDiscs;
+
 	@JsonIgnore
 	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
 	private @Fetch Set<MovieMediaNodeDTO> movies;
