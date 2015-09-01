@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
-import de.mediapool.server.entities.product.movies.domain.ProductMovieNodeDTO;
-import de.mediapool.server.entities.product.movies.repository.ProductMovieRepository;
+import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
+import de.mediapool.server.entities.product.movies.domain.MovieProductNodeDTO;
+import de.mediapool.server.entities.product.movies.repository.MovieProductRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController
 @RequestMapping("/rest/movieproduct")
-public class ProductMovieController implements MPController {
+public class MovieProductController implements MPController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ProductMovieController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MovieProductController.class);
 
 	@Autowired
-	private ProductMovieRepository productMovieRepository;
+	private MovieProductRepository productMovieRepository;
 
 	@PostConstruct
 	public void init() {
@@ -40,24 +40,24 @@ public class ProductMovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ProductMovieNodeDTO getMovieProduct(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
+	public MovieProductNodeDTO getMovieProduct(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getProductMovie(id)");
 
-		ProductMovieNodeDTO productMovie = productMovieRepository.findOne(id);
+		MovieProductNodeDTO productMovie = productMovieRepository.findOne(id);
 
 		return productMovie;
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findProdcutMovieByTitle(String title) {
+	public List<MovieMediaNodeDTO> findProdcutMovieByTitle(String title) {
 		return new ArrayList<>();
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ProductMovieNodeDTO createMovie(@RequestBody ProductMovieNodeDTO newProductMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public MovieProductNodeDTO createMovie(@RequestBody MovieProductNodeDTO newProductMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createProductMovie(newProductMovie)");
 
-		ProductMovieNodeDTO save = productMovieRepository.save(newProductMovie);
+		MovieProductNodeDTO save = productMovieRepository.save(newProductMovie);
 
 		return save;
 	}

@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NodeEntity
-public class ProductMovieNodeDTO extends ProductNodeDTO {
+public class MovieProductNodeDTO extends ProductNodeDTO {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,11 +30,11 @@ public class ProductMovieNodeDTO extends ProductNodeDTO {
 
 	@JsonIgnore
 	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
-	private @Fetch Set<MovieNodeDTO> movies;
+	private @Fetch Set<MovieMediaNodeDTO> movies;
 
-	public void addMovie(MovieNodeDTO movie) {
+	public void addMovie(MovieMediaNodeDTO movie) {
 		if (movies == null) {
-			movies = new HashSet<MovieNodeDTO>();
+			movies = new HashSet<MovieMediaNodeDTO>();
 		}
 		movies.add(movie);
 	}
@@ -44,7 +44,7 @@ public class ProductMovieNodeDTO extends ProductNodeDTO {
 		return "PRODUCTMOVIE";
 	}
 
-	public ProductMovieNodeDTO(String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean, String format,
+	public MovieProductNodeDTO(String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean, String format,
 			int duration, int ageRestriction) {
 		super(title, orginaltitle, publishedYear, special, language, price, cover, description, ean, format);
 		this.duration = duration;
@@ -52,7 +52,7 @@ public class ProductMovieNodeDTO extends ProductNodeDTO {
 
 	}
 
-	public ProductMovieNodeDTO() {
+	public MovieProductNodeDTO() {
 		super();
 
 	}

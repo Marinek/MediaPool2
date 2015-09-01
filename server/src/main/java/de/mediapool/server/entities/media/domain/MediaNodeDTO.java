@@ -8,8 +8,6 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.mediapool.server.core.domain.NodeDTO;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 import lombok.Getter;
@@ -40,7 +38,6 @@ public abstract class MediaNodeDTO extends NodeDTO {
 
 	private String contentType;
 
-	@JsonIgnore
 	@RelatedToVia(type = "IS_PART", direction = Direction.OUTGOING)
 	@Fetch
 	private Set<PersonsRelationship> persons = new HashSet<>();

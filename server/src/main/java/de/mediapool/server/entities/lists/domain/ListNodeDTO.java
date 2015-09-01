@@ -62,6 +62,10 @@ public class ListNodeDTO extends NodeDTO {
 	}
 
 	public ListedRelationship addToList(ProductNodeDTO product) {
+		if (listedProducts == null) {
+			listedProducts = new HashSet<>();
+		}
+
 		ListedRelationship relation = new ListedRelationship();
 
 		relation.setSince(new Date());

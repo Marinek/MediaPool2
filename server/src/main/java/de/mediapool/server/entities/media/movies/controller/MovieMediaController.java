@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
-import de.mediapool.server.entities.media.movies.repository.MovieRepository;
+import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
+import de.mediapool.server.entities.media.movies.repository.MovieMediaRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController
 @RequestMapping("/rest/movie")
-public class MovieController implements MPController {
+public class MovieMediaController implements MPController {
 
-	private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MovieMediaController.class);
 
 	@Autowired
-	private MovieRepository movieRepository;
+	private MovieMediaRepository movieRepository;
 
 	@PostConstruct
 	public void init() {
@@ -37,17 +37,17 @@ public class MovieController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieNodeDTO getMovie(@PathVariable("id") Long id) {
+	public MovieMediaNodeDTO getMovie(@PathVariable("id") Long id) {
 		logger.debug("Invoking: getMovie(id)");
 
-		MovieNodeDTO movie = movieRepository.findOne(id);
+		MovieMediaNodeDTO movie = movieRepository.findOne(id);
 
 		return movie;
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findMovieByTitle(String title) {
-		List<MovieNodeDTO> movieList = movieRepository.findByTitle(title);
+	public List<MovieMediaNodeDTO> findMovieByTitle(String title) {
+		List<MovieMediaNodeDTO> movieList = movieRepository.findByTitle(title);
 		return movieList;
 	}
 
@@ -57,10 +57,10 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public MovieMediaNodeDTO createMovie(@RequestBody MovieMediaNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newMovie)");
 
-		MovieNodeDTO save = movieRepository.save(newMovie);
+		MovieMediaNodeDTO save = movieRepository.save(newMovie);
 
 		return save;
 	}
