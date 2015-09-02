@@ -1,15 +1,24 @@
 package de.mediapool.server.entities.product.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @NodeEntity
-public abstract class ProductNodeDTO extends NodeDTO {
+public class ProductNodeDTO extends NodeDTO {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,8 +42,22 @@ public abstract class ProductNodeDTO extends NodeDTO {
 
 	private String format;
 
-	public ProductNodeDTO(String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean, String format) {
+	private int duration;
+
+	private int ageRestriction;
+
+	private int numberOfDiscs;
+
+	private MediaType mediaType;
+
+	@JsonIgnore
+	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
+	private @Fetch Set<MovieMediaNodeDTO> movies;
+
+	public ProductNodeDTO(MediaType mediaType, String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean,
+			String format) {
 		super();
+		this.mediaType = mediaType;
 		this.title = title;
 		this.orginaltitle = orginaltitle;
 		this.publishedYear = publishedYear;
@@ -49,6 +72,17 @@ public abstract class ProductNodeDTO extends NodeDTO {
 
 	public ProductNodeDTO() {
 		super();
+	}
+
+	public boolean addMovie(MovieMediaNodeDTO movie) {
+		if (MediaType.MOVIE == this.mediaType) {
+			if (movies == null) {
+				movies = new HashSet<MovieMediaNodeDTO>();
+			}
+			movies.add(movie);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
