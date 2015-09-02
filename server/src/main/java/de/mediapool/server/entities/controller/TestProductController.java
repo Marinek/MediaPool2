@@ -169,6 +169,8 @@ public class TestProductController implements MPController {
 	public void createAll() {
 		logger.debug("Invoking: createAllStuff");
 
+		UserNodeDTO newUser1 = new UserNodeDTO("Test1", "Test1");
+		userRepository.save(newUser1);
 		UserNodeDTO newUser2 = new UserNodeDTO("Test2", "Test2");
 		userRepository.save(newUser2);
 		UserNodeDTO newUser3 = new UserNodeDTO("Test3", "Test3");
@@ -178,7 +180,17 @@ public class TestProductController implements MPController {
 		UserNodeDTO newUser5 = new UserNodeDTO("Test5", "Test5");
 		userRepository.save(newUser5);
 
-		UserNodeDTO newUser1 = new UserNodeDTO("Test1", "Test1");
+		newUser1.follows(newUser2);
+		newUser2.follows(newUser3);
+		newUser3.follows(newUser4);
+		newUser4.follows(newUser5);
+		newUser5.follows(newUser1);
+
+		userRepository.save(newUser1);
+		userRepository.save(newUser2);
+		userRepository.save(newUser3);
+		userRepository.save(newUser4);
+		userRepository.save(newUser5);
 
 		ProductNodeDTO newProductMovie1 = new ProductNodeDTO(MediaType.MOVIE, "Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg",
 				"All Movies together", "000-000", "Blueray");
