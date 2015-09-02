@@ -59,11 +59,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http) throws Exception {
 		logger.debug("Invoking: configure(http)");
 		//		http.authorizeRequests().antMatchers("/rest/**").authenticated();
-		http.csrf().disable();
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 		http.formLogin().successHandler(authenticationSuccessHandler);
 		http.formLogin().failureHandler(authenticationFailureHandler);
 		http.logout().logoutUrl("/logout");
+//		http.csrf().disable();
 	}
 
 	@PostConstruct
