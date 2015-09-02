@@ -25,21 +25,22 @@ import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
 import de.mediapool.server.entities.media.movies.repository.MovieMediaRepository;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 import de.mediapool.server.entities.persons.repository.PersonsRepository;
-import de.mediapool.server.entities.product.movies.domain.MovieProductNodeDTO;
-import de.mediapool.server.entities.product.movies.repository.MovieProductRepository;
+import de.mediapool.server.entities.product.domain.MediaType;
+import de.mediapool.server.entities.product.domain.ProductNodeDTO;
+import de.mediapool.server.entities.product.repository.ProductRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
 import de.mediapool.server.entities.users.repository.UserRepository;
 import de.mediapool.server.security.domain.MPUserDetails;
 import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController
-@RequestMapping("/rest/testmovieproduct")
-public class TestMovieProductController implements MPController {
+@RequestMapping("/rest/testProduct")
+public class TestProductController implements MPController {
 
-	private static final Logger logger = LoggerFactory.getLogger(TestMovieProductController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestProductController.class);
 
 	@Autowired
-	private MovieProductRepository productMovieRepository;
+	private ProductRepository productMovieRepository;
 
 	@Autowired
 	private PersonsRepository personsRepository;
@@ -65,10 +66,10 @@ public class TestMovieProductController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieProductNodeDTO getProductMovie(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
+	public ProductNodeDTO getProductMovie(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getMovie(id)");
 
-		MovieProductNodeDTO productMovie = productMovieRepository.findOne(id);
+		ProductNodeDTO productMovie = productMovieRepository.findOne(id);
 
 		return productMovie;
 	}
@@ -97,13 +98,13 @@ public class TestMovieProductController implements MPController {
 
 	}
 
-	@RequestMapping(value = "/deleteMovieProduct", method = RequestMethod.POST)
-	public void deleteMovieProduct(String title) {
+	@RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
+	public void deleteProduct(String title) {
 
-		List<MovieProductNodeDTO> pmnl = productMovieRepository.findByTitle(title);
+		List<ProductNodeDTO> pmnl = productMovieRepository.findByTitle(title);
 
 		if (pmnl != null && pmnl.size() > 0) {
-			for (MovieProductNodeDTO pmn : pmnl)
+			for (ProductNodeDTO pmn : pmnl)
 				productMovieRepository.delete(pmn);
 		}
 	}
@@ -135,12 +136,12 @@ public class TestMovieProductController implements MPController {
 	@RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
 	public void deleteAll() {
 
-		deleteMovieProduct("Herr der Ringe Triologie");
+		deleteProduct("Herr der Ringe Triologie");
 		deleteMovie("Herr der Ringe - Die Gefährten");
 		deleteMovie("Herr der Ringe - Die 2 Türme");
 		deletePerson("Bloom");
 		deletePerson("Tyler");
-		deleteMovieProduct("Star Wars Triologie");
+		deleteProduct("Star Wars Triologie");
 		deleteMovie("Das Imperium schlägt zurück");
 		deleteMovie("Krieg der Sterne");
 		deletePerson("Ford");
@@ -168,6 +169,8 @@ public class TestMovieProductController implements MPController {
 	public void createAll() {
 		logger.debug("Invoking: createAllStuff");
 
+		UserNodeDTO newUser1 = new UserNodeDTO("Test1", "Test1");
+		userRepository.save(newUser1);
 		UserNodeDTO newUser2 = new UserNodeDTO("Test2", "Test2");
 		userRepository.save(newUser2);
 		UserNodeDTO newUser3 = new UserNodeDTO("Test3", "Test3");
@@ -177,10 +180,20 @@ public class TestMovieProductController implements MPController {
 		UserNodeDTO newUser5 = new UserNodeDTO("Test5", "Test5");
 		userRepository.save(newUser5);
 
-		UserNodeDTO newUser1 = new UserNodeDTO("Test1", "Test1");
+		newUser1.follows(newUser2);
+		newUser2.follows(newUser3);
+		newUser3.follows(newUser4);
+		newUser4.follows(newUser5);
+		newUser5.follows(newUser1);
 
-		MovieProductNodeDTO newProductMovie1 = new MovieProductNodeDTO("Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
-				"000-000", "Blueray", 120, 12);
+		userRepository.save(newUser1);
+		userRepository.save(newUser2);
+		userRepository.save(newUser3);
+		userRepository.save(newUser4);
+		userRepository.save(newUser5);
+
+		ProductNodeDTO newProductMovie1 = new ProductNodeDTO(MediaType.MOVIE, "Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg",
+				"All Movies together", "000-000", "Blueray");
 
 		MovieMediaNodeDTO newMovie1 = new MovieMediaNodeDTO("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg",
 				"Trying to defeat Sauron", "Movie", 180, 12);
@@ -188,7 +201,7 @@ public class TestMovieProductController implements MPController {
 		newProductMovie1.addMovie(newMovie1);
 
 		PersonNodeDTO newPerson1 = new PersonNodeDTO("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
-		// newMovie1.addPerson(newPerson1);
+		newMovie1.addPerson(newPerson1);
 
 		MovieMediaNodeDTO newMovie2 = new MovieMediaNodeDTO("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"Movie", 180, 12);
@@ -196,10 +209,10 @@ public class TestMovieProductController implements MPController {
 		newProductMovie1.addMovie(newMovie2);
 
 		PersonNodeDTO newPerson2 = new PersonNodeDTO("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
-		// newMovie2.addPerson(newPerson2);
+		newMovie2.addPerson(newPerson2);
 
-		// movieRepository.save(newMovie1);
-		// movieRepository.save(newMovie2);
+		personsRepository.save(newPerson1);
+		personsRepository.save(newPerson2);
 
 		// logger.info("TESTTEST " + newMovie2.getPersons().toString() + "
 		// TESTTEST");
@@ -218,8 +231,8 @@ public class TestMovieProductController implements MPController {
 
 		userRepository.save(newUser1);
 
-		MovieProductNodeDTO newProductMovie2 = new MovieProductNodeDTO("Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
-				"Blueray", 120, 12);
+		ProductNodeDTO newProductMovie2 = new ProductNodeDTO(MediaType.MOVIE, "Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
+				"000-000", "Blueray");
 
 		MovieMediaNodeDTO newMovie3 = new MovieMediaNodeDTO("Krieg der Sterne", "Krieg der Sterne", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "Movie", 180,
 				12);
@@ -228,7 +241,7 @@ public class TestMovieProductController implements MPController {
 
 		PersonNodeDTO newPerson3 = new PersonNodeDTO("Harrison", "Ford", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		// newMovie3.addPerson(newPerson3);
+		newMovie3.addPerson(newPerson3);
 
 		MovieMediaNodeDTO newMovie4 = new MovieMediaNodeDTO("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg",
 				"Trying to defeat Sauron", "Movie", 180, 12);
@@ -237,18 +250,21 @@ public class TestMovieProductController implements MPController {
 
 		PersonNodeDTO newPerson4 = new PersonNodeDTO("Carrie", "Fisher", getDateForString("20.04.1982"), "USA", "w", "Actor", false, "image.jpg");
 
-		// newMovie4.addPerson(newPerson4);
+		newMovie4.addPerson(newPerson4);
+
+		personsRepository.save(newPerson3);
+		personsRepository.save(newPerson4);
 
 		productMovieRepository.save(newProductMovie2);
 
-		List<MovieProductNodeDTO> pmnl = productMovieRepository.findByTitle("Star Wars Triologie");
+		List<ProductNodeDTO> pmnl = productMovieRepository.findByTitle("Star Wars Triologie");
 
 		ListNodeDTO list = new ListNodeDTO("Wishlist", newUser1);
 
 		if (pmnl != null && pmnl.size() > 0) {
-			for (MovieProductNodeDTO pmn : pmnl)
+			for (ProductNodeDTO pmn : pmnl) {
 				list.addToList(pmn);
-
+			}
 			listRepository.save(list);
 		}
 

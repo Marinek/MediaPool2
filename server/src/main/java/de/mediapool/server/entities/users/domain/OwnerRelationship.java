@@ -4,9 +4,10 @@ import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.EndNode;
 import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.RelationShipDTO;
 import de.mediapool.server.entities.domain.Visibility;
@@ -28,30 +29,23 @@ public class OwnerRelationship extends RelationShipDTO {
 	private ProductNodeDTO ownes;
 
 	@StartNode
+	@JsonIgnore
 	private UserNodeDTO user;
 
-	@GraphProperty
 	private Date since;
 
-	@GraphProperty
 	private boolean known;
 
-	@GraphProperty
 	private int rating;
 
-	@GraphProperty
 	private Visibility visible;
 
-	@GraphProperty
 	private Date lastUsed;
 
-	@GraphProperty
 	private String condition;
 
-	@GraphProperty
 	private String storageLocation;
 
-	@GraphProperty
 	private int storageNumber;
 
 }

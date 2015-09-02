@@ -38,7 +38,7 @@ public abstract class MediaNodeDTO extends NodeDTO {
 
 	private String contentType;
 
-	@RelatedToVia(type = "IS_PART", direction = Direction.OUTGOING)
+	@RelatedToVia(type = "IS_PART", direction = Direction.INCOMING)
 	@Fetch
 	private Set<PersonsRelationship> persons = new HashSet<>();
 

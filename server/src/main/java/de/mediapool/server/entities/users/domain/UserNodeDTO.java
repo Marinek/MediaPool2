@@ -40,6 +40,10 @@ public class UserNodeDTO extends NodeDTO {
 	@Fetch
 	private Set<OwnerRelationship> owendProducts = new HashSet<>();
 
+	@RelatedToVia(type = "FOLLOW", direction = Direction.OUTGOING)
+	@Fetch
+	private Set<FollowRelationship> followedUser = new HashSet<>();
+
 	public UserNodeDTO(String username, String password) {
 		this(username, password, new HashSet<>(), false);
 		// this.addRole("User");
@@ -49,9 +53,12 @@ public class UserNodeDTO extends NodeDTO {
 		super();
 	}
 
-	@Override
-	public String getType() {
-		return "USER";
+	public UserNodeDTO(String username, String password, Set<UserRoleNodeDTO> roles, Boolean isLocked) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+		this.isLocked = isLocked;
 	}
 
 	public void addRole(String role) {
@@ -59,19 +66,6 @@ public class UserNodeDTO extends NodeDTO {
 		userRole.setName(role);
 		roles.add(userRole);
 
-	}
-
-	@Override
-	public String toString() {
-		return "UserNodeDTO [username=" + username + "]";
-	}
-
-	public UserNodeDTO(String username, String password, Set<UserRoleNodeDTO> roles, Boolean isLocked) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-		this.isLocked = isLocked;
 	}
 
 	public OwnerRelationship owens(ProductNodeDTO product) {
@@ -86,6 +80,30 @@ public class UserNodeDTO extends NodeDTO {
 		owendProducts.add(relation);
 
 		return relation;
+	}
+
+	public FollowRelationship follows(UserNodeDTO user) {
+		FollowRelationship relation = new FollowRelationship();
+
+		relation.setSince(new Date());
+
+		relation.setOwnes(user);
+
+		relation.setUser(this);
+
+		followedUser.add(relation);
+
+		return relation;
+	}
+
+	@Override
+	public String getType() {
+		return "USER";
+	}
+
+	@Override
+	public String toString() {
+		return "UserNodeDTO [username=" + username + "]";
 	}
 
 }
