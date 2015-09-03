@@ -12,5 +12,5 @@ public class GraphEntryDTO implements DataTransfereObject {
 	private static final long serialVersionUID = 1L;
 
 	@GraphId
-	private Long graphId;
+	private Long id;
 }

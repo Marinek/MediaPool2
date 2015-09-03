@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +18,9 @@ import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
 import de.mediapool.server.entities.media.movies.repository.MovieMediaRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
-import de.mediapool.server.security.domain.PreAuthorization;
 
 @RestController
-@RequestMapping("/rest/movie")
+@RequestMapping("/rest/movies")
 public class MovieMediaController implements MPController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MovieMediaController.class);
@@ -35,12 +33,14 @@ public class MovieMediaController implements MPController {
 		logger.debug("Invoking: init()");
 	}
 
-	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieMediaNodeDTO getMovie(@PathVariable("id") Long id) {
+	public MovieWrapper getMovie(@PathVariable("id") Long id) {
 		logger.debug("Invoking: getMovie(id)");
 
-		MovieMediaNodeDTO movie = movieRepository.findOne(id);
+		MovieWrapper movie = new MovieWrapper();
+		MovieMediaNodeDTO movies = movieRepository.findOne(id);
+		
+		movie.setMovie(movies);
 
 		return movie;
 	}
