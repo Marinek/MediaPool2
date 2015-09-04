@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
+import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import de.mediapool.server.entities.product.repository.ProductRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
@@ -49,7 +49,7 @@ public class ProductController implements MPController {
 	}
 
 	@RequestMapping
-	public List<MovieMediaNodeDTO> findProdcutMovieByTitle(String title) {
+	public List<MovieNodeDTO> findProdcutMovieByTitle(String title) {
 		return new ArrayList<>();
 	}
 

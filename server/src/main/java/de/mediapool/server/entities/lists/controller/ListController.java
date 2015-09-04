@@ -1,7 +1,5 @@
 package de.mediapool.server.entities.lists.controller;
 
-import java.util.Date;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -45,15 +43,16 @@ public class ListController implements MPController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public ListNodeDTO createList(@RequestBody ListNodeDTO newList, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public ListNodeDTO createList(@RequestBody String title, @AuthenticationPrincipal UserNodeDTO currentUser) {
 		logger.debug("Invoking: createMovie(newList, currentUser)");
 
-		newList.setCreated(new Date());
-		newList.setCreatedBy(currentUser);
+		currentUser.createNewList(title);
 
-		ListNodeDTO savedList = listRepository.save(newList);
+		ListNodeDTO newList = currentUser.getListByTitle(title);
 
-		return savedList;
+		listRepository.save(newList);
+
+		return newList;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)

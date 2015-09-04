@@ -9,7 +9,7 @@ import lombok.Setter;
 @NodeEntity
 @Getter
 @Setter
-public class MovieMediaNodeDTO extends MediaNodeDTO {
+public class MovieNodeDTO extends MediaNodeDTO {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,14 +21,14 @@ public class MovieMediaNodeDTO extends MediaNodeDTO {
 		return "MOVIE";
 	}
 
-	public MovieMediaNodeDTO(String title, String orginaltitle, int publishedYear, String genre, String language, String award, String cover, String description, String contentType, int duration,
+	public MovieNodeDTO(String title, String orginaltitle, int publishedYear, String genre, String language, String award, String cover, String description, String contentType, int duration,
 			int age_restriction) {
 		super(title, orginaltitle, genre, language, award, cover, description, contentType, publishedYear);
 		this.duration = duration;
 		this.age_restriction = age_restriction;
 	}
 
-	public MovieMediaNodeDTO() {
+	public MovieNodeDTO() {
 		super();
 	}
 

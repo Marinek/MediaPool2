@@ -22,8 +22,8 @@ import de.mediapool.server.security.simple.controller.RESTAuthenticationSuccessH
 
 @ComponentScan("de.mediapool.server")
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
 
@@ -45,12 +45,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		auth.userDetailsService(customUserDetailsService());
 	}
 
-	@Bean @Override
+	@Bean
+	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
-	@Bean   
+	@Bean
 	public UserDetailsService customUserDetailsService() {
 		return new MPUserDetailsService();
 	}
@@ -58,12 +59,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		logger.debug("Invoking: configure(http)");
-		//		http.authorizeRequests().antMatchers("/rest/**").authenticated();
+		// http.authorizeRequests().antMatchers("/rest/**").authenticated();
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 		http.formLogin().successHandler(authenticationSuccessHandler);
 		http.formLogin().failureHandler(authenticationFailureHandler);
 		http.logout().logoutUrl("/logout");
-//		http.csrf().disable();
+		http.csrf().disable();
+
 	}
 
 	@PostConstruct

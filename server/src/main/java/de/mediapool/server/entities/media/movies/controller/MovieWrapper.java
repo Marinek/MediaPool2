@@ -1,6 +1,6 @@
 package de.mediapool.server.entities.media.movies.controller;
 
-import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
+import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class MovieWrapper {
 
-	private MovieMediaNodeDTO movie;
+	private MovieNodeDTO movie;
 }
