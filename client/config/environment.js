@@ -25,6 +25,17 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    // https://github.com/rwjblue/ember-cli-content-security-policy
+    ENV.contentSecurityPolicy = {
+        'default-src': "'none'",
+        'script-src': "'self'", // Allow scripts from https://cdn.mxpnl.com
+        'font-src': "'self' http://fontface.ninja", // Allow fonts to be loaded from http://fonts.gstatic.com
+        'connect-src': "'self'", // Allow data (ajax/websocket) from api.mixpanel.com and custom-api.local
+        'img-src': "'self'",
+        'style-src': "'self' 'unsafe-inline'", // Allow inline styles and loaded CSS from http://fonts.googleapis.com
+        'media-src': "'self'"
+    }
   }
 
   if (environment === 'test') {
