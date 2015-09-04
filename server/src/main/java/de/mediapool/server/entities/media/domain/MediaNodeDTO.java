@@ -8,6 +8,8 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import de.mediapool.server.core.domain.NodeDTO;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 import lombok.Getter;
@@ -16,6 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NodeEntity
+@JsonTypeName("media")
 public abstract class MediaNodeDTO extends NodeDTO {
 
 	private static final long serialVersionUID = 1L;

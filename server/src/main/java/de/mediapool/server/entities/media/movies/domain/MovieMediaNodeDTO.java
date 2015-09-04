@@ -2,6 +2,8 @@ package de.mediapool.server.entities.media.movies.domain;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import de.mediapool.server.entities.media.domain.MediaNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @NodeEntity
 @Getter
 @Setter
+@JsonTypeName("movie")
 public class MovieMediaNodeDTO extends MediaNodeDTO {
 
 	private static final long serialVersionUID = 1L;

@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,16 +34,22 @@ public class MovieMediaController implements MPController {
 		logger.debug("Invoking: init()");
 	}
 
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public Result<MovieMediaNodeDTO> getMovies() {
+		logger.debug("Invoking: getMovies()");
+		
+		Result<MovieMediaNodeDTO> findAll = movieRepository.findAll();
+
+		return findAll;
+	}
+
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieWrapper getMovie(@PathVariable("id") Long id) {
+	public MovieMediaNodeDTO getMovie(@PathVariable("id") Long id) {
 		logger.debug("Invoking: getMovie(id)");
 
-		MovieWrapper movie = new MovieWrapper();
 		MovieMediaNodeDTO movies = movieRepository.findOne(id);
-		
-		movie.setMovie(movies);
 
-		return movie;
+		return movies;
 	}
 
 	@RequestMapping

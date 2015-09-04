@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		http.formLogin().successHandler(authenticationSuccessHandler);
 		http.formLogin().failureHandler(authenticationFailureHandler);
 		http.logout().logoutUrl("/logout");
-//		http.csrf().disable();
+		http.csrf().disable();
 	}
 
 	@PostConstruct
