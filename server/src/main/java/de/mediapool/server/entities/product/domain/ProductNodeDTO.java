@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.NodeDTO;
-import de.mediapool.server.entities.media.movies.domain.MovieMediaNodeDTO;
+import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,7 +52,7 @@ public class ProductNodeDTO extends NodeDTO {
 
 	@JsonIgnore
 	@RelatedTo(type = "IS_ON", direction = Direction.INCOMING)
-	private @Fetch Set<MovieMediaNodeDTO> movies;
+	private @Fetch Set<MovieNodeDTO> movies;
 
 	public ProductNodeDTO(MediaType mediaType, String title, String orginaltitle, int publishedYear, String special, String language, double price, String cover, String description, String ean,
 			String format) {
@@ -74,10 +74,10 @@ public class ProductNodeDTO extends NodeDTO {
 		super();
 	}
 
-	public boolean addMovie(MovieMediaNodeDTO movie) {
+	public boolean addMovie(MovieNodeDTO movie) {
 		if (MediaType.MOVIE == this.mediaType) {
 			if (movies == null) {
-				movies = new HashSet<MovieMediaNodeDTO>();
+				movies = new HashSet<MovieNodeDTO>();
 			}
 			movies.add(movie);
 			return true;

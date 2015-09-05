@@ -13,6 +13,7 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.entities.lists.domain.ListNodeDTO;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,22 +32,26 @@ public class UserNodeDTO extends NodeDTO {
 	@JsonIgnore
 	private String password;
 
-	@RelatedTo(type = "HAS_ROLE", direction = Direction.OUTGOING)
-	private @Fetch Set<UserRoleNodeDTO> roles = new HashSet<>();
-
 	private Boolean isLocked = false;
 
-	@RelatedToVia(type = "OWNS", direction = Direction.INCOMING)
+	@RelatedTo(type = "HAS_ROLE", direction = Direction.OUTGOING)
+	private @Fetch Set<UserRoleNodeDTO> roles;
+
+	@RelatedToVia(type = "OWNS", direction = Direction.OUTGOING)
 	@Fetch
-	private Set<OwnerRelationship> owendProducts = new HashSet<>();
+	private Set<OwnerRelationship> owendProducts;
 
 	@RelatedToVia(type = "FOLLOW", direction = Direction.OUTGOING)
 	@Fetch
-	private Set<FollowRelationship> followedUser = new HashSet<>();
+	private Set<FollowRelationship> followedUser;
+
+	@RelatedTo(type = "CREATED", direction = Direction.OUTGOING)
+	@Fetch
+	private Set<ListNodeDTO> createdLists;
 
 	public UserNodeDTO(String username, String password) {
 		this(username, password, new HashSet<>(), false);
-		// this.addRole("User");
+		this.addRole("User");
 	}
 
 	public UserNodeDTO() {
@@ -61,7 +66,36 @@ public class UserNodeDTO extends NodeDTO {
 		this.isLocked = isLocked;
 	}
 
+	public boolean createNewList(String title) {
+		if (createdLists == null) {
+			createdLists = new HashSet<>();
+		}
+		if (getListByTitle(title) == null) {
+			ListNodeDTO list = new ListNodeDTO(title);
+			list.setCreated(new Date());
+			createdLists.add(list);
+			return true;
+		}
+		return false;
+	}
+
+	public ListNodeDTO getListByTitle(String title) {
+		ListNodeDTO list = null;
+
+		if (createdLists != null) {
+			for (ListNodeDTO lnd : createdLists) {
+				if (lnd.getTitle().equals(title)) {
+					list = lnd;
+				}
+			}
+		}
+		return list;
+	}
+
 	public void addRole(String role) {
+		if (roles == null) {
+			roles = new HashSet<>();
+		}
 		UserRoleNodeDTO userRole = new UserRoleNodeDTO();
 		userRole.setName(role);
 		roles.add(userRole);
@@ -71,12 +105,13 @@ public class UserNodeDTO extends NodeDTO {
 	public OwnerRelationship owens(ProductNodeDTO product) {
 		OwnerRelationship relation = new OwnerRelationship();
 
+		if (owendProducts == null) {
+			owendProducts = new HashSet<>();
+		}
+
 		relation.setSince(new Date());
-
 		relation.setOwnes(product);
-
 		relation.setUser(this);
-
 		owendProducts.add(relation);
 
 		return relation;
@@ -84,6 +119,10 @@ public class UserNodeDTO extends NodeDTO {
 
 	public FollowRelationship follows(UserNodeDTO user) {
 		FollowRelationship relation = new FollowRelationship();
+
+		if (followedUser == null) {
+			followedUser = new HashSet<>();
+		}
 
 		relation.setSince(new Date());
 
