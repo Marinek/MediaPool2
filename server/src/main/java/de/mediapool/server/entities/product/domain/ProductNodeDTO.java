@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.domain.Node;
 import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NodeEntity
-public class ProductNodeDTO extends NodeDTO {
+public class ProductNodeDTO extends Node {
 
 	private static final long serialVersionUID = 1L;
 
@@ -83,11 +83,6 @@ public class ProductNodeDTO extends NodeDTO {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public String getType() {
-		return "list";
 	}
 
 	@Override

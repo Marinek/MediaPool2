@@ -2,7 +2,7 @@ package de.mediapool.server.entities.users.domain;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.domain.Node;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,15 +11,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserRoleNodeDTO extends NodeDTO {
+public class UserRoleNodeDTO extends Node {
 
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-
-	@Override
-	public String getType() {
-		return "ROLES";
-	}
 
 }

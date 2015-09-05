@@ -12,18 +12,16 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.domain.Node;
 import de.mediapool.server.entities.lists.domain.ListNodeDTO;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @NodeEntity
 @Getter
 @Setter
-@ToString
-public class UserNodeDTO extends NodeDTO {
+public class UserNodeDTO extends Node {
 
 	private static final long serialVersionUID = 1L;
 
@@ -133,11 +131,6 @@ public class UserNodeDTO extends NodeDTO {
 		followedUser.add(relation);
 
 		return relation;
-	}
-
-	@Override
-	public String getType() {
-		return "USER";
 	}
 
 	@Override

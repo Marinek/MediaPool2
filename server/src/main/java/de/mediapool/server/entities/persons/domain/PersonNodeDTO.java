@@ -4,14 +4,14 @@ import java.util.Date;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.domain.Node;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @NodeEntity
-public class PersonNodeDTO extends NodeDTO {
+public class PersonNodeDTO extends Node {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,11 +42,6 @@ public class PersonNodeDTO extends NodeDTO {
 
 	public PersonNodeDTO() {
 		super();
-	}
-
-	@Override
-	public String getType() {
-		return "PERSON";
 	}
 
 	@Override

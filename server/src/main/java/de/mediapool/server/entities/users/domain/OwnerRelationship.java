@@ -9,7 +9,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.core.domain.RelationShipDTO;
+import de.mediapool.server.core.domain.Relationship;
 import de.mediapool.server.entities.domain.Visibility;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RelationshipEntity(type = "OWNING")
-public class OwnerRelationship extends RelationShipDTO {
+public class OwnerRelationship extends Relationship {
 
 	private static final long serialVersionUID = 1L;
 

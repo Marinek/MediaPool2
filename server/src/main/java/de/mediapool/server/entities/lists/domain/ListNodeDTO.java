@@ -9,18 +9,16 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.domain.Node;
 import de.mediapool.server.entities.domain.Visibility;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NodeEntity
-public class ListNodeDTO extends NodeDTO {
+public class ListNodeDTO extends Node {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,11 +46,6 @@ public class ListNodeDTO extends NodeDTO {
 
 	public ListNodeDTO() {
 		super();
-	}
-
-	@Override
-	public String getType() {
-		return "list";
 	}
 
 	public ListedRelationship addToList(ProductNodeDTO product) {

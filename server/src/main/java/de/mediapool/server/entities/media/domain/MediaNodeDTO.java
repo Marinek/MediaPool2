@@ -2,15 +2,18 @@ package de.mediapool.server.entities.media.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
-import de.mediapool.server.core.domain.NodeDTO;
+import de.mediapool.server.core.builder.ember.EmberLinks;
+import de.mediapool.server.core.builder.ember.EmberTypeInfo;
+import de.mediapool.server.core.domain.Node;
 import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NodeEntity
-@JsonTypeName("media")
-public abstract class MediaNodeDTO extends NodeDTO {
+@EmberTypeInfo(name="media")
+public abstract class MediaNodeDTO extends Node implements EmberLinks {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,6 +44,7 @@ public abstract class MediaNodeDTO extends NodeDTO {
 
 	private String contentType;
 
+    @JsonIdentityReference(alwaysAsId = true)
 	@RelatedToVia(type = "IS_PART", direction = Direction.INCOMING)
 	@Fetch
 	private Set<PersonsRelationship> persons = new HashSet<>();
@@ -58,9 +62,18 @@ public abstract class MediaNodeDTO extends NodeDTO {
 
 		return relation;
 	}
-
+	
 	public PersonsRelationship addPerson(PersonNodeDTO person) {
 		return addPerson(person, person.getMainRole());
+	}
+	
+	@Override
+	public ConcurrentMap<String, String> getLinks() {
+		ConcurrentMap<String, String> links = EmberLinks.super.getLinks();
+		
+		links.put("persons", "persons");
+		
+		return links;
 	}
 
 	@Override

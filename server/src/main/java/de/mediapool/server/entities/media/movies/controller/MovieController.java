@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.mediapool.server.core.builder.ember.EmberModel;
 import de.mediapool.server.core.controller.MPController;
+import de.mediapool.server.entities.media.domain.PersonsRelationship;
 import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.users.domain.UserNodeDTO;
@@ -35,21 +37,24 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public Result<MovieNodeDTO> getMovies() {
+	public EmberModel getMovies() {
 		logger.debug("Invoking: getMovies()");
-		
+
 		Result<MovieNodeDTO> findAll = movieRepository.findAll();
 
-		return findAll;
+		return new EmberModel.Builder<MovieNodeDTO>(MovieNodeDTO.class, findAll)
+				.build();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public MovieNodeDTO getMovie(@PathVariable("id") Long id) {
+	public EmberModel getMovie(@PathVariable("id") Long id) {
 		logger.debug("Invoking: getMovie(id)");
 
 		MovieNodeDTO movies = movieRepository.findOne(id);
 
-		return movies;
+		return new EmberModel.Builder<MovieNodeDTO>(movies)
+				.sideLoad(PersonsRelationship.class, movies.getPersons())
+				.build();
 	}
 
 	@RequestMapping

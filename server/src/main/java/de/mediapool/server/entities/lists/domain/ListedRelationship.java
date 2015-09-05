@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import de.mediapool.server.core.domain.RelationShipDTO;
+import de.mediapool.server.core.domain.Relationship;
 import de.mediapool.server.entities.product.domain.ProductNodeDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RelationshipEntity(type = "LISTED")
-public class ListedRelationship extends RelationShipDTO {
+public class ListedRelationship extends Relationship {
 
 	private static final long serialVersionUID = 1L;
 
