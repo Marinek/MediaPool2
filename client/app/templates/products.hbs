@@ -1,15 +1,16 @@
 {{outlet}}
 
-<div class="row">
-  {{#each movie in content}}
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <div class="caption">
-        <h3>{{movie.title}}</h3>
-        <p>{{movie.description}}</p>
-        <p><a href="#" class="btn btn-primary" role="button">Habe ich.</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-  {{/each}}
-</div>
+<table class="table table-striped">
+  <thead>
+
+  </thead>
+  <tbody>
+    {{#each movie in content}}
+    <tr>
+        <td> <span class="label label-default">{{movie.mediaType}}</span> </td>
+        <td>{{movie.title}}</td>
+        <td><a href="#" class="btn btn-primary" role="button">Habe ich.</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
