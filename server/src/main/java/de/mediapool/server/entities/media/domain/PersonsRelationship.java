@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.builder.ember.EmberTypeInfo;
 import de.mediapool.server.core.domain.Relationship;
-import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
+import de.mediapool.server.entities.persons.domain.Person;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,11 +26,11 @@ public class PersonsRelationship extends Relationship {
 
 	@EndNode
 	@JsonIgnore
-	private MediaNodeDTO media;
+	private Media media;
 
 	@StartNode
 	@Fetch
-	private PersonNodeDTO person;
+	private Person person;
 
 	@GraphProperty
 	private String role;

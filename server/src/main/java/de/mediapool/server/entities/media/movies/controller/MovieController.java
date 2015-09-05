@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import de.mediapool.server.core.builder.ember.EmberModel;
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.media.domain.PersonsRelationship;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.media.movies.domain.Movie;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
-import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.User;
 
 @RestController
 @RequestMapping("/rest/movies")
@@ -40,9 +40,9 @@ public class MovieController implements MPController {
 	public EmberModel getMovies() {
 		logger.debug("Invoking: getMovies()");
 
-		Result<MovieNodeDTO> findAll = movieRepository.findAll();
+		Result<Movie> findAll = movieRepository.findAll();
 
-		return new EmberModel.Builder<MovieNodeDTO>(MovieNodeDTO.class, findAll)
+		return new EmberModel.Builder<Movie>(Movie.class, findAll)
 				.build();
 	}
 
@@ -50,16 +50,16 @@ public class MovieController implements MPController {
 	public EmberModel getMovie(@PathVariable("id") Long id) {
 		logger.debug("Invoking: getMovie(id)");
 
-		MovieNodeDTO movies = movieRepository.findOne(id);
+		Movie movies = movieRepository.findOne(id);
 
-		return new EmberModel.Builder<MovieNodeDTO>(movies)
+		return new EmberModel.Builder<Movie>(movies)
 				.sideLoad(PersonsRelationship.class, movies.getPersons())
 				.build();
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findMovieByTitle(String title) {
-		List<MovieNodeDTO> movieList = movieRepository.findByTitle(title);
+	public List<Movie> findMovieByTitle(String title) {
+		List<Movie> movieList = movieRepository.findByTitle(title);
 		return movieList;
 	}
 
@@ -69,10 +69,10 @@ public class MovieController implements MPController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public MovieNodeDTO createMovie(@RequestBody MovieNodeDTO newMovie, @AuthenticationPrincipal UserNodeDTO currentUser) {
+	public Movie createMovie(@RequestBody Movie newMovie, @AuthenticationPrincipal User currentUser) {
 		logger.debug("Invoking: createMovie(newMovie)");
 
-		MovieNodeDTO save = movieRepository.save(newMovie);
+		Movie save = movieRepository.save(newMovie);
 
 		return save;
 	}

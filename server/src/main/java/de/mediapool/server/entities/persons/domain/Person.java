@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NodeEntity
-public class PersonNodeDTO extends Node {
+public class Person extends Node {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class PersonNodeDTO extends Node {
 
 	private String image;
 
-	public PersonNodeDTO(String firstName, String lastName, Date birthdate, String country, String gender, String mainRole, boolean business, String image) {
+	public Person(String firstName, String lastName, Date birthdate, String country, String gender, String mainRole, boolean business, String image) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -40,7 +40,7 @@ public class PersonNodeDTO extends Node {
 		this.image = image;
 	}
 
-	public PersonNodeDTO() {
+	public Person() {
 		super();
 	}
 

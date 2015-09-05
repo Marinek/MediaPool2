@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.repository.CrudRepository;
 
-import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
+import de.mediapool.server.entities.persons.domain.Person;
 
-public interface PersonsRepository extends CrudRepository<PersonNodeDTO, String> {
+public interface PersonsRepository extends CrudRepository<Person, String> {
 
-	public List<PersonNodeDTO> findByLastName(String name);
+	public List<Person> findByLastName(String name);
 
-	public Result<PersonNodeDTO> findAll();
+	public Result<Person> findAll();
 
 }

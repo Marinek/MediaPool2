@@ -9,8 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import de.mediapool.server.entities.users.domain.UserNodeDTO;
-import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
+import de.mediapool.server.entities.users.domain.User;
+import de.mediapool.server.entities.users.domain.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MPUserDetails extends UserNodeDTO implements UserDetails {
+public class MPUserDetails extends User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -26,7 +26,7 @@ public class MPUserDetails extends UserNodeDTO implements UserDetails {
 
 	private Collection<GrantedAuthority> authorities;
 	
-	public MPUserDetails(UserNodeDTO userNode) {
+	public MPUserDetails(User userNode) {
 		try {
 			BeanUtils.copyProperties(this, userNode);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -35,7 +35,7 @@ public class MPUserDetails extends UserNodeDTO implements UserDetails {
 
 		authorities = new ArrayList<GrantedAuthority>();
 		
-		for(UserRoleNodeDTO userRole : getRoles()) {
+		for(UserRole userRole : getRoles()) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.getName()));
 		}
 	}

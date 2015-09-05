@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.User;
 import de.mediapool.server.entities.users.repository.UserRepository;
 import de.mediapool.server.security.domain.MPUserDetails;
 
@@ -17,7 +17,7 @@ public class MPUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
 		
-		UserNodeDTO findByUsername = userRepository.findByUsername(arg0);
+		User findByUsername = userRepository.findByUsername(arg0);
 		
 		if(findByUsername == null) {
 			throw new UsernameNotFoundException("Unknown user: " + arg0);

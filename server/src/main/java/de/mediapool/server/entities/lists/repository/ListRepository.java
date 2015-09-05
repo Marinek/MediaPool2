@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import de.mediapool.server.entities.lists.domain.ListNodeDTO;
+import de.mediapool.server.entities.lists.domain.Listing;
 
-public interface ListRepository extends GraphRepository<ListNodeDTO> {
+public interface ListRepository extends GraphRepository<Listing> {
 
-	public List<ListNodeDTO> findByTitle(String title);
+	public List<Listing> findByTitle(String title);
 
-	public Result<ListNodeDTO> findAll();
+	public Result<Listing> findAll();
 
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.users.domain.UserNodeDTO;
-import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
+import de.mediapool.server.entities.users.domain.User;
+import de.mediapool.server.entities.users.domain.UserRole;
 import de.mediapool.server.entities.users.repository.UserRepository;
 import de.mediapool.server.security.domain.PreAuthorization;
 
@@ -35,27 +35,27 @@ public class UserController implements MPController {
 
 	@PreAuthorize(PreAuthorization.ROLE_ADMIN)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public UserNodeDTO getUser(@PathVariable("id") Long id) {
+	public User getUser(@PathVariable("id") Long id) {
 		return userRepository.findOne(id);
 	}
 
 	@PreAuthorize(PreAuthorization.AUTHENTICATED)
 	@RequestMapping(value = "current", method = RequestMethod.GET)
-	public UserNodeDTO getUser(@AuthenticationPrincipal UserNodeDTO userNode) {
+	public User getUser(@AuthenticationPrincipal User userNode) {
 		return userNode;
 	}
 
 	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public UserNodeDTO createUser(@RequestBody UserNodeDTO userNodeDTO) {
+	public User createUser(@RequestBody User userNodeDTO) {
 
 		{
-			UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
+			UserRole userRoleUser = new UserRole();
 			userRoleUser.setName("USER");
 			userNodeDTO.getRoles().add(userRoleUser);
 		}
 
 		{
-			UserRoleNodeDTO userRoleUser = new UserRoleNodeDTO();
+			UserRole userRoleUser = new UserRole();
 			userRoleUser.setName("ADMIN");
 			userNodeDTO.getRoles().add(userRoleUser);
 		}

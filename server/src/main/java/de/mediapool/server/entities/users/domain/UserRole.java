@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserRoleNodeDTO extends Node {
+public class UserRole extends Node {
 
 	private static final long serialVersionUID = 1L;
 

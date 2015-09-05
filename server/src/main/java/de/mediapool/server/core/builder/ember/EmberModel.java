@@ -51,11 +51,6 @@ public final class EmberModel extends ConcurrentHashMap<String, Object> {
         	sideLoad(clazz, collectionEntites);
         }
 
-        public Builder(final String rootName, final Collection<?> entities) {
-            Assert.notNull(entities);
-            sideLoad(rootName, entities);
-        }
-
         public Builder<T> addMeta(final String key, final Object value) {
             metaData.put(key, value);
             return this;
@@ -71,13 +66,6 @@ public final class EmberModel extends ConcurrentHashMap<String, Object> {
         public <K> Builder<T> sideLoad(final Class<K> clazz, final Collection<K> entities) {
             if (entities != null) {
                 sideLoadedItems.put(getPluralName(clazz), entities);
-            }
-            return this;
-        }
-
-        public Builder<T> sideLoad(final String rootName, final Collection<?> entities) {
-            if (entities != null) {
-                sideLoadedItems.put(English.plural(rootName), entities);
             }
             return this;
         }

@@ -11,7 +11,7 @@ import org.springframework.data.neo4j.annotation.StartNode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.Relationship;
-import de.mediapool.server.entities.product.domain.ProductNodeDTO;
+import de.mediapool.server.entities.product.domain.Product;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,11 +26,11 @@ public class ListedRelationship extends Relationship {
 
 	@EndNode
 	@JsonIgnore
-	private ProductNodeDTO listItem;
+	private Product listItem;
 
 	@StartNode
 	@Fetch
-	private ListNodeDTO list;
+	private Listing list;
 
 	@GraphProperty
 	private Date since;

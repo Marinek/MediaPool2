@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.lists.domain.ListNodeDTO;
+import de.mediapool.server.entities.lists.domain.Listing;
 import de.mediapool.server.entities.lists.repository.ListRepository;
-import de.mediapool.server.entities.media.movies.domain.MovieNodeDTO;
+import de.mediapool.server.entities.media.movies.domain.Movie;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
-import de.mediapool.server.entities.persons.domain.PersonNodeDTO;
+import de.mediapool.server.entities.persons.domain.Person;
 import de.mediapool.server.entities.persons.repository.PersonsRepository;
 import de.mediapool.server.entities.product.domain.MediaType;
-import de.mediapool.server.entities.product.domain.ProductNodeDTO;
+import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.product.repository.ProductRepository;
-import de.mediapool.server.entities.users.domain.UserNodeDTO;
-import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
+import de.mediapool.server.entities.users.domain.User;
+import de.mediapool.server.entities.users.domain.UserRole;
 import de.mediapool.server.entities.users.repository.UserRepository;
 import de.mediapool.server.entities.users.repository.UserRoleRepository;
 import de.mediapool.server.security.domain.MPUserDetails;
@@ -67,16 +67,16 @@ public class TestProductController implements MPController {
 	}
 
 	@RequestMapping
-	public List<MovieNodeDTO> findMovieByTitle(String name) {
+	public List<Movie> findMovieByTitle(String name) {
 		return new ArrayList<>();
 	}
 
 	@PreAuthorize(PreAuthorization.ROLE_USER)
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ProductNodeDTO getProduct(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
+	public Product getProduct(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getMovie(id)");
 
-		ProductNodeDTO Product = productRepository.findOne(id);
+		Product Product = productRepository.findOne(id);
 
 		return Product;
 	}
@@ -84,10 +84,10 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deletePerson", method = RequestMethod.POST)
 	public void deletePerson(String lastname) {
 
-		List<PersonNodeDTO> personList = personsRepository.findByLastName(lastname);
+		List<Person> personList = personsRepository.findByLastName(lastname);
 
 		if (personList != null && personList.size() > 0) {
-			for (PersonNodeDTO person : personList)
+			for (Person person : personList)
 				personsRepository.delete(person);
 		}
 	}
@@ -95,10 +95,10 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public void deleteUser(String username) {
 
-		List<UserNodeDTO> userList = userRepository.findAllByUsername(username);
+		List<User> userList = userRepository.findAllByUsername(username);
 
 		if (userList != null && userList.size() > 0) {
-			for (UserNodeDTO user : userList) {
+			for (User user : userList) {
 				userRepository.delete(user);
 			}
 		}
@@ -108,10 +108,10 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
 	public void deleteProduct(String title) {
 
-		List<ProductNodeDTO> pmnl = productRepository.findByTitle(title);
+		List<Product> pmnl = productRepository.findByTitle(title);
 
 		if (pmnl != null && pmnl.size() > 0) {
-			for (ProductNodeDTO pmn : pmnl)
+			for (Product pmn : pmnl)
 				productRepository.delete(pmn);
 		}
 	}
@@ -119,10 +119,10 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteMovie", method = RequestMethod.POST)
 	public void deleteMovie(String title) {
 
-		List<MovieNodeDTO> movieList = movieRepository.findByTitle(title);
+		List<Movie> movieList = movieRepository.findByTitle(title);
 
 		if (movieList != null && movieList.size() > 0) {
-			for (MovieNodeDTO movie : movieList) {
+			for (Movie movie : movieList) {
 				movieRepository.delete(movie);
 			}
 		}
@@ -131,11 +131,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllRoles", method = RequestMethod.POST)
 	public void deleteAllRoles() {
 
-		Result<UserRoleNodeDTO> urnl = userRoleRepository.findAll();
+		Result<UserRole> urnl = userRoleRepository.findAll();
 
-		Iterator<UserRoleNodeDTO> it = urnl.iterator();
+		Iterator<UserRole> it = urnl.iterator();
 		while (it.hasNext()) {
-			UserRoleNodeDTO role = it.next();
+			UserRole role = it.next();
 			userRoleRepository.delete(role);
 		}
 	}
@@ -143,11 +143,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllMovies", method = RequestMethod.POST)
 	public void deleteAllMovies() {
 
-		Result<MovieNodeDTO> mnl = movieRepository.findAll();
+		Result<Movie> mnl = movieRepository.findAll();
 
-		Iterator<MovieNodeDTO> it = mnl.iterator();
+		Iterator<Movie> it = mnl.iterator();
 		while (it.hasNext()) {
-			MovieNodeDTO movie = it.next();
+			Movie movie = it.next();
 			movieRepository.delete(movie);
 		}
 	}
@@ -155,10 +155,10 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
 	public void deleteList(String title) {
 
-		List<ListNodeDTO> listList = listRepository.findByTitle(title);
+		List<Listing> listList = listRepository.findByTitle(title);
 
 		if (listList != null && listList.size() > 0) {
-			for (ListNodeDTO list : listList) {
+			for (Listing list : listList) {
 				listRepository.delete(list);
 			}
 		}
@@ -167,11 +167,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllPersons", method = RequestMethod.POST)
 	public void deleteAllPersons() {
 
-		Result<PersonNodeDTO> pnl = personsRepository.findAll();
+		Result<Person> pnl = personsRepository.findAll();
 
-		Iterator<PersonNodeDTO> it = pnl.iterator();
+		Iterator<Person> it = pnl.iterator();
 		while (it.hasNext()) {
-			PersonNodeDTO person = it.next();
+			Person person = it.next();
 			personsRepository.delete(person);
 		}
 	}
@@ -179,11 +179,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllLists", method = RequestMethod.POST)
 	public void deleteAllLists() {
 
-		Result<ListNodeDTO> lnl = listRepository.findAll();
+		Result<Listing> lnl = listRepository.findAll();
 
-		Iterator<ListNodeDTO> it = lnl.iterator();
+		Iterator<Listing> it = lnl.iterator();
 		while (it.hasNext()) {
-			ListNodeDTO list = it.next();
+			Listing list = it.next();
 			listRepository.delete(list);
 		}
 
@@ -192,11 +192,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllProducts", method = RequestMethod.POST)
 	public void deleteAllProducts() {
 
-		Result<ProductNodeDTO> pmnl = productRepository.findAll();
+		Result<Product> pmnl = productRepository.findAll();
 
-		Iterator<ProductNodeDTO> it = pmnl.iterator();
+		Iterator<Product> it = pmnl.iterator();
 		while (it.hasNext()) {
-			ProductNodeDTO product = it.next();
+			Product product = it.next();
 			productRepository.delete(product);
 		}
 
@@ -205,11 +205,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllUsers", method = RequestMethod.POST)
 	public void deleteAllUsers() {
 
-		Result<UserNodeDTO> unl = userRepository.findAll();
+		Result<User> unl = userRepository.findAll();
 
-		Iterator<UserNodeDTO> it = unl.iterator();
+		Iterator<User> it = unl.iterator();
 		while (it.hasNext()) {
-			UserNodeDTO user = it.next();
+			User user = it.next();
 			userRepository.delete(user);
 		}
 
@@ -242,15 +242,15 @@ public class TestProductController implements MPController {
 	public void createAll() {
 		logger.debug("Invoking: createAllStuff");
 
-		UserNodeDTO newUser1 = new UserNodeDTO("Test1", "Test1");
+		User newUser1 = new User("Test1", "Test1");
 		userRepository.save(newUser1);
-		UserNodeDTO newUser2 = new UserNodeDTO("Test2", "Test2");
+		User newUser2 = new User("Test2", "Test2");
 		userRepository.save(newUser2);
-		UserNodeDTO newUser3 = new UserNodeDTO("Test3", "Test3");
+		User newUser3 = new User("Test3", "Test3");
 		userRepository.save(newUser3);
-		UserNodeDTO newUser4 = new UserNodeDTO("Test4", "Test4");
+		User newUser4 = new User("Test4", "Test4");
 		userRepository.save(newUser4);
-		UserNodeDTO newUser5 = new UserNodeDTO("Test5", "Test5");
+		User newUser5 = new User("Test5", "Test5");
 		userRepository.save(newUser5);
 
 		newUser1.follows(newUser2);
@@ -265,84 +265,84 @@ public class TestProductController implements MPController {
 		userRepository.save(newUser4);
 		userRepository.save(newUser5);
 
-		ProductNodeDTO newProduct1 = new ProductNodeDTO(MediaType.MOVIE, "Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
+		Product newProduct1 = new Product(MediaType.MOVIE, "Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
 				"000-000", "Blu-ray");
-		ProductNodeDTO newProduct2 = new ProductNodeDTO(MediaType.MOVIE, "Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+		Product newProduct2 = new Product(MediaType.MOVIE, "Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
-		ProductNodeDTO newProduct3 = new ProductNodeDTO(MediaType.MOVIE, "Stirb langsam Triologie", "Stirb langsam Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
+		Product newProduct3 = new Product(MediaType.MOVIE, "Stirb langsam Triologie", "Stirb langsam Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
 				"000-000", "Blu-ray");
-		ProductNodeDTO newProduct4 = new ProductNodeDTO(MediaType.MOVIE, "Indiana Jones Triologie", "Indiana Jones Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
+		Product newProduct4 = new Product(MediaType.MOVIE, "Indiana Jones Triologie", "Indiana Jones Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
 				"000-000", "Blu-ray");
-		ProductNodeDTO newProduct5 = new ProductNodeDTO(MediaType.MOVIE, "Zurück in die Zukunft Triologie", "Zurück in die Zukunft Triologie", 2001, "Extended", "German", 10, "cover.jpg",
+		Product newProduct5 = new Product(MediaType.MOVIE, "Zurück in die Zukunft Triologie", "Zurück in die Zukunft Triologie", 2001, "Extended", "German", 10, "cover.jpg",
 				"All Movies together", "000-000", "Blu-ray");
-		ProductNodeDTO newProduct6 = new ProductNodeDTO(MediaType.MOVIE, "Mad Max Triologie", "Mad Max Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+		Product newProduct6 = new Product(MediaType.MOVIE, "Mad Max Triologie", "Mad Max Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
-		ProductNodeDTO newProduct7 = new ProductNodeDTO(MediaType.MOVIE, "X-Men Triologie", "X-Men Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+		Product newProduct7 = new Product(MediaType.MOVIE, "X-Men Triologie", "X-Men Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
-		ProductNodeDTO newProduct8 = new ProductNodeDTO(MediaType.MOVIE, "Matrix Triologie", "Matrix Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+		Product newProduct8 = new Product(MediaType.MOVIE, "Matrix Triologie", "Matrix Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
-		ProductNodeDTO newProduct9 = new ProductNodeDTO(MediaType.MOVIE, "Iron Man Triologie", "Iron Man Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+		Product newProduct9 = new Product(MediaType.MOVIE, "Iron Man Triologie", "Iron Man Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
-		ProductNodeDTO newProduct0 = new ProductNodeDTO(MediaType.MOVIE, "Der kleine Hobbit Triologie", "Der kleine Hobbit Triologie", 2001, "Extended", "German", 10, "cover.jpg",
+		Product newProduct0 = new Product(MediaType.MOVIE, "Der kleine Hobbit Triologie", "Der kleine Hobbit Triologie", 2001, "Extended", "German", 10, "cover.jpg",
 				"All Movies together", "000-000", "Blu-ray");
 
-		MovieNodeDTO newMovie1 = new MovieNodeDTO("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
+		Movie newMovie1 = new Movie("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie2 = new MovieNodeDTO("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
+		Movie newMovie2 = new Movie("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie3 = new MovieNodeDTO("Krieg der Sterne", "Krieg der Sterne", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie4 = new MovieNodeDTO("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
+		Movie newMovie3 = new Movie("Krieg der Sterne", "Krieg der Sterne", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie4 = new Movie("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie5 = new MovieNodeDTO("Stirb langsam", "Stirb langsam", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie6 = new MovieNodeDTO("Stirb langsam II", "Stirb langsam II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie7 = new MovieNodeDTO("Indiana Jones", "Indiana Jones", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie8 = new MovieNodeDTO("Indiana Jones II", "Indiana Jones II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie9 = new MovieNodeDTO("Zurück in die Zukunft", "Zurück in die Zukunft", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
+		Movie newMovie5 = new Movie("Stirb langsam", "Stirb langsam", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie6 = new Movie("Stirb langsam II", "Stirb langsam II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie7 = new Movie("Indiana Jones", "Indiana Jones", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie8 = new Movie("Indiana Jones II", "Indiana Jones II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie9 = new Movie("Zurück in die Zukunft", "Zurück in die Zukunft", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
 				180, 12);
-		MovieNodeDTO newMovie10 = new MovieNodeDTO("Zurück in die Zukunft II", "Zurück in die Zukunft II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
+		Movie newMovie10 = new Movie("Zurück in die Zukunft II", "Zurück in die Zukunft II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
 				"FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie11 = new MovieNodeDTO("Mad Max", "Mad Max", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie12 = new MovieNodeDTO("Mad Max II", "Mad Max II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie11 = new Movie("Mad Max", "Mad Max", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie12 = new Movie("Mad Max II", "Mad Max II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 
-		MovieNodeDTO newMovie13 = new MovieNodeDTO("X-Men", "X-Men", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie14 = new MovieNodeDTO("X-Men II", "X-Men II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie15 = new MovieNodeDTO("Matrix", "Matrix", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie16 = new MovieNodeDTO("Matrix II", "Matrix II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie17 = new MovieNodeDTO("Iron Man", "Iron Man", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie18 = new MovieNodeDTO("Iron Man II", "Iron Man II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		MovieNodeDTO newMovie19 = new MovieNodeDTO("Der kleine Hobbit", "Der kleine Hobbit", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
+		Movie newMovie13 = new Movie("X-Men", "X-Men", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie14 = new Movie("X-Men II", "X-Men II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie15 = new Movie("Matrix", "Matrix", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie16 = new Movie("Matrix II", "Matrix II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie17 = new Movie("Iron Man", "Iron Man", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie18 = new Movie("Iron Man II", "Iron Man II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie19 = new Movie("Der kleine Hobbit", "Der kleine Hobbit", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
 				12);
-		MovieNodeDTO newMovie20 = new MovieNodeDTO("Der kleine Hobbit II", "Der kleine Hobbit II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
+		Movie newMovie20 = new Movie("Der kleine Hobbit II", "Der kleine Hobbit II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
 				180, 12);
 
-		PersonNodeDTO newPerson1 = new PersonNodeDTO("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson2 = new PersonNodeDTO("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson3 = new PersonNodeDTO("Harrison", "Ford", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson4 = new PersonNodeDTO("Carrie", "Fisher", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson5 = new PersonNodeDTO("Bruce", "Willis", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson6 = new PersonNodeDTO("Alan", "Rickman", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson1 = new Person("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson2 = new Person("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson3 = new Person("Harrison", "Ford", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson4 = new Person("Carrie", "Fisher", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson5 = new Person("Bruce", "Willis", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson6 = new Person("Alan", "Rickman", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 		// PersonNodeDTO newPerson7 = new PersonNodeDTO("Harrison", "Ford",
 		// getDateForString("20.04.1982"), "USA", "m", "Actor", false,
 		// "image.jpg");
-		PersonNodeDTO newPerson8 = new PersonNodeDTO("Dan", "Aykroyd", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson8 = new Person("Dan", "Aykroyd", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
-		PersonNodeDTO newPerson9 = new PersonNodeDTO("Michael", "J. Fox", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson10 = new PersonNodeDTO("Christopher", "Lloyd", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson9 = new Person("Michael", "J. Fox", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson10 = new Person("Christopher", "Lloyd", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
-		PersonNodeDTO newPerson11 = new PersonNodeDTO("Mel", "Gibson", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson12 = new PersonNodeDTO("Tina", "Turner", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson11 = new Person("Mel", "Gibson", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson12 = new Person("Tina", "Turner", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
-		PersonNodeDTO newPerson13 = new PersonNodeDTO("Hugh", "Jackmann", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson14 = new PersonNodeDTO("Patrick", "Steward", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson13 = new Person("Hugh", "Jackmann", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson14 = new Person("Patrick", "Steward", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
-		PersonNodeDTO newPerson15 = new PersonNodeDTO("Keanu", "Reeves", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson16 = new PersonNodeDTO("Lawrence", "Fishbourne", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson15 = new Person("Keanu", "Reeves", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson16 = new Person("Lawrence", "Fishbourne", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
-		PersonNodeDTO newPerson19 = new PersonNodeDTO("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson20 = new PersonNodeDTO("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson19 = new Person("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson20 = new Person("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
-		PersonNodeDTO newPerson17 = new PersonNodeDTO("Martin", "Freeman", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
-		PersonNodeDTO newPerson18 = new PersonNodeDTO("Ian", "McKellen", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
+		Person newPerson17 = new Person("Martin", "Freeman", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
+		Person newPerson18 = new Person("Ian", "McKellen", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
 
 		personsRepository.save(newPerson1);
 		personsRepository.save(newPerson2);
@@ -442,12 +442,12 @@ public class TestProductController implements MPController {
 
 	}
 
-	private void addProductWithTitleToList(String productTitle, String listTitle, UserNodeDTO user) {
-		List<ProductNodeDTO> pmnl = productRepository.findByTitle(productTitle);
-		ListNodeDTO list = user.getListByTitle(listTitle);
+	private void addProductWithTitleToList(String productTitle, String listTitle, User user) {
+		List<Product> pmnl = productRepository.findByTitle(productTitle);
+		Listing list = user.getListByTitle(listTitle);
 
 		if (pmnl != null && pmnl.size() > 0) {
-			for (ProductNodeDTO pmn : pmnl) {
+			for (Product pmn : pmnl) {
 				list.addToList(pmn);
 			}
 			listRepository.save(list);

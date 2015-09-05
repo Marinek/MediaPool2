@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import de.mediapool.server.entities.users.domain.UserNodeDTO;
+import de.mediapool.server.entities.users.domain.User;
 
-public interface UserRepository extends GraphRepository<UserNodeDTO> {
+public interface UserRepository extends GraphRepository<User> {
 
-	public UserNodeDTO findByUsername(String username);
+	public User findByUsername(String username);
 
-	public List<UserNodeDTO> findAllByUsername(String username);
+	public List<User> findAllByUsername(String username);
 
-	public Result<UserNodeDTO> findAll();
+	public Result<User> findAll();
 }

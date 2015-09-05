@@ -3,9 +3,9 @@ package de.mediapool.server.entities.users.repository;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import de.mediapool.server.entities.users.domain.UserRoleNodeDTO;
+import de.mediapool.server.entities.users.domain.UserRole;
 
-public interface UserRoleRepository extends GraphRepository<UserRoleNodeDTO> {
+public interface UserRoleRepository extends GraphRepository<UserRole> {
 
-	public Result<UserRoleNodeDTO> findAll();
+	public Result<UserRole> findAll();
 }

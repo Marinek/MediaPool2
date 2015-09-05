@@ -24,11 +24,11 @@ public class FollowRelationship extends Relationship {
 
 	@EndNode
 	@Fetch
-	private UserNodeDTO ownes;
+	private User ownes;
 
 	@StartNode
 	@JsonIgnore
-	private UserNodeDTO user;
+	private User user;
 
 	private Date since;
 

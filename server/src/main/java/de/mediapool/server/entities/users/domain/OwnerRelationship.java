@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.Relationship;
 import de.mediapool.server.entities.domain.Visibility;
-import de.mediapool.server.entities.product.domain.ProductNodeDTO;
+import de.mediapool.server.entities.product.domain.Product;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,11 +26,11 @@ public class OwnerRelationship extends Relationship {
 
 	@EndNode
 	@Fetch
-	private ProductNodeDTO ownes;
+	private Product ownes;
 
 	@StartNode
 	@JsonIgnore
-	private UserNodeDTO user;
+	private User user;
 
 	private Date since;
 
