@@ -1,3 +1,10 @@
-<h1>Movie</h1>
+<h1>{{content.title}}</h1>
 
-{{content.title}}
+<div class="media">
+  <div class="media-left media-top">
+      <img height="278" width="185" class="thumbnail" src="http://localhost:8080/server/rest/picture/1">
+  </div>
+  <div class="media-body">
+    {{content.description}}
+  </div>
+</div>

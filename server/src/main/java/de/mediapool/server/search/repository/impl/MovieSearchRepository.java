@@ -64,7 +64,7 @@ public class MovieSearchRepository implements SearchRepository {
 
 	private TheMovieDbApi getTMDB() {
 		try {
-			return new TheMovieDbApi("");
+			return new TheMovieDbApi("52e2a4f480bb00c1969c6a9a338f2b90");
 		} catch (MovieDbException e) {
 			throw new MPServerException(ExceptionCode.EXTERN_API_CALL, "Fehler beim Erstellen eines API-Objekts zur TMDB", e);
 		}

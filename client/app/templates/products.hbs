@@ -1,16 +1,21 @@
-{{outlet}}
-
-<table class="table table-striped">
-  <thead>
-
-  </thead>
-  <tbody>
-    {{#each movie in content}}
-    <tr>
-        <td> <span class="label label-default">{{movie.mediaType}}</span> </td>
-        <td>{{movie.title}}</td>
-        <td><a href="#" class="btn btn-primary" role="button">Habe ich.</a></td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="row">
+   <div class="col-md-4">
+      <table class="table table-striped">
+        <thead>
+          <th> </th>
+          <th>Titel</th>
+        </thead>
+        <tbody>
+          {{#each content as |product|}}
+          <tr>
+              <td> <span class="label label-default">{{product.mediaType}}</span> </td>
+              <td>{{#link-to 'products.product' product}}{{product.title}}{{/link-to}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-8">
+      {{outlet}}
+    </div>
+</div>
