@@ -21,11 +21,11 @@ import lombok.ToString;
 public class MPUserDetails extends User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String password;
 
 	private Collection<GrantedAuthority> authorities;
-	
+
 	public MPUserDetails(User userNode) {
 		try {
 			BeanUtils.copyProperties(this, userNode);
@@ -34,9 +34,9 @@ public class MPUserDetails extends User implements UserDetails {
 		}
 
 		authorities = new ArrayList<GrantedAuthority>();
-		
-		for(UserRole userRole : getRoles()) {
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.getName()));
+
+		for (UserRole userRole : getRoles()) {
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.getTitle()));
 		}
 	}
 
