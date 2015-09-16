@@ -124,11 +124,12 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
 	public void deleteProduct(String title) {
 
-		List<Product> pmnl = productRepository.findByTitle(title);
+		Result<Product> pmnl = productRepository.findByTitle(title);
 
-		if (pmnl != null && pmnl.size() > 0) {
-			for (Product pmn : pmnl)
-				productRepository.delete(pmn);
+		Iterator<Product> it = pmnl.iterator();
+		while (it.hasNext()) {
+			Product product = it.next();
+			productRepository.delete(product);
 		}
 	}
 
@@ -311,6 +312,8 @@ public class TestProductController implements MPController {
 		Product newProduct9 = new Product(MediaType.MOVIE, "Iron Man Triologie", "Iron Man Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
 		Product newProduct0 = new Product(MediaType.MOVIE, "Der kleine Hobbit Triologie", "Der kleine Hobbit Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
+		Product newProduct10 = new Product(MediaType.MOVIE, "Iron Man", "Iron Man", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct11 = new Product(MediaType.MOVIE, "Matrix", "Matrix", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
 
 		Movie newMovie1 = new Movie("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
 				12);
@@ -401,6 +404,7 @@ public class TestProductController implements MPController {
 		newMovie11.addPerson(newPerson11);
 		newMovie12.addPerson(newPerson12);
 		newMovie13.addPerson(newPerson13);
+		newMovie13.addPerson(newPerson18);
 		newMovie14.addPerson(newPerson14);
 		newMovie15.addPerson(newPerson15);
 		newMovie16.addPerson(newPerson16);
@@ -429,6 +433,8 @@ public class TestProductController implements MPController {
 		newProduct9.addMovie(newMovie18);
 		newProduct0.addMovie(newMovie19);
 		newProduct0.addMovie(newMovie20);
+		newProduct10.addMovie(newMovie15);
+		newProduct11.addMovie(newMovie19);
 
 		productRepository.save(newProduct1);
 		productRepository.save(newProduct2);
@@ -440,6 +446,8 @@ public class TestProductController implements MPController {
 		productRepository.save(newProduct8);
 		productRepository.save(newProduct9);
 		productRepository.save(newProduct0);
+		productRepository.save(newProduct10);
+		productRepository.save(newProduct11);
 
 		ownerRelationshipController.create(newUser1, newProduct1);
 		ownerRelationshipController.create(newUser1, newProduct2);
@@ -452,6 +460,7 @@ public class TestProductController implements MPController {
 		// ownerRelationshipController.create(newUser1, newProduct9);
 		// ownerRelationshipController.create(newUser2, newProduct0);
 
+		Listing list1 = userController.createNewList("Wishlist", newUser1);
 		Listing list2 = userController.createNewList("Wishlist", newUser2);
 		Listing list3 = userController.createNewList("Wishlist", newUser3);
 		Listing list4 = userController.createNewList("Wishlist", newUser4);
@@ -471,6 +480,9 @@ public class TestProductController implements MPController {
 		listingController.addToList(list4.getId(), newProduct8, newUser4);
 		listingController.addToList(list5.getId(), newProduct9, newUser5);
 		listingController.addToList(list5.getId(), newProduct0, newUser5);
+
+		listingController.addToList(list1.getId(), newProduct10, newUser1);
+		listingController.addToList(list1.getId(), newProduct11, newUser1);
 
 		// addProductWithTitleToList("Star Wars Triologie", "Wishlist",
 		// newUser1);
