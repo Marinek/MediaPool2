@@ -8,4 +8,6 @@ import de.mediapool.server.entities.users.domain.UserRole;
 public interface UserRoleRepository extends GraphRepository<UserRole> {
 
 	public Result<UserRole> findAll();
+
+	public UserRole findByTitle(String title);
 }

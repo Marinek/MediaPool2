@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
+import de.mediapool.server.entities.lists.controller.ListingController;
 import de.mediapool.server.entities.lists.domain.Listing;
-import de.mediapool.server.entities.lists.repository.ListRepository;
+import de.mediapool.server.entities.lists.repository.ListingRepository;
 import de.mediapool.server.entities.media.movies.domain.Movie;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.persons.domain.Person;
@@ -30,6 +31,9 @@ import de.mediapool.server.entities.persons.repository.PersonsRepository;
 import de.mediapool.server.entities.product.domain.MediaType;
 import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.product.repository.ProductRepository;
+import de.mediapool.server.entities.users.controller.FollowRelationshipController;
+import de.mediapool.server.entities.users.controller.OwnerRelationshipController;
+import de.mediapool.server.entities.users.controller.UserController;
 import de.mediapool.server.entities.users.domain.User;
 import de.mediapool.server.entities.users.domain.UserRole;
 import de.mediapool.server.entities.users.repository.UserRepository;
@@ -53,10 +57,22 @@ public class TestProductController implements MPController {
 	private UserRepository userRepository;
 
 	@Autowired
+	private UserController userController;
+
+	@Autowired
 	private MovieRepository movieRepository;
 
 	@Autowired
-	private ListRepository listRepository;
+	private ListingController listingController;
+
+	@Autowired
+	private FollowRelationshipController followRelationshipController;
+
+	@Autowired
+	private OwnerRelationshipController ownerRelationshipController;
+
+	@Autowired
+	private ListingRepository listingRepository;
 
 	@Autowired
 	private UserRoleRepository userRoleRepository;
@@ -108,11 +124,12 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
 	public void deleteProduct(String title) {
 
-		List<Product> pmnl = productRepository.findByTitle(title);
+		Result<Product> pmnl = productRepository.findByTitle(title);
 
-		if (pmnl != null && pmnl.size() > 0) {
-			for (Product pmn : pmnl)
-				productRepository.delete(pmn);
+		Iterator<Product> it = pmnl.iterator();
+		while (it.hasNext()) {
+			Product product = it.next();
+			productRepository.delete(product);
 		}
 	}
 
@@ -155,11 +172,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
 	public void deleteList(String title) {
 
-		List<Listing> listList = listRepository.findByTitle(title);
+		List<Listing> listList = listingRepository.findByTitle(title);
 
 		if (listList != null && listList.size() > 0) {
 			for (Listing list : listList) {
-				listRepository.delete(list);
+				listingRepository.delete(list);
 			}
 		}
 	}
@@ -179,12 +196,12 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllLists", method = RequestMethod.POST)
 	public void deleteAllLists() {
 
-		Result<Listing> lnl = listRepository.findAll();
+		Result<Listing> lnl = listingRepository.findAll();
 
 		Iterator<Listing> it = lnl.iterator();
 		while (it.hasNext()) {
 			Listing list = it.next();
-			listRepository.delete(list);
+			listingRepository.delete(list);
 		}
 
 	}
@@ -238,69 +255,80 @@ public class TestProductController implements MPController {
 		return date;
 	}
 
+	@RequestMapping(value = "/createAllUser", method = RequestMethod.POST)
+	public void createAllUser() {
+		logger.debug("Invoking: createAllStuff");
+
+		User newUser1 = new User("mp@mp.de", "mp");
+		userController.createUser(newUser1);
+
+		User newUser2 = new User("Test2", "Test2");
+		userController.createUser(newUser2);
+
+		User newUser3 = new User("Test3", "Test3");
+		userController.createUser(newUser3);
+
+		User newUser4 = new User("Test4", "Test4");
+		userController.createUser(newUser4);
+
+		User newUser5 = new User("Test5", "Test5");
+		userController.createUser(newUser5);
+
+	}
+
 	@RequestMapping(value = "/createAll", method = RequestMethod.POST)
 	public void createAll() {
 		logger.debug("Invoking: createAllStuff");
 
-		User newUser1 = new User("mp@mp.de", "mp");
-		userRepository.save(newUser1);
-		User newUser2 = new User("Test2", "Test2");
-		userRepository.save(newUser2);
-		User newUser3 = new User("Test3", "Test3");
-		userRepository.save(newUser3);
-		User newUser4 = new User("Test4", "Test4");
-		userRepository.save(newUser4);
-		User newUser5 = new User("Test5", "Test5");
-		userRepository.save(newUser5);
+		User newUser1 = userController.findByUsername("Test1");
+		User newUser2 = userController.findByUsername("Test2");
+		User newUser3 = userController.findByUsername("Test3");
+		User newUser4 = userController.findByUsername("Test4");
+		User newUser5 = userController.findByUsername("Test5");
 
-		newUser1.follows(newUser2);
-		newUser2.follows(newUser3);
-		newUser3.follows(newUser4);
-		newUser4.follows(newUser5);
-		newUser5.follows(newUser1);
+		followRelationshipController.createFellowship(newUser1, newUser2);
+		followRelationshipController.createFellowship(newUser1, newUser3);
+		followRelationshipController.createFellowship(newUser1, newUser4);
+		followRelationshipController.createFellowship(newUser1, newUser5);
 
-		userRepository.save(newUser1);
-		userRepository.save(newUser2);
-		userRepository.save(newUser3);
-		userRepository.save(newUser4);
-		userRepository.save(newUser5);
+		// userRepository.save(newUser1);
+		// userRepository.save(newUser2);
+		// userRepository.save(newUser3);
+		// userRepository.save(newUser4);
+		// userRepository.save(newUser5);
 
-		Product newProduct1 = new Product(MediaType.MOVIE, "Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
+		Product newProduct1 = new Product(MediaType.MOVIE, "Herr der Ringe Triologie", "Herr der Ringe Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+				"Blu-ray");
+		Product newProduct2 = new Product(MediaType.MOVIE, "Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct3 = new Product(MediaType.MOVIE, "Stirb langsam Triologie", "Stirb langsam Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+				"Blu-ray");
+		Product newProduct4 = new Product(MediaType.MOVIE, "Indiana Jones Triologie", "Indiana Jones Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+				"Blu-ray");
+		Product newProduct5 = new Product(MediaType.MOVIE, "Zurück in die Zukunft Triologie", "Zurück in die Zukunft Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
 				"000-000", "Blu-ray");
-		Product newProduct2 = new Product(MediaType.MOVIE, "Star Wars Triologie", "Star Wars Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
+		Product newProduct6 = new Product(MediaType.MOVIE, "Mad Max Triologie", "Mad Max Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct7 = new Product(MediaType.MOVIE, "X-Men Triologie", "X-Men Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct8 = new Product(MediaType.MOVIE, "Matrix Triologie", "Matrix Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct9 = new Product(MediaType.MOVIE, "Iron Man Triologie", "Iron Man Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct0 = new Product(MediaType.MOVIE, "Der kleine Hobbit Triologie", "Der kleine Hobbit Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
 				"Blu-ray");
-		Product newProduct3 = new Product(MediaType.MOVIE, "Stirb langsam Triologie", "Stirb langsam Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
-				"000-000", "Blu-ray");
-		Product newProduct4 = new Product(MediaType.MOVIE, "Indiana Jones Triologie", "Indiana Jones Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together",
-				"000-000", "Blu-ray");
-		Product newProduct5 = new Product(MediaType.MOVIE, "Zurück in die Zukunft Triologie", "Zurück in die Zukunft Triologie", 2001, "Extended", "German", 10, "cover.jpg",
-				"All Movies together", "000-000", "Blu-ray");
-		Product newProduct6 = new Product(MediaType.MOVIE, "Mad Max Triologie", "Mad Max Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
-				"Blu-ray");
-		Product newProduct7 = new Product(MediaType.MOVIE, "X-Men Triologie", "X-Men Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
-				"Blu-ray");
-		Product newProduct8 = new Product(MediaType.MOVIE, "Matrix Triologie", "Matrix Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
-				"Blu-ray");
-		Product newProduct9 = new Product(MediaType.MOVIE, "Iron Man Triologie", "Iron Man Triologie", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000",
-				"Blu-ray");
-		Product newProduct0 = new Product(MediaType.MOVIE, "Der kleine Hobbit Triologie", "Der kleine Hobbit Triologie", 2001, "Extended", "German", 10, "cover.jpg",
-				"All Movies together", "000-000", "Blu-ray");
+		Product newProduct10 = new Product(MediaType.MOVIE, "Iron Man", "Iron Man", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
+		Product newProduct11 = new Product(MediaType.MOVIE, "Matrix", "Matrix", 2001, "Extended", "German", 10, "cover.jpg", "All Movies together", "000-000", "Blu-ray");
 
-		Movie newMovie1 = new Movie("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
-				"FeatureFilm", 180, 12);
-		Movie newMovie2 = new Movie("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
-				"FeatureFilm", 180, 12);
+		Movie newMovie1 = new Movie("Herr der Ringe - Die Gefährten", "Herr der Ringe - Die Gefährten", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
+				12);
+		Movie newMovie2 = new Movie("Herr der Ringe - Die 2 Türme", "Herr der Ringe - Die 2 Türme", 2001, "Fantasy", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
+				12);
 		Movie newMovie3 = new Movie("Krieg der Sterne", "Krieg der Sterne", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		Movie newMovie4 = new Movie("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
-				"FeatureFilm", 180, 12);
+		Movie newMovie4 = new Movie("Das Imperium schlägt zurück", "Das Imperium schlägt zurück", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
+				180, 12);
 		Movie newMovie5 = new Movie("Stirb langsam", "Stirb langsam", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 		Movie newMovie6 = new Movie("Stirb langsam II", "Stirb langsam II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 		Movie newMovie7 = new Movie("Indiana Jones", "Indiana Jones", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 		Movie newMovie8 = new Movie("Indiana Jones II", "Indiana Jones II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		Movie newMovie9 = new Movie("Zurück in die Zukunft", "Zurück in die Zukunft", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
-				180, 12);
-		Movie newMovie10 = new Movie("Zurück in die Zukunft II", "Zurück in die Zukunft II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron",
-				"FeatureFilm", 180, 12);
+		Movie newMovie9 = new Movie("Zurück in die Zukunft", "Zurück in die Zukunft", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie10 = new Movie("Zurück in die Zukunft II", "Zurück in die Zukunft II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
+				12);
 		Movie newMovie11 = new Movie("Mad Max", "Mad Max", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 		Movie newMovie12 = new Movie("Mad Max II", "Mad Max II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 
@@ -310,10 +338,8 @@ public class TestProductController implements MPController {
 		Movie newMovie16 = new Movie("Matrix II", "Matrix II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 		Movie newMovie17 = new Movie("Iron Man", "Iron Man", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 		Movie newMovie18 = new Movie("Iron Man II", "Iron Man II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
-		Movie newMovie19 = new Movie("Der kleine Hobbit", "Der kleine Hobbit", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180,
-				12);
-		Movie newMovie20 = new Movie("Der kleine Hobbit II", "Der kleine Hobbit II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm",
-				180, 12);
+		Movie newMovie19 = new Movie("Der kleine Hobbit", "Der kleine Hobbit", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
+		Movie newMovie20 = new Movie("Der kleine Hobbit II", "Der kleine Hobbit II", 2001, "ScienceFiction", "english", "Oscar", "cover.jpg", "Trying to defeat Sauron", "FeatureFilm", 180, 12);
 
 		Person newPerson1 = new Person("Orlando", "Bloom", getDateForString("20.04.1982"), "USA", "m", "Actor", false, "image.jpg");
 		Person newPerson2 = new Person("Liv", "Tyler", getDateForString("20.04.1982"), "USA", "f", "Actor", false, "image.jpg");
@@ -378,6 +404,7 @@ public class TestProductController implements MPController {
 		newMovie11.addPerson(newPerson11);
 		newMovie12.addPerson(newPerson12);
 		newMovie13.addPerson(newPerson13);
+		newMovie13.addPerson(newPerson18);
 		newMovie14.addPerson(newPerson14);
 		newMovie15.addPerson(newPerson15);
 		newMovie16.addPerson(newPerson16);
@@ -406,6 +433,8 @@ public class TestProductController implements MPController {
 		newProduct9.addMovie(newMovie18);
 		newProduct0.addMovie(newMovie19);
 		newProduct0.addMovie(newMovie20);
+		newProduct10.addMovie(newMovie15);
+		newProduct11.addMovie(newMovie19);
 
 		productRepository.save(newProduct1);
 		productRepository.save(newProduct2);
@@ -417,41 +446,62 @@ public class TestProductController implements MPController {
 		productRepository.save(newProduct8);
 		productRepository.save(newProduct9);
 		productRepository.save(newProduct0);
+		productRepository.save(newProduct10);
+		productRepository.save(newProduct11);
 
-		newUser1.owens(newProduct1);
-		newUser2.owens(newProduct2);
-		newUser4.owens(newProduct3);
-		newUser4.owens(newProduct4);
-		newUser4.owens(newProduct5);
-		newUser4.owens(newProduct6);
-		newUser4.owens(newProduct7);
-		newUser4.owens(newProduct8);
-		newUser4.owens(newProduct9);
-		newUser4.owens(newProduct0);
+		ownerRelationshipController.create(newUser1, newProduct1);
+		ownerRelationshipController.create(newUser1, newProduct2);
+		// ownerRelationshipController.create(newUser3, newProduct3);
+		// ownerRelationshipController.create(newUser4, newProduct4);
+		// ownerRelationshipController.create(newUser1, newProduct5);
+		// ownerRelationshipController.create(newUser2, newProduct6);
+		// ownerRelationshipController.create(newUser3, newProduct7);
+		// ownerRelationshipController.create(newUser4, newProduct8);
+		// ownerRelationshipController.create(newUser1, newProduct9);
+		// ownerRelationshipController.create(newUser2, newProduct0);
 
-		newUser1.createNewList("Wishlist");
-		newUser3.createNewList("Wishlist");
+		Listing list1 = userController.createNewList("Wishlist", newUser1);
+		Listing list2 = userController.createNewList("Wishlist", newUser2);
+		Listing list3 = userController.createNewList("Wishlist", newUser3);
+		Listing list4 = userController.createNewList("Wishlist", newUser4);
+		Listing list5 = userController.createNewList("Wishlist", newUser5);
 
-		userRepository.save(newUser1);
-		userRepository.save(newUser2);
-		userRepository.save(newUser3);
-		userRepository.save(newUser4);
+		// userRepository.save(newUser1);
+		// userRepository.save(newUser2);
+		// userRepository.save(newUser3);
+		// userRepository.save(newUser4);
 
-		addProductWithTitleToList("Star Wars Triologie", "Wishlist", newUser1);
-		addProductWithTitleToList("Herr der Ringe Triologie", "Wishlist", newUser3);
+		listingController.addToList(list2.getId(), newProduct3, newUser2);
+		listingController.addToList(list2.getId(), newProduct4, newUser2);
+		listingController.addToList(list3.getId(), newProduct5, newUser3);
+		listingController.addToList(list3.getId(), newProduct6, newUser3);
+
+		listingController.addToList(list4.getId(), newProduct7, newUser4);
+		listingController.addToList(list4.getId(), newProduct8, newUser4);
+		listingController.addToList(list5.getId(), newProduct9, newUser5);
+		listingController.addToList(list5.getId(), newProduct0, newUser5);
+
+		listingController.addToList(list1.getId(), newProduct10, newUser1);
+		listingController.addToList(list1.getId(), newProduct11, newUser1);
+
+		// addProductWithTitleToList("Star Wars Triologie", "Wishlist",
+		// newUser1);
+		// addProductWithTitleToList("Herr der Ringe Triologie", "Wishlist",
+		// newUser3);
 
 	}
 
-	private void addProductWithTitleToList(String productTitle, String listTitle, User user) {
-		List<Product> pmnl = productRepository.findByTitle(productTitle);
-		Listing list = user.getListByTitle(listTitle);
-
-		if (pmnl != null && pmnl.size() > 0) {
-			for (Product pmn : pmnl) {
-				list.addToList(pmn);
-			}
-			listRepository.save(list);
-		}
-	}
+	// private void addProductWithTitleToList(String productTitle, String
+	// listTitle, User user) {
+	// List<Product> pmnl = productRepository.findByTitle(productTitle);
+	// Listing listing = listRepository.findByTitleAndUser(listTitle, user);
+	//
+	// if (pmnl != null && pmnl.size() > 0) {
+	// for (Product pmn : pmnl) {
+	// listing.addToList(pmn);
+	// }
+	// listRepository.save(listing);
+	// }
+	// }
 
 }

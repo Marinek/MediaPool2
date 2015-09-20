@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.lists.domain.Listing;
-import de.mediapool.server.entities.lists.repository.ListRepository;
+import de.mediapool.server.entities.lists.repository.ListingRepository;
 import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.users.domain.User;
 import de.mediapool.server.security.domain.MPUserDetails;
 
 @RestController
 @RequestMapping("/rest/list")
-public class ListController implements MPController {
+public class ListingController implements MPController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ListController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ListingController.class);
 
 	@Autowired
-	private ListRepository listRepository;
+	private ListingRepository listRepository;
 
 	@PostConstruct
 	public void init() {
@@ -46,13 +46,7 @@ public class ListController implements MPController {
 	public Listing createList(@RequestBody String title, @AuthenticationPrincipal User currentUser) {
 		logger.debug("Invoking: createMovie(newList, currentUser)");
 
-		currentUser.createNewList(title);
-
-		Listing newList = currentUser.getListByTitle(title);
-
-		listRepository.save(newList);
-
-		return newList;
+		return null;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)

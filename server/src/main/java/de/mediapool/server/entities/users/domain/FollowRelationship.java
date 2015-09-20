@@ -24,7 +24,7 @@ public class FollowRelationship extends Relationship {
 
 	@EndNode
 	@Fetch
-	private User ownes;
+	private User fUser;
 
 	@StartNode
 	@JsonIgnore

@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 
 import de.mediapool.server.entities.lists.domain.Listing;
 
-public interface ListRepository extends GraphRepository<Listing> {
+public interface ListingRepository extends GraphRepository<Listing> {
 
 	public List<Listing> findByTitle(String title);
 
