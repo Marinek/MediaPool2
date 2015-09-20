@@ -7,6 +7,9 @@ export default Ember.Component.extend({
 
       this.get('session').authenticate('authenticator:rest', data);
 
+    },
+    invalidateSession : function() {
+      this.get('session').invalidate();
     }
   }
 });

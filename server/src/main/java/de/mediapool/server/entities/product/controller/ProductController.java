@@ -44,7 +44,7 @@ public class ProductController implements MPController {
 		return new EmberModel.Builder<>(product).build();
 	}
 
-	@RequestMapping(value = "findAll", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public EmberModel findAll(@AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: findAll(test)");
 		

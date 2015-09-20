@@ -3,7 +3,6 @@ import Base from 'simple-auth/authenticators/base';
 
 export default Base.extend({
   restore(data) {
-    alert('restore')
     return Ember.RSVP.resolve();
   },
 
@@ -28,7 +27,7 @@ export default Base.extend({
     },
 
   invalidate(data) {
-    alert('invalidate')
+    Ember.$.post('http://localhost:8080/server/logout')
     return Ember.RSVP.resolve();
   }
 });
