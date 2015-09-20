@@ -12,6 +12,11 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
+	'simple-auth': {
+		 authorizer: 'authorizer:restserver',
+		 store: 'simple-auth-session-store:local-storage',
+		 crossOriginWhitelist : ['*']
+	},
 
     APP: {
       // Here you can pass flags/options to your application instance
@@ -53,6 +58,6 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
-
+  
   return ENV;
 };

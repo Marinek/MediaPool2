@@ -35,6 +35,7 @@ public class ProductController implements MPController {
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public EmberModel getProduct(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getProductMovie(id)");
+		logger.debug("Current User: " + test);
 
 		Product product = productRepository.findOne(id);
 
@@ -42,7 +43,11 @@ public class ProductController implements MPController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public EmberModel findAll() {
+	public EmberModel findAll(@AuthenticationPrincipal MPUserDetails test) {
+		logger.debug("Invoking: findAll(test)");
+		
+		logger.debug("Current User: " + test);
+		
 		Result<Product> allProducts = productRepository.findAll();
 		
 		return new EmberModel.Builder<Product>(Product.class, allProducts)
