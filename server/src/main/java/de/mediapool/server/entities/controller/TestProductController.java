@@ -259,7 +259,7 @@ public class TestProductController implements MPController {
 	public void createAllUser() {
 		logger.debug("Invoking: createAllStuff");
 
-		User newUser1 = new User("Test1", "Test1");
+		User newUser1 = new User("mp@mp.de", "mp");
 		userController.createUser(newUser1);
 
 		User newUser2 = new User("Test2", "Test2");
