@@ -9,9 +9,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 @Configuration
 public class ThemeleafConfig {
-	
 
-	
 	//start Thymeleaf specific configuration
 	@Bean(name ="templateResolver")	
 	public SpringResourceTemplateResolver getTemplateResolver() {
@@ -21,6 +19,7 @@ public class ThemeleafConfig {
 		templateResolver.setTemplateMode("XHTML");
 		return templateResolver;
 	}
+	
 	@Bean(name ="templateEngine")	    
 	public SpringTemplateEngine getTemplateEngine() {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -28,6 +27,7 @@ public class ThemeleafConfig {
 		templateEngine.setTemplateResolver(getTemplateResolver());
 		return templateEngine;
 	}
+	
 	@Bean(name="viewResolver")
 	public ThymeleafViewResolver getViewResolver(){
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver(); 

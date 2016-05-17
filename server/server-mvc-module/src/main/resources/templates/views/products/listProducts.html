@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div class="container" th:fragment="content">
+		<div class="row">
+			<div class="col-md-4">
+				<table class="table table-striped">
+					<thead>
+						<th></th>
+						<th>Titel</th>
+					</thead>
+					<tbody>
+						<tr th:each="product : ${products}">
+							<td><span class="label label-default"
+								th:text="${{product.mediaType}}">MediaType</span></td>
+							<td><a
+								th:href="${(#mvc.url('PC#getProduct').arg(0,product.id)).build()}"
+								th:text="${{product.title}}">Link</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-8" th:if="${prod}">
+				<h1 th:text="${prod.title}">{{prod.title}}</h1>
+
+				<div class="media">
+					<div class="media-left media-top">x</div>
+					<div class="media-body" th:text="${prod.description}">{{content.description}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

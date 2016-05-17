@@ -22,12 +22,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>de.mediapool</groupId>
-			<artifactId>server-core-module</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>pom</type>
-		</dependency>
-		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring4</artifactId>
 			<version>3.0.0.RELEASE</version>
@@ -38,6 +32,11 @@
 			<version>3.0.0.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>de.mediapool</groupId>
+			<artifactId>server-core-module</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<packaging>war</packaging>
 
