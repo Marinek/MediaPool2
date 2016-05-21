@@ -7,21 +7,18 @@
 
 <body>
 	<div th:fragment="productDetail" th:if="${prod}">
-		<script type="text/javascript">
-			function getOwner(id) {
-
-				var url = './productOwner?id=' + id;
-				console.log(url);
-				$("#ownerList").load(url);
-			}
-		</script>
-		<div th:onblur="'javascript:getOwner(' + ${prod.id} + ')'"
-			class="col-md-8">
-			<h1 th:text="${prod.title}">{{prod.title}}</h1>
+		<div class="col-md-8">
+			<div class="page-header">
+				<h1>
+					[[${prod.title}]] <small><a href="./"
+						th:href="@{/editProduct(id=${prod.id})}"
+						class="glyphicon glyphicon-pencil"></a></small>
+				</h1>
+			</div>
 
 			<div class="media">
 				<div class="media-left media-top">x</div>
-				<div class="media-body" th:text="${prod.description}">{{content.description}}</div>
+				<div class="media-body" th:text="${prod.description}">{{prod.description}}</div>
 			</div>
 
 			<div id="owner">

@@ -4,22 +4,24 @@
 
 <body>
 	<div class="container" th:fragment="content">
-		<form th:action="@{./editProduct}" th:object="${product}" class="form-horizontal" method="post">
+		<form th:action="@{./editProduct}" th:object="${product}"
+			class="form-horizontal" method="post">
 			<fieldset>
 
 				<!-- Form Name -->
 				<legend>Neues Produkt erstellen</legend>
-
+				<input type="hidden" th:field="*{id}">
 				<!-- Select Basic -->
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="selectbasic">Produktart</label>
 					<div class="col-md-5">
-						<select th:field="*{mediaType}" id="selectbasic" name="selectbasic" class="form-control">
+						<select th:field="*{mediaType}" id="selectbasic"
+							name="selectbasic" class="form-control">
 							<option value="MOVIE">Film</option>
 							<option value="BOOK">Buch</option>
 							<option value="GAME">Spiel</option>
 							<option value="BOARDGAME">Brettspiel</option>
-							<option value="MUSIC">Musik</option> 
+							<option value="MUSIC">Musik</option>
 						</select>
 					</div>
 				</div>
@@ -28,8 +30,9 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="textinput">Titel</label>
 					<div class="col-md-5">
-						<input th:field="*{title}" id="textinput" name="textinput" placeholder=""
-							class="form-control input-md" required="required" type="text">
+						<input th:field="*{title}" id="textinput" name="textinput"
+							placeholder="" class="form-control input-md" required="required"
+							type="text">
 
 					</div>
 				</div>
@@ -52,6 +55,14 @@
 						<input id="textinput" name="textinput" placeholder=""
 							class="form-control input-md" type="text">
 
+					</div>
+				</div>
+
+				<!-- Textarea -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="textarea">Beschreibung</label>
+					<div class="col-md-5">
+						<textarea th:field="*{description}" class="form-control input-md" id="textarea" name="textarea"></textarea>
 					</div>
 				</div>
 

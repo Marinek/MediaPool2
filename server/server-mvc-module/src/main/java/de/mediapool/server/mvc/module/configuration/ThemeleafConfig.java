@@ -24,6 +24,7 @@ public class ThemeleafConfig {
 		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
 		resolver.setTemplateEngine(templateEngine());
 		resolver.setCharacterEncoding("UTF-8");
+		resolver.setContentType("text/html; charset=UTF-8");
 		return resolver;
 	}
 
@@ -41,6 +42,8 @@ public class ThemeleafConfig {
 		resolver.setPrefix("classpath:templates/");
 		resolver.setSuffix(".html");
 		resolver.setTemplateMode(TemplateMode.HTML);
+
+		resolver.setCharacterEncoding("UTF-8");
 		return resolver;
 	}
 }

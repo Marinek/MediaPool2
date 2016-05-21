@@ -41,14 +41,20 @@ public class ProductController implements MPController {
 	}
 
     @RequestMapping(value="/editProduct", method=RequestMethod.GET)
-    public String greetingForm(Model model) {
-        model.addAttribute("product", new Product());
+    public String greetingForm(@RequestParam(name="id", required=false)Long productId, Model model) {
+    	if(productId != null) {
+    		model.addAttribute("product", productRepository.findOne(productId));
+    	} else {
+    		model.addAttribute("product", new Product());
+    	}
+    	
         return "views/products/editProduct";
     }
 	
-	@RequestMapping(value="/editProduct", method=RequestMethod.POST)
+	@RequestMapping(value="/editProduct", method=RequestMethod.POST )
 	public String getProduct(@ModelAttribute Product product, Model model) {
 		logger.debug("Invoking: getProduct(product, model)");
+		
 		model.addAttribute("product", productRepository.save(product));
 		
 		return "views/products/editProduct";
