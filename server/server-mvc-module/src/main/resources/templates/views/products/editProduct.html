@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div class="container" th:fragment="content">
+		<form th:action="@{./editProduct}" th:object="${product}" class="form-horizontal" method="post">
+			<fieldset>
+
+				<!-- Form Name -->
+				<legend>Neues Produkt erstellen</legend>
+
+				<!-- Select Basic -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="selectbasic">Produktart</label>
+					<div class="col-md-5">
+						<select th:field="*{mediaType}" id="selectbasic" name="selectbasic" class="form-control">
+							<option value="MOVIE">Film</option>
+							<option value="BOOK">Buch</option>
+							<option value="GAME">Spiel</option>
+							<option value="BOARDGAME">Brettspiel</option>
+							<option value="MUSIC">Musik</option> 
+						</select>
+					</div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="textinput">Titel</label>
+					<div class="col-md-5">
+						<input th:field="*{title}" id="textinput" name="textinput" placeholder=""
+							class="form-control input-md" required="required" type="text">
+
+					</div>
+				</div>
+
+				<!-- Select Basic -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="selectbasic">Sprache</label>
+					<div class="col-md-5">
+						<select id="selectbasic" name="selectbasic" class="form-control">
+							<option value="Deutsch">Deutsch</option>
+							<option value="Englisch">Englisch</option>
+						</select>
+					</div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="textinput">Erscheinungsjahr</label>
+					<div class="col-md-5">
+						<input id="textinput" name="textinput" placeholder=""
+							class="form-control input-md" type="text">
+
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="singlebutton"></label>
+					<div class="col-md-4">
+						<button id="singlebutton" name="singlebutton"
+							class="btn btn-primary">Speichern</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+
+	</div>
+</body>
+</html>
