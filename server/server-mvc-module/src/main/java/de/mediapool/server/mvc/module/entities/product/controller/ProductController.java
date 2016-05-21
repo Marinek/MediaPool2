@@ -28,13 +28,8 @@ public class ProductController implements MPController {
 
 	@RequestMapping("/product")
 	public String getProduct(@RequestParam(value = "id") Long productId, Model model) {
-		Result<Product> listProducts = productRepository.findAll();
-		
-		model.addAttribute("products", listProducts);
-		
 		model.addAttribute("prod", productRepository.findOne(productId));
 		
-		return "views/products/listProducts";
+		return "views/products/fragmentProduct :: productDetail";
 	}
-	
 }

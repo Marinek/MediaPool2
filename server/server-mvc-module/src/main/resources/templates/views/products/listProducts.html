@@ -3,7 +3,18 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <body>
+
+
 	<div class="container" th:fragment="content">
+		<script type="text/javascript">
+			function getProduct(id) {
+				
+				var url = './product?id=' + id;
+				console.log(url);
+				$("#fragmentProduct").load(url);
+			}
+		</script>
+
 		<div class="row">
 			<div class="col-md-4">
 				<table class="table table-striped">
@@ -15,21 +26,14 @@
 						<tr th:each="product : ${products}">
 							<td><span class="label label-default"
 								th:text="${{product.mediaType}}">MediaType</span></td>
-							<td><a
-								th:href="${(#mvc.url('PC#getProduct').arg(0,product.id)).build()}"
+							<td><a href="#"
+								th:onclick="'javascript:getProduct(' + ${product.id} + ');'"
 								th:text="${{product.title}}">Link</a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="col-md-8" th:if="${prod}">
-				<h1 th:text="${prod.title}">{{prod.title}}</h1>
-
-				<div class="media">
-					<div class="media-left media-top">x</div>
-					<div class="media-body" th:text="${prod.description}">{{content.description}}</div>
-				</div>
-			</div>
+			<div id="fragmentProduct"></div>
 		</div>
 	</div>
 </body>

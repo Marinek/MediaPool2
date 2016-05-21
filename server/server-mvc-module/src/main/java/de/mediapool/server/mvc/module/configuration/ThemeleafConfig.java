@@ -1,38 +1,45 @@
 package de.mediapool.server.mvc.module.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.springframework.web.servlet.ViewResolver;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
 public class ThemeleafConfig {
 
-	//start Thymeleaf specific configuration
-	@Bean(name ="templateResolver")	
-	public SpringResourceTemplateResolver getTemplateResolver() {
-		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-		templateResolver.setPrefix("classpath:templates/");
-		templateResolver.setSuffix(".html");
-		templateResolver.setTemplateMode("XHTML");
-		return templateResolver;
+	@Autowired
+	private ApplicationContext applicationContext;
+
+	@Bean
+	public ViewResolver viewResolver() {
+		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+		resolver.setTemplateEngine(templateEngine());
+		resolver.setCharacterEncoding("UTF-8");
+		return resolver;
 	}
-	
-	@Bean(name ="templateEngine")	    
-	public SpringTemplateEngine getTemplateEngine() {
-		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-		templateEngine.addDialect(new SpringSecurityDialect());
-		templateEngine.setTemplateResolver(getTemplateResolver());
-		return templateEngine;
+
+	private TemplateEngine templateEngine() {
+		SpringTemplateEngine engine = new SpringTemplateEngine();
+		engine.setEnableSpringELCompiler(true);
+		engine.setTemplateResolver(templateResolver());
+		return engine;
 	}
-	
-	@Bean(name="viewResolver")
-	public ThymeleafViewResolver getViewResolver(){
-		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver(); 
-		viewResolver.setTemplateEngine(getTemplateEngine());
-		return viewResolver;
+
+	private ITemplateResolver templateResolver() {
+		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+		resolver.setApplicationContext(applicationContext);
+		resolver.setPrefix("classpath:templates/");
+		resolver.setSuffix(".html");
+		resolver.setTemplateMode(TemplateMode.HTML);
+		return resolver;
 	}
-	//end Thymeleaf specific configuration
 }

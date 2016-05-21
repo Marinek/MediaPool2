@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+
+<body>
+    <div th:fragment="productDetail" th:if="${prod}">
+       <div class="col-md-8" >
+				<h1 th:text="${prod.title}">{{prod.title}}</h1>
+
+				<div class="media">
+					<div class="media-left media-top">x</div>
+					<div class="media-body" th:text="${prod.description}">{{content.description}}</div>
+				</div>
+			</div>
+    </div>
+</body>
+</html>

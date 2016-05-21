@@ -20,10 +20,18 @@ public class ThymeleafLayoutInterceptor extends HandlerInterceptorAdapter {
         if (isRedirectOrForward(originalViewName)) {
             return;
         }
+        
+        if(isFragment(originalViewName)) {
+        	return;
+        }
+        
         modelAndView.setViewName(DEFAULT_LAYOUT);
         modelAndView.addObject(DEFAULT_VIEW_ATTRIBUTE_NAME, originalViewName);
     } 
-    private boolean isRedirectOrForward(String viewName) {
+    private boolean isFragment(String originalViewName) {
+		return originalViewName.indexOf("::") > -1;
+	}
+	private boolean isRedirectOrForward(String viewName) {
         return viewName.startsWith("redirect:") || viewName.startsWith("forward:");
     }   
 }
