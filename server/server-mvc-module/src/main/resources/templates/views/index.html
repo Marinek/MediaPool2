@@ -3,6 +3,10 @@
  
 <body>
 <div class="container" th:fragment="content">
+    <p>
+        Hello <span th:text="${#authentication.name}"> User</span>!
+        Welcome to the Spring MVC Quickstart application!
+    </p>
 </div>
 </body>
 </html>

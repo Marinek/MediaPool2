@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login page</title>
+</head>
+<body>
+	<div th:fragment="content">
+		<form class="form-signin" th:action="@{/login}" method="post">
+			<h2 class="form-signin-heading">Bitte einloggen...</h2>
+			<label for="inputEmail" class="sr-only">Benutzername</label> <input
+				name="username" type="email" id="inputEmail" class="form-control"
+				placeholder="Benutzername" required autofocus> <label
+				for="inputPassword" class="sr-only">Password</label> <input
+				name="password" type="password" id="inputPassword"
+				class="form-control" placeholder="Passwort" required>
+			<div class="checkbox">
+				<label> <input type="checkbox" value="remember-me">
+					Remember me
+				</label>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+		</form>
+	</div>
+</body>
+</html>

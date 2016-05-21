@@ -14,9 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
-import de.mediapool.server.configuration.SimpleCORSFilter;
 import de.mediapool.server.security.services.MPUserDetailsService;
 import de.mediapool.server.security.simple.controller.RESTAuthenticationEntryPoint;
 import de.mediapool.server.security.simple.controller.RESTAuthenticationFailureHandler;
@@ -61,10 +59,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http) throws Exception {
 		logger.debug("Invoking: configure(http)");
 		//		http.authorizeRequests().antMatchers("/rest/**").authenticated();
-		http.addFilterBefore(new SimpleCORSFilter(), ChannelProcessingFilter.class);
-		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-		http.formLogin().successHandler(authenticationSuccessHandler);
-		http.formLogin().failureHandler(authenticationFailureHandler);
+//		http.addFilterBefore(new SimpleCORSFilter(), ChannelProcessingFilter.class);
+//		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+//		http.formLogin().successHandler(authenticationSuccessHandler);
+//		http.formLogin().failureHandler(authenticationFailureHandler);
+		http.formLogin().loginPage("/login");
+		http.formLogin().failureUrl("/login-error");
 		http.logout().logoutUrl("/logout");
 		http.csrf();
 	}

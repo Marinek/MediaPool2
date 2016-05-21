@@ -13,10 +13,14 @@
 		<level value="debug" />
 	</logger>
 
+	<category name="org.springframework.security">
+		<priority value="info" />
+	</category>
+
 	<logger name="org.springframework.context">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>

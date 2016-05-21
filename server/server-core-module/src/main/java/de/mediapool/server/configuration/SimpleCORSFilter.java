@@ -18,7 +18,7 @@ public class SimpleCORSFilter implements Filter {
 	private static final Logger logger = LoggerFactory.getLogger(SimpleCORSFilter.class);
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		logger.debug("Invoking: doFilter(req, res, chain)");
+		logger.trace("Invoking: doFilter(req, res, chain)");
 		
 		HttpServletResponse response = (HttpServletResponse) res;
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");

@@ -47,7 +47,7 @@ public class MPUserDetails extends User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return !getIsLocked();
+		return true;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class MPUserDetails extends User implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return !getIsLocked();
+		return true;
 	}
 
 }
