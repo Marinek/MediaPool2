@@ -1,20 +1,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org" lang="en">
+	xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
 </head>
 
 <body>
-    <div th:fragment="productDetail" th:if="${prod}">
-       <div class="col-md-8" >
-				<h1 th:text="${prod.title}">{{prod.title}}</h1>
+	<div th:fragment="productDetail" th:if="${prod}">
+		<script type="text/javascript">
+			function getOwner(id) {
 
-				<div class="media">
-					<div class="media-left media-top">x</div>
-					<div class="media-body" th:text="${prod.description}">{{content.description}}</div>
-				</div>
+				var url = './productOwner?id=' + id;
+				console.log(url);
+				$("#ownerList").load(url);
+			}
+		</script>
+		<div th:onblur="'javascript:getOwner(' + ${prod.id} + ')'"
+			class="col-md-8">
+			<h1 th:text="${prod.title}">{{prod.title}}</h1>
+
+			<div class="media">
+				<div class="media-left media-top">x</div>
+				<div class="media-body" th:text="${prod.description}">{{content.description}}</div>
 			</div>
-    </div>
+
+			<div id="owner">
+				<h2>Besitzer</h2>
+				<table class="table">
+					<thead>
+						<th>Benutzername</th>
+						<th>Seit</th>
+					</thead>
+					<tbody>
+						<tr th:each="owner : ${ownerList}">
+							<td th:text="${owner.username}">Username</td>
+							<td>01.01.2000</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
