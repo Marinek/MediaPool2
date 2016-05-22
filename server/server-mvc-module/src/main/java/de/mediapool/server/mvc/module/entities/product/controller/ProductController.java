@@ -27,7 +27,7 @@ public class ProductController implements MPController {
 	
 	@RequestMapping("/products")
 	public String getAllProducts(Model model) {
-		Result<Product> listProducts = productRepository.findAll();
+		Result<Product> listProducts = productRepository.findAllOrderByTitle();
 		
 		model.addAttribute("products", listProducts);
 		

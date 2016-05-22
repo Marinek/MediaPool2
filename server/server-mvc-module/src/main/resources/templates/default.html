@@ -41,13 +41,7 @@
 
 			<form class="navbar-form navbar-left">
 				<a class="btn btn-danger" href="./editProduct" role="button">Erstellen</a>
-			</form>
-			<form class="navbar-form navbar-right" role="search">
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Produktsuche">
-				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
+			</form> 
 			<div class="nav navbar-form navbar-right">
 				<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"
 					href="logout">Logout</a>

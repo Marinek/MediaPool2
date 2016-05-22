@@ -75,6 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		http.formLogin().failureUrl("/login-error");
 		http.logout().logoutUrl("/logout");
 		http.csrf();
+		http.rememberMe();
 	}
 
 	@PostConstruct

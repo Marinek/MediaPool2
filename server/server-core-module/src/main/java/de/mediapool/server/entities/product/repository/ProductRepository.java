@@ -10,6 +10,9 @@ import de.mediapool.server.entities.users.domain.User;
 public interface ProductRepository extends GraphRepository<Product> {
 
 	public Result<Product> findByTitle(String title);
+	
+	@Query("MATCH (product:Product) RETURN product order by product.title")
+	public Result<Product> findAllOrderByTitle();
 
 	@Query("MATCH (movie:Movie {title:{0}})--(product:Product) RETURN product")
 	public Result<Product> findByMovieTitle(String movieTitle);
