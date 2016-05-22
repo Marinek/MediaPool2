@@ -71,7 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		//		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 		//		http.formLogin().successHandler(authenticationSuccessHandler);
 		//		http.formLogin().failureHandler(authenticationFailureHandler);
-		http.formLogin().loginPage("/login");
+		http.formLogin().loginPage("/login-page");
 		http.formLogin().failureUrl("/login-error");
 		http.logout().logoutUrl("/logout");
 		http.csrf();

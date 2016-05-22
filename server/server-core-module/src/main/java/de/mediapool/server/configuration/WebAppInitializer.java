@@ -13,9 +13,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  */
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	 
-	@Autowired
-	private SimpleCORSFilter corsFilter = new SimpleCORSFilter();
-	
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};

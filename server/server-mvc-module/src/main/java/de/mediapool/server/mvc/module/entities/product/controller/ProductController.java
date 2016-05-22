@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.product.repository.ProductRepository;
+import de.mediapool.server.security.domain.PreAuthorization;
 
 @Controller
 public class ProductController implements MPController {
@@ -57,8 +59,15 @@ public class ProductController implements MPController {
 		
 		model.addAttribute("product", productRepository.save(product));
 		
-		return "views/products/editProduct";
+		return "redirect:/products";
 	}
 	
+	@RequestMapping(value="/removeProduct", method=RequestMethod.GET)
+	@PreAuthorize(PreAuthorization.ROLE_USER)
+	public String removeProduct(@RequestParam(name="id", required=true)Long productId, Model model) {
+		productRepository.delete(productId);
+		
+		return "redirect:/products";
+	}
 	
 }

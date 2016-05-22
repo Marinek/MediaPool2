@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Getting Started: Serving Web Content</title>
+<title>Mediapool</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -53,7 +53,7 @@
 					href="logout">Logout</a>
 				<form
 					th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}"
-					class="form-inline" method="post" th:action="@{/login}">
+					class="form-inline" method="post" th:action="@{/login-page}">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Benutzername"
 							id="j_username" name="username" />

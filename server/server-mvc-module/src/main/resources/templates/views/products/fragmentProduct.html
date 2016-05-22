@@ -13,6 +13,9 @@
 					[[${prod.title}]] <small><a href="./"
 						th:href="@{/editProduct(id=${prod.id})}"
 						class="glyphicon glyphicon-pencil"></a></small>
+						<small><a href="./"
+						th:href="@{/removeProduct(id=${prod.id})}"
+						class="glyphicon glyphicon-remove" style="color:red"></a></small>
 				</h1>
 			</div>
 
