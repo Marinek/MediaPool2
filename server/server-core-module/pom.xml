@@ -10,7 +10,6 @@
 	</parent>
 	<artifactId>server-core-module</artifactId>
 	<name>server-core-module</name>
-	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

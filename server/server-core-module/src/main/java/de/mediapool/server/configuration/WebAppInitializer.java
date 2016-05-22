@@ -4,18 +4,13 @@ import javax.servlet.Filter;
 import javax.servlet.ServletRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import de.mediapool.server.security.simple.config.SecurityConfiguration;
 
 /**
  * 
  * @author marcinek
  *
  */
-@Order(2)
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	 
 	@Autowired
@@ -28,22 +23,19 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
  
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {SecurityConfiguration.class};
+        return new Class<?>[] {RootApp.class};
     }
  
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] {AppConfig.class};
+        return new Class<?>[] {};
     }
  
     @Override
     protected Filter[] getServletFilters() {
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-        return new Filter[] {characterEncodingFilter, corsFilter};
+        return new Filter[] {};
     }
- 
+    
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {        
         registration.setInitParameter("spring.profiles.active", "default");
