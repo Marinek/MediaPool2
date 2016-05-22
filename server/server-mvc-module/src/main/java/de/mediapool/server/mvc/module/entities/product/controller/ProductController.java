@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import de.mediapool.server.core.controller.MPController;
 import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.product.repository.ProductRepository;
+import de.mediapool.server.entities.users.domain.User;
 import de.mediapool.server.security.domain.PreAuthorization;
 
 @Controller
@@ -36,8 +37,12 @@ public class ProductController implements MPController {
 
 	@RequestMapping("/product")
 	public String getProduct(@RequestParam(value = "id") Long productId, Model model) {
+		Result<User> productOwner = productRepository.findOwner(productId);
+		
+		
 		model.addAttribute("prod", productRepository.findOne(productId));
-		model.addAttribute("ownerList", productRepository.findOwner(productId));
+		model.addAttribute("ownerList", productOwner);
+		model.addAttribute("hasOwner",productOwner.iterator().hasNext() );
 		
 		return "views/products/fragmentProduct :: productDetail";
 	}

@@ -24,7 +24,7 @@
 				<div class="media-body" th:text="${prod.description}">{{prod.description}}</div>
 			</div>
 
-			<div id="owner">
+			<div id="owner" th:if="${hasOwner}">
 				<h2>Besitzer</h2>
 				<table class="table">
 					<thead>
