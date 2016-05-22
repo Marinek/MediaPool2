@@ -3,6 +3,10 @@
 <head>
 <title>Mediapool</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+	crossorigin="anonymous"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -21,27 +25,26 @@
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"
-	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-	crossorigin="anonymous"></script>
 
 </head>
 <body>
 	<nav class="navbar navbar-default">
-		<div class="container">
+
+		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<a class="navbar-brand" href="./">Mediapool</a>
 			</div>
-
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<ul class="nav navbar-nav">
-				<li><a href="products">Produkte</a></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">Erstellen<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="./editProduct">Produkt</a></li>
+						<li><a href="./editList">Liste</a></li>
+					</ul></li>
 			</ul>
-
-			<form class="navbar-form navbar-left">
-				<a class="btn btn-danger" href="./editProduct" role="button">Erstellen</a>
-			</form> 
 			<div class="nav navbar-form navbar-right">
 				<a th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"
 					href="logout">Logout</a>
@@ -66,11 +69,19 @@
 		<!-- /.navbar-collapse -->
 		<!-- /.container-fluid -->
 	</nav>
-
-	<div class="container">
-		<div th:replace="${view} :: content">Content</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-2">
+				<ul class="nav nav-pills nav-stacked">
+					<li><a href="products">Produkte <span class="badge" th:text="${productCount}">0</span></a></li>
+					<li><a href="lists">Listen</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-10">
+				<div th:replace="${view} :: content">Content</div>
+			</div>
+		</div>
 	</div>
-
 </body>
 </html>
 

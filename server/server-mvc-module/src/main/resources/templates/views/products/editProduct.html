@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <body>
-	<div class="container" th:fragment="content">
+	<div th:fragment="content">
 		<form th:action="@{./editProduct}" th:object="${product}"
 			class="form-horizontal" method="post">
 			<fieldset>
