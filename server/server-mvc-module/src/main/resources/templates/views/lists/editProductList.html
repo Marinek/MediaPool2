@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="content">
+		<form th:action="@{./editProductList}" th:object="${list}"
+			class="form-horizontal" method="post">
+			<fieldset>
+
+				<!-- Form Name -->
+				<legend>Neue Liste erstellen</legend>
+				<input type="hidden" th:field="*{id}">
+				
+				<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="textinput">Titel</label>
+					<div class="col-md-5">
+						<input th:field="*{title}" id="textinput" name="textinput"
+							placeholder="" class="form-control input-md" required="required"
+							type="text">
+
+					</div>
+				</div>
+
+				<!-- Textarea -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="textarea">Beschreibung</label>
+					<div class="col-md-5">
+						<textarea th:field="*{description}" class="form-control input-md" id="textarea" name="textarea"></textarea>
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="singlebutton"></label>
+					<div class="col-md-4">
+						<button id="singlebutton" name="singlebutton"
+							class="btn btn-primary">Speichern</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+
+	</div>
+</body>
+</html>

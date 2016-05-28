@@ -12,7 +12,7 @@ import org.springframework.data.neo4j.annotation.RelatedToVia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.mediapool.server.core.domain.Node;
-import de.mediapool.server.entities.lists.domain.Listing;
+import de.mediapool.server.entities.lists.domain.ProductList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,7 +39,7 @@ public class User extends Node {
 
 	@RelatedTo(type = "CREATED", direction = Direction.OUTGOING)
 	@Fetch
-	private Set<Listing> createdLists;
+	private Set<ProductList> createdLists;
 
 	@RelatedTo(type = "HAS_ROLE", direction = Direction.OUTGOING)
 	private @Fetch Set<UserRole> roles;

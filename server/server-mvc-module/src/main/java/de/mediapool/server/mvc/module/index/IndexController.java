@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import de.mediapool.server.entities.lists.repository.ProductListRepository;
 import de.mediapool.server.entities.product.repository.ProductRepository;
 
 @Controller
@@ -15,6 +16,9 @@ public class IndexController {
 
 	@Autowired
 	private ProductRepository productRepo;
+
+	@Autowired
+	private ProductListRepository productListRepo;
 	
     @RequestMapping("/")
     public String index(Model model) {
@@ -32,8 +36,9 @@ public class IndexController {
     	}
     	
     	model.put("productCount", productRepo.count());
+    	model.put("productListCount", productListRepo.count());
     	
     	return model;
     }
-
+    
 }

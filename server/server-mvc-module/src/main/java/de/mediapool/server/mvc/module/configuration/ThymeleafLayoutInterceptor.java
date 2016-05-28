@@ -12,7 +12,7 @@ import de.mediapool.server.mvc.module.index.IndexController;
 
 @Component
 public class ThymeleafLayoutInterceptor extends HandlerInterceptorAdapter {
- 
+
     private static final String DEFAULT_LAYOUT = "default";
     private static final String DEFAULT_VIEW_ATTRIBUTE_NAME = "view";
     
@@ -38,7 +38,8 @@ public class ThymeleafLayoutInterceptor extends HandlerInterceptorAdapter {
         modelAndView.setViewName(DEFAULT_LAYOUT);
         modelAndView.addObject(DEFAULT_VIEW_ATTRIBUTE_NAME, originalViewName);
     } 
-    private boolean isFragment(String originalViewName) {
+    
+	private boolean isFragment(String originalViewName) {
 		return originalViewName.indexOf("::") > -1;
 	}
 	private boolean isRedirectOrForward(String viewName) {

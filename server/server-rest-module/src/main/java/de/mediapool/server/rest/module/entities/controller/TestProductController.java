@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.lists.domain.Listing;
-import de.mediapool.server.entities.lists.repository.ListingRepository;
+import de.mediapool.server.entities.lists.domain.ProductList;
+import de.mediapool.server.entities.lists.repository.ProductListRepository;
 import de.mediapool.server.entities.media.movies.domain.Movie;
 import de.mediapool.server.entities.media.movies.repository.MovieRepository;
 import de.mediapool.server.entities.persons.domain.Person;
@@ -72,7 +72,7 @@ public class TestProductController implements MPController {
 	private OwnerRelationshipController ownerRelationshipController;
 
 	@Autowired
-	private ListingRepository listingRepository;
+	private ProductListRepository listingRepository;
 
 	@Autowired
 	private UserRoleRepository userRoleRepository;
@@ -172,10 +172,10 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
 	public void deleteList(String title) {
 
-		List<Listing> listList = listingRepository.findByTitle(title);
+		List<ProductList> listList = listingRepository.findByTitle(title);
 
 		if (listList != null && listList.size() > 0) {
-			for (Listing list : listList) {
+			for (ProductList list : listList) {
 				listingRepository.delete(list);
 			}
 		}
@@ -196,11 +196,11 @@ public class TestProductController implements MPController {
 	@RequestMapping(value = "/deleteAllLists", method = RequestMethod.POST)
 	public void deleteAllLists() {
 
-		Result<Listing> lnl = listingRepository.findAll();
+		Result<ProductList> lnl = listingRepository.findAll();
 
-		Iterator<Listing> it = lnl.iterator();
+		Iterator<ProductList> it = lnl.iterator();
 		while (it.hasNext()) {
-			Listing list = it.next();
+			ProductList list = it.next();
 			listingRepository.delete(list);
 		}
 
@@ -460,11 +460,11 @@ public class TestProductController implements MPController {
 		// ownerRelationshipController.create(newUser1, newProduct9);
 		// ownerRelationshipController.create(newUser2, newProduct0);
 
-		Listing list1 = userController.createNewList("Wishlist", newUser1);
-		Listing list2 = userController.createNewList("Wishlist", newUser2);
-		Listing list3 = userController.createNewList("Wishlist", newUser3);
-		Listing list4 = userController.createNewList("Wishlist", newUser4);
-		Listing list5 = userController.createNewList("Wishlist", newUser5);
+		ProductList list1 = userController.createNewList("Wishlist", newUser1);
+		ProductList list2 = userController.createNewList("Wishlist", newUser2);
+		ProductList list3 = userController.createNewList("Wishlist", newUser3);
+		ProductList list4 = userController.createNewList("Wishlist", newUser4);
+		ProductList list5 = userController.createNewList("Wishlist", newUser5);
 
 		// userRepository.save(newUser1);
 		// userRepository.save(newUser2);

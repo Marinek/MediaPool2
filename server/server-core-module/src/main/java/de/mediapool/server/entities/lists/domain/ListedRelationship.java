@@ -30,7 +30,7 @@ public class ListedRelationship extends Relationship {
 
 	@StartNode
 	@Fetch
-	private Listing list;
+	private ProductList list;
 
 	@GraphProperty
 	private Date since;

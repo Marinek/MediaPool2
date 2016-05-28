@@ -1,40 +1,33 @@
 package de.mediapool.server.configuration;
-
-import javax.servlet.Filter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
-/**
- * 
- * @author marcinek
- *
- */
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-	 
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
-    }
+import de.mediapool.server.security.simple.config.SecurityConfiguration;
+ 
+public class WebAppInitializer implements WebApplicationInitializer {
  
     @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {RootApp.class};
+    public void onStartup(ServletContext container) {
+        // Create the 'root' Spring application context
+        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+        rootContext.register(RootApp.class, SecurityConfiguration.class);
+ 
+        // Manage the lifecycle of the root application context
+        container.addListener(new ContextLoaderListener(rootContext));
+ 
+        // Create the dispatcher servlet's Spring application context
+        AnnotationConfigWebApplicationContext dispatcherServlet = new AnnotationConfigWebApplicationContext();
+             
+        // Register and map the dispatcher servlet
+        ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherServlet));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+         
     }
  
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] {};
-    }
- 
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[] {};
-    }
-    
-    @Override
-    protected void customizeRegistration(ServletRegistration.Dynamic registration) {        
-        registration.setInitParameter("spring.profiles.active", "default");
-    }
-}
+ }

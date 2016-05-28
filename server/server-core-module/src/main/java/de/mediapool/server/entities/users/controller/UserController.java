@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.lists.domain.Listing;
+import de.mediapool.server.entities.lists.domain.ProductList;
 import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.users.domain.FellowshipType;
 import de.mediapool.server.entities.users.domain.FollowRelationship;
@@ -76,12 +76,12 @@ public class UserController implements MPController {
 		return userRepository.save(user);
 	}
 
-	public Listing createNewList(String title, User user) {
-		Set<Listing> listing = user.getCreatedLists();
+	public ProductList createNewList(String title, User user) {
+		Set<ProductList> listing = user.getCreatedLists();
 		if (listing == null) {
 			listing = new HashSet<>();
 		}
-		Listing list = new Listing(title);
+		ProductList list = new ProductList(title);
 		list.setCreated(new Date());
 		listing.add(list);
 		user.setCreatedLists(listing);

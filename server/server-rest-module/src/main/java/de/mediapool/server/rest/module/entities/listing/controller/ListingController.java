@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.mediapool.server.core.controller.MPController;
-import de.mediapool.server.entities.lists.domain.Listing;
-import de.mediapool.server.entities.lists.repository.ListingRepository;
+import de.mediapool.server.entities.lists.domain.ProductList;
+import de.mediapool.server.entities.lists.repository.ProductListRepository;
 import de.mediapool.server.entities.product.domain.Product;
 import de.mediapool.server.entities.users.domain.User;
 import de.mediapool.server.security.domain.MPUserDetails;
@@ -26,7 +26,7 @@ public class ListingController implements MPController {
 	private static final Logger logger = LoggerFactory.getLogger(ListingController.class);
 
 	@Autowired
-	private ListingRepository listRepository;
+	private ProductListRepository listRepository;
 
 	@PostConstruct
 	public void init() {
@@ -34,16 +34,16 @@ public class ListingController implements MPController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public Listing getList(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
+	public ProductList getList(@PathVariable("id") Long id, @AuthenticationPrincipal MPUserDetails test) {
 		logger.debug("Invoking: getList(id, test)");
 
-		Listing list = listRepository.findOne(id);
+		ProductList list = listRepository.findOne(id);
 
 		return list;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public Listing createList(@RequestBody String title, @AuthenticationPrincipal User currentUser) {
+	public ProductList createList(@RequestBody String title, @AuthenticationPrincipal User currentUser) {
 		logger.debug("Invoking: createMovie(newList, currentUser)");
 
 		return null;
@@ -57,7 +57,7 @@ public class ListingController implements MPController {
 			return;
 		}
 
-		Listing currentList = listRepository.findOne(id);
+		ProductList currentList = listRepository.findOne(id);
 
 		currentList.addToList(newProduct);
 
@@ -68,7 +68,7 @@ public class ListingController implements MPController {
 	public void delete(@PathVariable("id") Long id, @AuthenticationPrincipal User currentUser) {
 		logger.debug("Invoking: delete(id, currentUser)");
 
-		Listing currentList = listRepository.findOne(id);
+		ProductList currentList = listRepository.findOne(id);
 
 		listRepository.delete(currentList);
 	}

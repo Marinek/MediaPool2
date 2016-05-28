@@ -18,13 +18,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NodeEntity
-public class Listing extends Node {
+public class ProductList extends Node {
 
 	private static final long serialVersionUID = 1L;
 
 	private String title;
 
 	private Date created;
+	
+	private String description;
 
 	private Visibility visibility = Visibility.PRIVATE;
 
@@ -32,7 +34,7 @@ public class Listing extends Node {
 	@Fetch
 	private Set<ListedRelationship> listedProducts;
 
-	public Listing(String title, Date created, Visibility visibility, Set<ListedRelationship> listedProducts) {
+	public ProductList(String title, Date created, Visibility visibility, Set<ListedRelationship> listedProducts) {
 		super();
 		this.title = title;
 		this.created = created;
@@ -40,11 +42,11 @@ public class Listing extends Node {
 		this.listedProducts = listedProducts;
 	}
 
-	public Listing(String title) {
+	public ProductList(String title) {
 		this(title, new Date(), Visibility.PRIVATE, new HashSet<>());
 	}
 
-	public Listing() {
+	public ProductList() {
 		super();
 	}
 

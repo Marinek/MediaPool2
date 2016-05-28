@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="content">
+		<script type="text/javascript">
+			function getProduct(id) {
+				
+				var url = './product?id=' + id;
+				console.log(url);
+				$("#fragmentProduct").load(url);
+			}
+		</script>
+
+		<div class="row">
+			<div class="col-md-4">
+				<table class="table table-striped">
+					<tbody>
+						<tr th:each="list : ${productLists}">
+							<td><span class="label label-default"
+								th:text="${{list.visibility}}">Sichtbarkeit</span></td>
+							<td><a href="#"
+								th:onclick="'javascript:getProduct(' + ${list.id} + ');'"
+								th:text="${{list.title}}">Link</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="fragmentProduct"></div>
+		</div>
+	</div>
+</body>
+</html>
