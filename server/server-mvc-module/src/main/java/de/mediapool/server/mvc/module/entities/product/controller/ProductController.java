@@ -1,5 +1,7 @@
 package de.mediapool.server.mvc.module.entities.product.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class ProductController implements MPController {
 
 	@RequestMapping("/product")
 	public String getProduct(@RequestParam(value = "id") Long productId, Model model) {
-		Result<User> productOwner = productRepository.findOwner(productId);
+		List<User> productOwner = productRepository.findOwner(productId);
 		
 		
 		model.addAttribute("prod", productRepository.findOne(productId));
