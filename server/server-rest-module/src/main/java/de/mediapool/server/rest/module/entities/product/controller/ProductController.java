@@ -1,5 +1,7 @@
 package de.mediapool.server.rest.module.entities.product.controller;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -66,7 +68,7 @@ public class ProductController implements MPController {
 
 	@RequestMapping(value = "findByMovieTitle", method = RequestMethod.POST)
 	public EmberModel findByMovieTitle(@RequestBody SearchQuery query) {
-		Result<Product> allProducts = productRepository.findByMovieTitle(query.getSearchString());
+		List<Product> allProducts = productRepository.findByMovieTitle(query.getSearchString());
 
 		return new EmberModel.Builder<Product>(Product.class, allProducts).build();
 

@@ -5,7 +5,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +29,7 @@ public class ProductController implements MPController {
 	
 	@RequestMapping("/products")
 	public String getAllProducts(Model model) {
-		Result<Product> listProducts = productRepository.findAllOrderByTitle();
+		List<Product> listProducts = productRepository.findAllOrderByTitle();
 		
 		model.addAttribute("products", listProducts);
 		
@@ -42,7 +41,7 @@ public class ProductController implements MPController {
 		List<User> productOwner = productRepository.findOwner(productId);
 		
 		
-		model.addAttribute("prod", productRepository.findOne(productId));
+		model.addAttribute("prod", productRepository.findOneById(productId));
 		model.addAttribute("ownerList", productOwner);
 		model.addAttribute("hasOwner",productOwner.iterator().hasNext() );
 		
